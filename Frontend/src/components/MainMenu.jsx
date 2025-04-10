@@ -1,0 +1,255 @@
+import logo from '../assets/logo.png'
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { IoCartOutline } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
+import { FaRegUser,FaCartPlus } from "react-icons/fa";
+import styled from "styled-components";
+import { Dropdown } from './Dropdown';
+import { useState } from 'react';
+const MainMenuContainer = styled.div`
+    width: 100%;
+    background-color: #003459;
+`
+const MainMenuItem = styled.div`
+    margin: auto;
+    width:80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`
+const ButtonMenu = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap:1.5rem;
+    flex-shrink: 0;
+`
+const ButtonMenu2 = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:1.2rem;
+    flex-shrink: 0;
+`
+
+const TitleBtnMenu = styled.div`
+    position: relative;
+    padding-block:1.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    transition: opacity 0.15s;
+    &:hover{
+        color:rgba(255, 255, 255, 0.78);
+    }
+`
+const SearchInputWrapper = styled.div`
+    background-color: white;
+    border-radius: 15px;
+    width: 450px;
+    display: flex;
+    
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+
+
+`
+
+
+
+
+const LogoImg = styled.img`
+    width: 100px;
+    height: 50px;
+    object-fit: cover;
+
+`
+const InputMenu = styled.input`
+    
+    margin-left: 3px;
+    width: 100%;
+    border:none;
+    background-color: transparent;
+    font-size: 0.9rem;
+    &:focus{
+    
+        outline: none;
+        border: none;
+    
+    }
+`
+
+const btnMenu = styled.button`
+    margin-left: 25px;
+    font-size: 16px;
+    border:none;
+    background-color:#003459;
+    color:white;
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    transition: opacity 0.15s;
+    cursor: pointer;
+    &:active{
+        opacity: 0.8;
+    }
+`
+
+
+const StyledCartIcon = styled(FaCartPlus)`
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  color: #003459; /* thường hoạt động */
+  fill: currentColor; /* đảm bảo màu sắc áp dụng từ color */
+  transition: color 0.15s;
+
+  &:hover {
+    color: #01528b;
+  }
+`
+
+const StyledUserIcon = styled(FaRegUser)`
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  color: #003459; /* thường hoạt động */
+  fill: currentColor; /* đảm bảo màu sắc áp dụng từ color */
+  transition: color 0.15s;
+
+  &:hover {
+    color: #01528b;
+  }
+`
+function MainMenu() {
+    const isLogin = true;
+    const [isHoverDog,setIsHoverDog] = useState(false);
+    const [isHoverCat,setIsHoverCat] = useState(false);
+    const [isHoverProduct,setIsHoverProduct] = useState(false);
+    const handleHoverIn = (menu) =>{
+        if(menu==="Dog")
+            setIsHoverDog(true)
+        else if (menu==="Cat")
+            setIsHoverCat(true)
+        else
+            setIsHoverProduct(true)
+    }
+
+    const handleHoverOut = (menu) =>{
+        
+        if(menu==="Dog")
+            setIsHoverDog(false)
+        else if (menu==="Cat")
+            setIsHoverCat(false)
+        else
+            setIsHoverProduct(false)
+    }
+
+    return (
+      <>
+        <MainMenuContainer>
+            <MainMenuItem>
+
+            <div className='logo-menu'>
+                <LogoImg src={logo} width="115px" height="40px"/>
+            </div>
+
+            <ButtonMenu>
+                <TitleBtnMenu>
+                    Trang chủ 
+                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}}/>
+                </TitleBtnMenu>
+
+                <TitleBtnMenu 
+                    onMouseOver={()=>handleHoverIn("Dog")} 
+                    onMouseOut={()=>handleHoverOut("Dog")}
+                >
+
+
+                    Chó cảnh
+                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}} 
+                     />
+
+                    { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
+                         />:<></>  }
+                    
+                </TitleBtnMenu>
+
+
+                
+                <TitleBtnMenu onMouseOver={()=>handleHoverIn("Cat")} 
+                    onMouseOut={()=>handleHoverOut("Cat")}
+                    >
+                    Mèo cảnh
+
+                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
+                     />
+
+                    { isHoverCat? <Dropdown menuType={2} setHover={setIsHoverCat}/>:<></>  }
+
+                </TitleBtnMenu>
+
+                <TitleBtnMenu onMouseOver={()=>handleHoverIn("Product")} 
+                    onMouseOut={()=>handleHoverOut("Product")}>
+                    Phụ kiện
+                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
+                    />
+
+                    { isHoverProduct? <Dropdown menuType={3}/>:<></>  }
+
+                </TitleBtnMenu>
+            </ButtonMenu>
+
+
+
+            <div className='search-input-container'>
+                <SearchInputWrapper>
+                    <CiSearch id="search-icon" style={{width: "2rem",height: "2rem"}}/>
+                    <InputMenu className='input-menu' placeholder='Search something here!' classtype="text"></InputMenu>
+                </SearchInputWrapper>
+            </div>
+            
+
+            <ButtonMenu2>
+
+            {isLogin?
+                    <>
+                        <FaCartPlus 
+                        id="menu-icon-info" 
+                         />
+                        <FaRegUser 
+                        id="menu-icon-info" 
+                        />
+                    </>
+                :
+                <>
+                    <TitleBtnMenu>
+                        Sign up
+                    </TitleBtnMenu>
+
+                    <TitleBtnMenu>
+                        Log in
+                    </TitleBtnMenu>
+                 </>
+
+
+                  
+                }
+                
+
+            </ButtonMenu2>
+
+            </MainMenuItem>
+                
+            
+
+        </MainMenuContainer>
+          
+      </>
+    )
+  }
+export default MainMenu;
