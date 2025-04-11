@@ -17,7 +17,15 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Homepage/>}/>
-          <Route path="/category" element={<CategoryPage/>}/>
+
+          <Route path="/category/cho-canh/:breed" element={<CategoryPage type={"cho-canh"}/>}/>
+
+          <Route path="/category/meo-canh/:breed" element={<CategoryPage type={"meo-canh"}/>}/>
+
+          <Route path="/category/phu-kien" element={<CategoryPage type={"phu-kien"}/>}/>
+
+          <Route path="/category/search" element={<CategoryPage type={"search"}/>}/>
+
           <Route path="/detail/:id" element={<ProductDetail/>}></Route>
           <Route path="/login" element={<LoginPage/>}></Route>
           <Route path="/signup" element={<RegistrationPage></RegistrationPage>}></Route>

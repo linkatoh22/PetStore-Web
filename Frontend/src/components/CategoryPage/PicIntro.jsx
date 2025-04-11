@@ -13,9 +13,9 @@ const CategoryParagraphContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  top: 100px;
-  right: 140px;
-  width: 35%;
+  top: 23%;
+  right: 4%;
+  width: 38%;
 `;
 
 const CategoryTitle = styled.h1`
@@ -33,7 +33,9 @@ const CategoryParagraph = styled.p`
   text-align: right;
   display: flex;
   justify-content: right;
-  font-size: 17px;
+  font-size: 1.2rem;
+  font-weight:600;
+
 `;
 
 const CBtnGroup = styled.div`
@@ -76,18 +78,20 @@ function PicIntro(){
                 
                 <CategoryParagraphContainer className="Category-paragraph-container">
 
-                    <CategoryTitle className="Category-title">One More Friend</CategoryTitle>
+                    <CategoryTitle className="Category-title">Một người bạn mới!</CategoryTitle>
 
-                    <CategorySubTitle className="Category-sub-title">Thousands More Fun!</CategorySubTitle>
+                    <CategorySubTitle className="Category-sub-title">Một niềm vui mới</CategorySubTitle>
 
-                    <CategoryParagraph className="Category-paragraph">Having a pet means you have more joy, a new friend, a happy person who will always be with you to have fun. We have 200+ different pets that can meet your needs!</CategoryParagraph>
+                    <CategoryParagraph className="Category-paragraph">Sắm thú cưng cùng DCAT STORE – nơi bạn dễ dàng tìm thấy những chú chó, mèo siêu đáng yêu, thân thiện và khỏe mạnh. DCAT STORE – bạn đồng hành lý tưởng cho những ai yêu thú cưng và muốn tìm một người bạn bốn chân thật sự!</CategoryParagraph>
 
-                    <CBtnGroup className="c-btn-group">
+                    
+
+                    {/* <CBtnGroup className="c-btn-group">
                         <CTransparentBtn className="c-transparent-btn">View Intro</CTransparentBtn>
 
                         <CBlueBtn className="c-blue-btn">Explore Now</CBlueBtn>
 
-                    </CBtnGroup>
+                    </CBtnGroup> */}
 
                 </CategoryParagraphContainer>
             </div>

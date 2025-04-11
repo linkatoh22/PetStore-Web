@@ -20,8 +20,7 @@ const PcTitleContainer = styled.div`
 const PcTitle = styled.div`
   display: flex;
   flex-direction: row;
-  width: 22%;
-  justify-content: space-between;
+  gap:1rem;
   align-items: baseline;
 `;
 
@@ -32,7 +31,7 @@ const PcTitleName = styled.h2`
 `;
 
 const PcTitleQuantity = styled.span`
-  color: #667479;
+  color: var(--grey-600);
   font-size: 20px;
 `;
 
@@ -55,14 +54,14 @@ const PcCardContainer = styled.div`
 
 
 
-function PetCardBody({Pet,SetPet}){
+function PetCardBody({Pet,SetPet,Header,SetSort}){
   
     const options =[
-        {label: "Sort By: All",value:0},
-        {label: "Most Popular",value:1},
-        {label: "Least Popular",value:2},
-        {label: "Most Expensive",value:3},
-        {label: "Cheapest",value:4},
+        {label: "Sắp xếp theo: Tất cả",value:0},
+        {label: "Phổ biến nhất",value:1},
+        {label: "Ít phổ biến",value:2},
+        {label: "Đắt nhất",value:3},
+        {label: "Rẻ nhất",value:4},
     ]
     return(
         <>
@@ -71,7 +70,7 @@ function PetCardBody({Pet,SetPet}){
 
                     <PcTitle className="pc-title">
                         <PcTitleName className="pc-title-name">
-                                Sản Phẩm
+                                {Header}
                         </PcTitleName>
 
                         <PcTitleQuantity className="pc-title-quantity">
@@ -81,12 +80,12 @@ function PetCardBody({Pet,SetPet}){
 
 
                     <div className="pc-title-select">
-                        <PcSort className="pc-sort">
+                        <PcSort className="pc-sort" onChange={(e)=>SetSort(Number(e.target.value))}>
                             {
                                 options.map(
 
                                     option=>(
-                                        <option value={option.value}>
+                                        <option key={option.value} value={option.value}>
                                             {option.label}
                                         </option>
                                     )
@@ -97,24 +96,8 @@ function PetCardBody({Pet,SetPet}){
 
                 </PcTitleContainer>
 
-
                 <PcCardContainer className="pc-card-container">
-                    
-                  
-                    {/* {
-                                Pet.map((item)=>{
-                                  return (<PetsCard 
-                                  key={item._id}
-                                  petImg = {item.image[0]}
-                                  petName={item.name}
-                                  petGender={item.gender}
-                                  petAge={item.age}
-                                  petPrice={item.price}></PetsCard>)
-
-                                }
-                              )
-                    } */}
-                  
+                
                   {
                     Pet.length>0?
                     (
@@ -133,14 +116,10 @@ function PetCardBody({Pet,SetPet}){
                     :
                     (<div>Không tìm thấy kết quả</div>)
                 }
-                  
-                  
-                    
-
+                 
                 </PcCardContainer> 
 
                 
-
             </PcContainer>          
         </>
     );

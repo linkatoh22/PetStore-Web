@@ -17,15 +17,17 @@ const fetchPetSoldDesc = async (req,res,next)=>{
 
 const PetQuery = async (req,res,next) =>{
     try{
-        console.log("HEYYY IM HERE")
-        const {search,breed,age,color,maxPrice,minPrice,gender} = req.query;
+        var pets;
+        const {search,breed,age,color,maxPrice,minPrice,gender,sort} = req.query;
         let filter = {};
         if(breed)
             filter.breed = breed;
         if (age)
             filter.age = age;
-        if (color)
-            filter.color = color;
+        if (color){
+            const colorArray = Array.isArray(color) ?  color: color.split(",");
+            filter.color = {$in: colorArray};
+        }
         if(search)
             filter.name={$regex:search,$options:'i'}
         if(gender)
@@ -37,9 +39,24 @@ const PetQuery = async (req,res,next) =>{
             if(minPrice) filter.price.$gte=parseInt(minPrice)
             if(maxPrice) filter.price.$lte=parseInt(maxPrice)
         }
-
-        const pets = await Pet.find(filter).sort({sold:-1});
-        // console.log(pets)
+        if(sort == 0||!sort){
+            
+            pets = await Pet.find(filter);
+        }
+        else if (sort==1){
+            
+            pets = await Pet.find(filter).sort({sold:-1});
+        }
+        else if (sort == 2){
+            pets = await Pet.find(filter).sort({sold:1});
+        }
+        else if (sort == 3){
+            pets = await Pet.find(filter).sort({price:-1});
+        }
+        else if (sort ==4){
+            pets = await Pet.find(filter).sort({price:1});
+        }
+        
         res.status(200).json(pets)
 
     }

@@ -40,8 +40,8 @@ export function Dropdown({menuType,setHover}){
     
     const navigate  = useNavigate();
 
-    const handleNavigate = (breed)=>{
-        navigate(`/category?breed=${breed}`)
+    const handleNavigate = (type,breed)=>{
+        navigate(`/category/${type}/${breed}`)
         
     }
 
@@ -63,7 +63,7 @@ export function Dropdown({menuType,setHover}){
                                 {
                                     Dog.map((item,index)=>{
                                             return (<DropdownBtn 
-                                            onClick = {()=>handleNavigate(item)}
+                                            onClick = {()=>handleNavigate("cho-canh",item)}
                                             key={index}>
                                                     Chó {item}
                                                 </DropdownBtn>
@@ -77,7 +77,7 @@ export function Dropdown({menuType,setHover}){
                             {
                                 Cat.map((item,index)=>{
                                         return (<DropdownBtn 
-                                            onClick = {()=>handleNavigate(item)}
+                                            onClick = {()=>handleNavigate("meo-canh",item)}
                                         key={index}>
                                                 Mèo {item}
                                             </DropdownBtn>

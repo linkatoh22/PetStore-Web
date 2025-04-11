@@ -1,42 +1,76 @@
 // import "../../styles/components/PageDirect.css"
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
 const PageDirectContainer = styled.div`
     display: flex;
     flex-direction: row;
-    gap:10px;
-    color:#667479;
+    gap:1rem;
     
-    font-size: 18px;
-    font-weight: 200px;
+    
+    font-size: 1.2rem;
+    
 
 `
 
-function PageDirect(){
+const PageDirectItem = styled.div`
+    font-weight:bold;
+    cursor:pointer;
+    &:hover{
+        color:var(--grey-800); 
+    }
+    &:active{
+        color:var(--blue-900);
+        
+    }
 
+`
+const ArrowSymbol = styled.div`
+    color:var(--grey-600);
+
+
+`
+function PageDirect({NavDirect}){
+    const navigate = useNavigate()
+    const handleNav= (url)=>{
+        navigate(url);
+
+
+    }
     return (
         <>
             <PageDirectContainer className="PageDirect-container">
-                <div className="PageDirect-btn">
-                    Home
-                </div>
 
-                <div className="arrow-symbol">
-                    &gt;
-                </div>
+                {
+
+                    NavDirect.map((item,index)=>{
+
+                        if(index!=NavDirect.length-1){
+                            return <>
+
+                                <PageDirectItem  
+                                    onClick={()=>handleNav(item.URL)}
+                                >
+                                    {item.Nav}
+                                </PageDirectItem>
+
+                                <ArrowSymbol className="arrow-symbol">
+                                    &gt;
+                                </ArrowSymbol>
+                            </>
+                        }
+                        else{
+                            return <>
+
+                                <PageDirectItem 
+                                    onClick={()=>handleNav(item.URL)}
+                                >
+                                    {item.Nav}
+                                </PageDirectItem>
+                            </>
+                        }
+                    })
+                }
                 
-                <div className="PageDirect-btn">
-                    Dog
-                </div>
-
-                <div className="arrow-symbol">
-                    &gt;
-                </div>
-
-
-                <div className="PageDirect-btn">
-                    Small Dog
-                </div>
             </PageDirectContainer>
         </>
     )

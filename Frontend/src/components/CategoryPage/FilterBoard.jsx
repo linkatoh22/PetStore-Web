@@ -1,4 +1,5 @@
 // import "../styles/components/FilterBoard.css"
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const FilterContainer = styled.div`
@@ -63,9 +64,57 @@ const FBtnPrice = styled.button`
   }
 `;
 
+const Color = ["Trắng","Kem","Vàng","Nâu","Đỏ","Xám","Xanh","Đen","Tam Thể"]
+
+function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
+    const [MinPrice,setMinPrice] = useState()
+    const [MaxPrice,setMaxPrice] = useState()
+
+    const handleSetMinPrice = (price)=>{
+        setMinPrice(price)
+    }
+
+    const handleSetMaxPrice = (price)=>{
+        setMaxPrice(price)
+    }
 
 
-function FilterBoard(){
+    const ApplyPrice = ()=>{
+        if( (!MinPrice && !MaxPrice) || (MaxPrice<MinPrice) ){
+            alert("Bạn vui lòng nhập mức giá hợp lệ!")
+        }
+        else{
+            SetPrice({"minPrice":MinPrice,"maxPrice":MaxPrice})
+        }
+
+
+    }
+
+    const handleCheckGender = (gender)=>{
+        if(GenderChosen===gender)
+            SetGender("")
+        else
+            SetGender(gender)
+    }
+
+    const handleCheckColor = (color)=>{
+        SetColor(
+
+            (prev) =>{
+                if (prev.some((c) => c === color) )
+                {
+                    
+                    return prev.filter ((c)=>c !==color) 
+                }
+                else{
+                   
+                    return [...prev,color]
+                }
+            }
+
+        )
+
+    }
 
     return(
         <>
@@ -76,17 +125,27 @@ function FilterBoard(){
                 <FSection className="f-section">
 
                     <FSubTitle className="f-sub-title">
-                        Gender
+                        Giới Tính
                     </FSubTitle>
 
                     <FLabelCheckbox className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Male
+                        <input className="f-checkbox"
+                        onChange={()=>handleCheckGender("Đực")}
+                        type="checkbox" 
+                        checked={(GenderChosen === "Đực")}
+                        
+                        ></input>
+                        {" Đực"}
                     </FLabelCheckbox>
 
                     <FLabelCheckbox className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Female
+                        <input className="f-checkbox" 
+                        onChange={()=>handleCheckGender("Cái")}
+                        type="checkbox"
+                        checked={(GenderChosen === "Cái")}
+                        
+                        ></input>
+                        {" Cái"}
                     </FLabelCheckbox>
 
                     <FLineDivider className="f-Line-Divider"></FLineDivider>
@@ -94,38 +153,29 @@ function FilterBoard(){
                 </FSection>
 
                 
-
                 {/*COLOR */}
 
                 <FSection className="f-section">
+
+                    
                     <FSubTitle className="f-sub-title">
-                        Color
+                        Màu
                     </FSubTitle>
 
-                    <laFLabelCheckboxbel className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Red
-                    </laFLabelCheckboxbel>
 
-                    <FLabelCheckbox className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Apricot
-                    </FLabelCheckbox>
+                    {
 
-                    <FLabelCheckbox className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Black & White
-                    </FLabelCheckbox>
+                        Color.map((item)=>{
+                            return (
+                                <laFLabelCheckboxbel className="f-label-checkbox">
+                                    <input className="f-checkbox" type="checkbox" checked = { ColorChosen.some((c)=>c===item) } onChange={()=>handleCheckColor(item)}></input>
+                                    {" "+item}
+                                </laFLabelCheckboxbel>
+                            )
+                            
+                        })
+                    }
 
-                    <FLabelCheckbox className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Silver
-                    </FLabelCheckbox>
-
-                    <FLabelCheckbox className="f-label-checkbox">
-                        <input className="f-checkbox" type="checkbox"></input>
-                        Tan
-                    </FLabelCheckbox>
 
                     <FLineDivider className="f-Line-Divider"></FLineDivider>
 
@@ -135,16 +185,16 @@ function FilterBoard(){
 
                 <FSection className="f-section">
                     <FSubTitle className="f-sub-title">
-                        Price
+                        Giá
                     </FSubTitle>
 
                    <FPriceGroup className="f-price-group">
-                        <FPriceInput placeholder="Min" className="f-price-input" type="number"></FPriceInput>
-                        <FPriceInput placeholder="Max" className="f-price-input" type="number"></FPriceInput>
+                        <FPriceInput placeholder="Min" className="f-price-input" type="number" value={MinPrice} onChange = {(e)=>handleSetMinPrice(e.target.value)}></FPriceInput>
+                        <FPriceInput placeholder="Max" className="f-price-input" type="number" value={MaxPrice} onChange = {(e)=>handleSetMaxPrice(e.target.value)}></FPriceInput>
                    </FPriceGroup>
 
                    
-                        <FBtnPrice className="f-btn-price">
+                        <FBtnPrice className="f-btn-price" onClick={()=>ApplyPrice()}>
                                 Apply Price
                         </FBtnPrice>
                    
@@ -154,29 +204,29 @@ function FilterBoard(){
                 </FSection>
 
                 {/*BREED*/}
-                <FSection className="f-section">
+                {/* <FSection className="f-section">
                     <FSubTitle className="f-sub-title">
                         Breed
                     </FSubTitle>
 
                     <FLabelCheckbox className="f-label-checkbox">
                         <input className="f-checkbox" type="checkbox"></input>
-                        Small
+                            Small
                     </FLabelCheckbox>
 
                     <FLabelCheckbox className="f-label-checkbox">
                         <input className="f-checkbox" type="checkbox"></input>
-                        Medium
+                            Medium
                     </FLabelCheckbox>
 
                     <FLabelCheckbox className="f-label-checkbox">
                         <input className="f-checkbox" type="checkbox"></input>
-                        Large
+                            Large
                     </FLabelCheckbox>
 
                     <FLineDivider className="f-Line-Divider"></FLineDivider>
 
-                </FSection>
+                </FSection> */}
 
 
 
