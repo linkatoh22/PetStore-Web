@@ -80,11 +80,18 @@ function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
 
 
     const ApplyPrice = ()=>{
-        if( (!MinPrice && !MaxPrice) || (MaxPrice<MinPrice) ){
+        if( (!MinPrice && !MaxPrice) ){
             alert("Bạn vui lòng nhập mức giá hợp lệ!")
         }
         else{
-            SetPrice({"minPrice":MinPrice,"maxPrice":MaxPrice})
+            if((MinPrice&&MaxPrice)&& MaxPrice<MinPrice ){
+                alert("Bạn vui lòng nhập mức giá hợp lệ!")
+
+            }
+            else
+            {
+                SetPrice({"minPrice":MinPrice,"maxPrice":MaxPrice})
+            }
         }
 
 

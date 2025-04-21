@@ -14,12 +14,16 @@ const fetchPetSoldDesc = async (req,res,next)=>{
     }
 
 }
-
 const PetQuery = async (req,res,next) =>{
+    
+    
     try{
         var pets;
-        const {search,breed,age,color,maxPrice,minPrice,gender,sort} = req.query;
+        const {search,breed,age,color,maxPrice,minPrice,gender,sort,page,limit} = req.query;
+        const skip = (page-1)*limit;
+        var totalRecords= 0;
         let filter = {};
+
         if(breed)
             filter.breed = breed;
         if (age)
@@ -39,25 +43,28 @@ const PetQuery = async (req,res,next) =>{
             if(minPrice) filter.price.$gte=parseInt(minPrice)
             if(maxPrice) filter.price.$lte=parseInt(maxPrice)
         }
+
+        totalRecords = await Pet.find(filter).countDocuments();
         if(sort == 0||!sort){
             
-            pets = await Pet.find(filter);
+            pets = await Pet.find(filter).skip(skip).limit(limit);
+            
         }
         else if (sort==1){
             
-            pets = await Pet.find(filter).sort({sold:-1});
+            pets = await Pet.find(filter).sort({sold:-1}).skip(skip).limit(limit);
         }
         else if (sort == 2){
-            pets = await Pet.find(filter).sort({sold:1});
+            pets = await Pet.find(filter).sort({sold:1}).skip(skip).limit(limit);
         }
         else if (sort == 3){
-            pets = await Pet.find(filter).sort({price:-1});
+            pets = await Pet.find(filter).sort({price:-1}).skip(skip).limit(limit);
         }
         else if (sort ==4){
-            pets = await Pet.find(filter).sort({price:1});
+            pets = await Pet.find(filter).sort({price:1}).skip(skip).limit(limit);
         }
         
-        res.status(200).json(pets)
+        res.status(200).json({page:page,amount:limit,totalItems:totalRecords,pets})
 
     }
 

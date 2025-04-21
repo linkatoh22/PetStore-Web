@@ -6,6 +6,9 @@ import { FaRegUser,FaCartPlus } from "react-icons/fa";
 import styled from "styled-components";
 import { Dropdown } from './Dropdown';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 const MainMenuContainer = styled.div`
     width: 100%;
     background-color: #003459;
@@ -55,12 +58,7 @@ const SearchInputWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     padding: 10px;
-
-
 `
-
-
-
 
 const LogoImg = styled.img`
     width: 100px;
@@ -104,12 +102,12 @@ const StyledCartIcon = styled(FaCartPlus)`
   cursor: pointer;
   width: 50px;
   height: 30px;
-  color: #003459; /* thường hoạt động */
+  color: var(--main-blue); /* thường hoạt động */
   fill: currentColor; /* đảm bảo màu sắc áp dụng từ color */
   transition: color 0.15s;
 
   &:hover {
-    color: #01528b;
+    color: var(--main-blue);
   }
 `
 
@@ -130,6 +128,7 @@ function MainMenu() {
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);
     const [isHoverProduct,setIsHoverProduct] = useState(false);
+    const navigate = useNavigate()
     const handleHoverIn = (menu) =>{
         if(menu==="Dog")
             setIsHoverDog(true)
@@ -149,19 +148,28 @@ function MainMenu() {
             setIsHoverProduct(false)
     }
 
+    const handleNavHome = ()=>{
+        
+            navigate("/")
+
+        
+    }
+
     return (
       <>
         <MainMenuContainer>
             <MainMenuItem>
 
-            <div className='logo-menu'>
+            <div className='logo-menu' style={{cursor:"pointer"}} onClick={()=>handleNavHome()}>
                 <LogoImg src={logo} width="115px" height="40px"/>
             </div>
 
             <ButtonMenu>
-                <TitleBtnMenu>
+                <TitleBtnMenu 
+                    onClick={()=>handleNavHome()}
+                >
                     Trang chủ 
-                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}}/>
+                    
                 </TitleBtnMenu>
 
                 <TitleBtnMenu 
@@ -171,8 +179,7 @@ function MainMenu() {
 
 
                     Chó cảnh
-                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}} 
-                     />
+                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}} />
 
                     { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
                          />:<></>  }

@@ -22,7 +22,7 @@ function App() {
 
           <Route path="/category/meo-canh/:breed" element={<CategoryPage type={"meo-canh"}/>}/>
 
-          <Route path="/category/phu-kien" element={<CategoryPage type={"phu-kien"}/>}/>
+          <Route path="/category/phu-kien/:ProductCategory/:ProductSubCategory" element={<CategoryPage type={"phu-kien"}/>}/>
 
           <Route path="/category/search" element={<CategoryPage type={"search"}/>}/>
 

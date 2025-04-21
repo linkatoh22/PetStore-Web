@@ -1,4 +1,3 @@
-// import "../../styles/components/PageDirect.css"
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 const PageDirectContainer = styled.div`
@@ -6,15 +5,13 @@ const PageDirectContainer = styled.div`
     flex-direction: row;
     gap:1rem;
     
-    
     font-size: 1.2rem;
-    
-
 `
 
 const PageDirectItem = styled.div`
     font-weight:bold;
     cursor:pointer;
+    color:var(--main-blue);
     &:hover{
         color:var(--grey-800); 
     }

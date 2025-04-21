@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import {useNavigate} from 'react-router-dom'
-
+import { IoIosArrowForward } from "react-icons/io";
+import { DropdownProduct } from "./DropdownProduct";
 const Dog = ["Beagle","Boston Terrier","Corgi","Poodle","Husky","Chihuahua","Pug","Golden Retriever","Labrador","Phốc Sóc","Samoyed","Shiba Inu"];
 
 const Cat =["Anh Lông Dài","Anh Lông Ngắn","Ba Tư","Himalaya","Munchkin","Ragdoll","Scottish Fold"];
+
+
 
 const DropdownContainer = styled.div`
     padding:1rem;
@@ -11,7 +14,7 @@ const DropdownContainer = styled.div`
     width:650px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    background-color: rgb(3, 74, 126);;
+    background-color: rgb(3, 74, 126);
     color:white;
     position: absolute;
     column-gap: 0.5rem ;
@@ -36,6 +39,8 @@ const DropdownBtn = styled.div`
     
 
 `
+
+
 export function Dropdown({menuType,setHover}){
     
     const navigate  = useNavigate();
@@ -93,8 +98,7 @@ export function Dropdown({menuType,setHover}){
             
             </>
             : 
-            <></>
-            
+            <DropdownProduct></DropdownProduct>
             }
          </>                  
 

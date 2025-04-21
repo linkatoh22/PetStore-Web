@@ -8,7 +8,7 @@ import KnowledgeCard from "../components/Card/KnowledgedCard.jsx";
 import Footer from "../components/Footer";
 import BackgroundMenu from "../components/Homepage/BackgroundMenu.jsx";
 import {useState,useEffect} from 'react';
-import { PetFetch } from '../services/homepageAPI';
+import { PetFetch,ProductFetch } from '../services/homepageAPI.js';
 import styled from 'styled-components';
 
 import MainMenu from "../components/MainMenu.jsx";
@@ -18,7 +18,7 @@ const PetsHomepageContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap:10px;
+    gap:1rem;
     padding-bottom: 2rem;
     z-index:1;
 `
@@ -79,22 +79,22 @@ const DescriptionSubMenu = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    top:60px;
-    right:110px;
+    top:30%;
+    right:5%;
 
 `
 
 const Header1SubMenu = styled.div`
     text-align: right;
     color: #002A48;
-    font-size: 70px;
+    font-size: 4rem;
     font-weight: bold;
 `
 
 const Header2SubMenu = styled.div`
     text-align: right;
     color: #002A48;
-    font-size: 50px;
+    font-size: 3rem;
     font-weight: 550;
 `
 
@@ -102,7 +102,7 @@ const ParagraphSubMenu = styled.div`
     text-align: right;
     width: 400px;
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 1.2rem;
 
 `
 
@@ -125,9 +125,9 @@ const SubBlueButton = styled.button`
     background-color:  #003459;
     color: white;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: bold;
     border:none;
-    font-family: Roboto;
+    
     border-radius: 100px;
     padding: 14px 15px;
     transition: background-color 0.15s;
@@ -168,27 +168,19 @@ const KnowledgeCardContainer = styled.div`
 
 function Homepage(){
     const [PetData,setPetData] = useState([])
+    const [ProductData,setProductData] = useState([])
     useEffect(()=>{
         const fetchData = async () =>{
             const Pet = await PetFetch();
-            
+            const Product = await ProductFetch();
             await setPetData(Pet);
-            
-            console.log('Data nhan dc: ',Pet);
-            
+            await setProductData(Product);
         }
 
 
         fetchData();
-
-
     },[]);
 
-    useEffect(()=>{
-        console.log("TEST: " , PetData)
-
-
-    },[PetData]);
     return(
         
         <>
@@ -205,7 +197,7 @@ function Homepage(){
                         fontWeight: "500",
                         fontSize: "18px"}}>
 
-                    What's new?</div>
+                    Có gì hot?</div>
 
                 <HomepageTitleContainer div className="homepage-title-container">
 
@@ -216,8 +208,8 @@ function Homepage(){
                             fontWeight: "bold",
 
                         }}
-                    >Take A Look At Some Of Our Pets</div>
-                    <HomepageTitleBtn>View More</HomepageTitleBtn>
+                    >Best-seller của store tụi mình  </div>
+                    <HomepageTitleBtn>Xem thêm</HomepageTitleBtn>
 
                 </HomepageTitleContainer>
 
@@ -230,11 +222,8 @@ function Homepage(){
                             item =>
                                     <PetsCard 
                                         key={item._id}
-                                        petImg = {item.image[0]}
-                                        petName={item.name}
-                                        petGender={item.gender}
-                                        petAge={item.age}
-                                        petPrice={item.price}
+                                        Item = {item}
+                                        type="Pet"
                                     /> 
                         )
                     )
@@ -250,18 +239,18 @@ function Homepage(){
                     <PicPets src={Bgr}></PicPets>
                      
                     <DescriptionSubMenu>
-                        <Header1SubMenu>One More Friend</Header1SubMenu>
+                        <Header1SubMenu>Một người bạn mới</Header1SubMenu>
 
-                            <Header2SubMenu>Thousands More Fun!</Header2SubMenu>
+                            <Header2SubMenu>Thêm vạn niềm vui!</Header2SubMenu>
 
-                            <ParagraphSubMenu>Having a pet meas you have more joy, a happy person who will always be with you to have fun. We have 200+ different pets that can meet your needs!</ParagraphSubMenu>
+                            <ParagraphSubMenu>DCAT Store là nơi cung cấp đa dạng loại thú cưng và các phụ kiện mà bạn thỏa thích lựa chọn</ParagraphSubMenu>
 
 
                             <div  style={{display: "flex",gap: "20px"}}>
 
-                                <SubTransparentBlueButton> View Intro</SubTransparentBlueButton>
+                                <SubTransparentBlueButton> Mèo cảnh</SubTransparentBlueButton>
 
-                                <SubBlueButton> Explore Now</SubBlueButton>
+                                <SubBlueButton>Chó cảnh</SubBlueButton>
 
                             </div>
 
@@ -283,35 +272,42 @@ function Homepage(){
                     fontWeight: "500",
                     fontSize: "18px"
                     
-                }}>Hard to choose product for your pets?</div>
+                }}>Khó khăn trong việc chọn lựa sản phẩm phù hợp với các boss?</div>
 
-                <div className="homepage-title-container">
+                <HomepageTitleContainer>
                     <div 
-style={{
+                        style={{
                             color:"#002A48",
                             fontSize: "25px",
                             fontWeight: "bold"
                         }}
                         className="homepage-title-2-pets">
-                    Our Products
+                    Sản phẩm của tụi mình
                     
                     </div>
 
                     <HomepageTitleBtn>View More</HomepageTitleBtn>
-                </div>
+                </HomepageTitleContainer>
 
 
 
                 <CardContainer>
-                        <ProductsCard/>
-                        <ProductsCard/>
-                        <ProductsCard/>
-                        <ProductsCard/>
-
-                        <ProductsCard/>
-                        <ProductsCard/>
-                        <ProductsCard/>
-                        <ProductsCard/>
+                    {
+                        ProductData.length >0?
+                        (
+                            ProductData.map(
+                                item =>
+                                        <PetsCard 
+                                            key={item._id}
+                                            Item = {item}
+                                            type="Product"
+                                        /> 
+                            )
+                        )
+                        :
+                        (<h1> NO DATA</h1>)
+                    } 
+                        
                 </CardContainer>
 
 
@@ -340,49 +336,14 @@ style={{
 
                 
 
-                <BgrImg>
-                    <PicPets src={HoldhandPic} className="pic-pets"></PicPets>
-                     
-                    <DescriptionSubMenuHoldHand>
-
-                        <div style={{color: "#002A48",
-                            fontSize: "70px",
-                            fontWeight: "bold",}} 
-
-                            className="header1-sub-menu-hold-hand">Adoption</div>
-
-                            <div 
-                            style={{color: "#002A48",
-                                fontSize: "50px",
-                                fontWeight: "550"}}
-                            className="header2-sub-menu-hold-hand">We need help. so do they.</div>
-
-
-                            <ParagraphSubMenuHoldHand>Adopt a pet and give it a home,<br/> it will be love you back unconditionally.</ParagraphSubMenuHoldHand>
-
-                            <div className="btn-group-sub-menu-hold-hand"
-                            style={{display: "flex",gap: "20px"}}>
-                            
-                                <SubTransparentBlueButton > View Intro</SubTransparentBlueButton>
-
-
-                                <SubBlueButton className="sub-blue-button"> Explore Now</SubBlueButton>
-
-                                
-                            </div>
-
-
-                    </DescriptionSubMenuHoldHand>
-                    
-
-                </BgrImg>
+                
 
             
 
 
 
             
-                <div className="homepage-title-1-pets"
+                {/* <div className="homepage-title-1-pets"
                     style={
                         {
                             textAlign: "left",
@@ -409,7 +370,7 @@ style={{
                     <KnowledgeCard/>
                     <KnowledgeCard/>
                     <KnowledgeCard/>
-                </KnowledgeCardContainer>
+                </KnowledgeCardContainer> */}
 
 
 

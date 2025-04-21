@@ -46,26 +46,44 @@ const PetPrice = styled.div`
 `
 
 
-function PetsCard({petImg, petName, petGender,petAge,petPrice} ){
+function PetsCard({Item,type} ){
     
     return(
         <>
             <CardContainer>
-                <PetImage src= {petImg ? petImg : petImage}  ></PetImage>
+            <PetImage src= {Item.image[0] ? Item.image[0] : petImage}  ></PetImage>
+                {type=="Pet"?
+                        <InfoContainer>
+                            <PetName>
+                                {Item.name ? Item.name : "Chưa cập nhập"}
+                            </PetName>
+
+                            <PetInfo>
+                                Giới Tính: {Item.gender? Item.gender : "Female"} - Tuổi: {Item.age ?Item.age : "02 months"}
+                            </PetInfo>
+
+                            <PetPrice>
+                                {Item.price ? Item.price +" VND" : "Chưa cập nhập"}
+                            </PetPrice>
+                        </InfoContainer>
+                :
+                <>
+                    <InfoContainer>
+                            <PetName>
+                                {Item.name ? Item.name : "Chưa cập nhập"}
+                            </PetName>
+
+                            <PetInfo>
+                                Thương hiệu: {Item.brand? Item.brand : "Chưa cập nhập"} 
+                                {/* - Tuổi: {Item.age ?Item.age : "02 months"} */}
+                            </PetInfo>
+
+                            <PetPrice>
+                                {Item.minPrice ? Item.minPrice +" VND" : "Chưa cập nhập"}
+                            </PetPrice>
+                    </InfoContainer>
                 
-                <InfoContainer>
-                    <PetName>
-                        {petName ? petName : "MO231-Pomerian White"}
-                    </PetName>
-
-                    <PetInfo>
-                        Gender: {petGender? petGender : "Female"} - Age: {petAge ?petAge : "02 months"}
-                    </PetInfo>
-
-                    <PetPrice>
-                        {petPrice ? petPrice +" VND" : "6.900.000 VND"}
-                    </PetPrice>
-                </InfoContainer>
+                </>}
 
             </CardContainer>
         </>
