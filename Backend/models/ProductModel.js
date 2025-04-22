@@ -51,17 +51,17 @@ const ProductSchema = mongoose.Schema({
     category:{
         type:String,
         enum:[
-            "Đồ dùng & đồ chơi & phụ kiện",
+            "Đồ dùng & Đồ chơi & Phụ kiện",
             "Vệ sinh & Chăm sóc",
-            "Thuốc và thực phẩm chức năng",
-            "Thức ăn và thực phẩm dinh dưỡng",
-            "Chuồng, nhà , balo, quây, đệm"
+            "Thuốc & Thực phẩm chức năng",
+            "Thức ăn & Thực phẩm dinh dưỡng",
+            "Chuồng & Nhà & Balo & Quây & Đệm"
         ]
     },
     subcategory:{
         type:String,
         enum:[
-            "Bình nước& Bát ăn & Lược Chải"
+            "Bình nước & Bát ăn & Lược Chải"
             ,"Quần áo"
             ,"Vòng cổ & Dây Dắt & Phụ Kiện"
             ,"Đồ chơi"
@@ -70,11 +70,11 @@ const ProductSchema = mongoose.Schema({
             ,"Thực Phẩm Chức Năng"
             ,"Thuốc Thú Y và thiết bị y Tế"
             ,"Thức ăn Hạt"
-            ,"Pate - Nước Sốt"
+            ,"Pate & Nước Sốt"
             ,"Bánh thưởng & Xương Gặm"
             ,"Balo & Túi Vận Chuyển"
             ,"Chuồng & Nhà & Chậu Cát"
-            ,"Đệm & Nệm - Ổ nằm"
+            ,"Đệm & Nệm & Ổ nằm"
         ]
     }
 },{timepstamps:true})

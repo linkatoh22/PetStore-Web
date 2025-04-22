@@ -9,7 +9,7 @@ const {sendOTPVerificationEmail} = require("./authOTPControllers");
 
 const signUp = async (req, res,next)=>{
     try{
-        console.log(process.env.USER, " ",process.env.PASS )
+        
         const {username,email,password,gender} = req.body;
 
         if(!username || !email || !password || !gender){
@@ -97,7 +97,6 @@ const logIn = async (req, res,next)=>{
         next(error);
     }
 }
-
 
 const logOut = async(req,res,next) =>{
     try{

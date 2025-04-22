@@ -15,14 +15,12 @@ const fetchPetSoldDesc = async (req,res,next)=>{
 
 }
 const PetQuery = async (req,res,next) =>{
-    
-    
     try{
-        var pets;
+        let filter = {};
+        var pets=[];
         const {search,breed,age,color,maxPrice,minPrice,gender,sort,page,limit} = req.query;
         const skip = (page-1)*limit;
         var totalRecords= 0;
-        let filter = {};
 
         if(breed)
             filter.breed = breed;
@@ -60,7 +58,7 @@ const PetQuery = async (req,res,next) =>{
         else if (sort == 3){
             pets = await Pet.find(filter).sort({price:-1}).skip(skip).limit(limit);
         }
-        else if (sort ==4){
+        else if (sort == 4){
             pets = await Pet.find(filter).sort({price:1}).skip(skip).limit(limit);
         }
         
@@ -70,10 +68,64 @@ const PetQuery = async (req,res,next) =>{
 
     catch(error)
     {
+        console.error("Error in ProductSearch:", error);
         next(error);
         
     }
-
-
 }
-module.exports = {fetchPetSoldDesc,PetQuery}
+
+
+const SearchPet = async (req,res,next) =>{
+    try{
+        
+        var query={}
+        var pets=[]
+        
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const keyword = req.query.keyword || '';
+        const sort = parseInt(req.query.sort);
+        const species = req.query.species ||'Chó';
+        const skip = (page-1)*limit;
+        
+        if(keyword){
+            query.$text = {$search:keyword};
+        }
+        if(species){
+            query.species = species
+        }
+
+        const totalRecords = await Pet.find(query).countDocuments();
+        
+        if(sort == 0||!sort)
+        {
+            pets = await Pet.find(query).skip(skip).limit(limit);
+        }
+        else if (sort == 1){
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({sold:-1});
+        }
+        else if (sort == 2){
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({sold:1});
+        }
+        else if (sort == 3){
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({price:-1});
+        }
+        else if (sort == 4){
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({price:1});
+        }
+        return res.status(200).json({
+            page:page,
+            amount:limit,
+            totalItems:totalRecords,
+            pets
+        })
+
+    }
+    catch(error){
+        
+        next(error);
+    }
+}
+
+module.exports = {fetchPetSoldDesc,PetQuery,SearchPet}

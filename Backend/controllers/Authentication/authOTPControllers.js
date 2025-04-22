@@ -8,13 +8,13 @@ const {generateToken} = require("../../utils/TokenFunc")
 
 const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
     try{
-        const otp =  `${Math.floor(1000 + Math.random() * 9000)}`; //random otp
+        const otp =  `${Math.floor(1000 + Math.random() * 9000)}`; 
         const mailOptions ={
 
             from: process.env.USER,
             to:email,
             subject: "Verify your email",
-            html:`<p>Chào! Bạn vừa sử dụng email này để đăng ký website của chúng tôi đây là mã OTP xác thực của bạn:</p>\
+            html:`<p>Chào! Bạn vừa sử dụng email này để đăng ký website của chúng mình đây là mã OTP xác thực của bạn:</p>\
             <h1>${otp}</h1>
             <p>OTP này sẽ hết hạn trong 5 phút</p>`
         }
