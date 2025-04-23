@@ -1,23 +1,29 @@
-const User = require("../../models/userModel");
-const passport = require("passport");
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { generateAccessToken,generateRefreshToken } = require("../../utils/TokenFunc");
+const User = require("../../models/userModel")
+const googleCallback = async (req,res,next) =>{
 
-// passport.use(new GoogleStrategy({
-//     clientID:process.env.GOOGLE_CLIENT_ID,
-//     clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-//     callbackURL:process.env.GOOGLE_CALLBACK_URL 
-// },
-//     async (accessToken,refreshToken,profile,done) =>{
-//         let user = await User.findOne({googleId:profile.id});
-//         if(!user){
-//             user = await User.create(
-//                 {
-//                     googleId:pro
-//                 }
-//             )
-//         }
+    try{
+        
+        const user = req.user;
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+        await User.updateOne({_id:user._id},{refreshToken});
 
-//         return done(null,user);
-//     }
-    
-// ))
+        res.cookie("refreshTojen",refreshToken,{
+            httpOnly:true,
+            secure:true,
+            sameSite:"Strict",
+            maxAge:7 * 24 * 60 * 60 * 1000,
+        })
+
+        res.status(200).json({
+            accessToken,
+            refreshToken,
+            message:"Google login successfully"
+        })
+    }   
+    catch(error){
+        next(error);
+    }
+}
+module.exports = {googleCallback};
