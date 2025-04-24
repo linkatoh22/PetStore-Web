@@ -52,7 +52,10 @@ const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
 const verifyOTP  = async (req,res,next)=>{
 
     try{
+        console.log("RAN HERE VERIFY")
         let {userId,otp} = req.body; //lay id va otp ng dung
+        console.log("userid ",userId);
+        console.log("otp ",otp);
         if(!userId||!otp){
             res.status(400)
             throw Error("Empty otp details are not allowed"); //empty

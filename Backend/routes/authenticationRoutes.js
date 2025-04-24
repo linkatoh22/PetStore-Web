@@ -9,7 +9,12 @@ const passport = require("passport");
 require('../config/google.js')
 
 //LOG IN AND SIGN UP GOOGLE
-router.get('/google',passport.authenticate('google',{scope:['profile','email']}))
+
+router.get('/google',
+    passport.authenticate('google',{
+        scope:['profile','email']
+    })
+);
 
 router.get(
     '/google/callback',
@@ -26,7 +31,7 @@ router.route("/login").post(logIn);
 router.route("/logout").post(logOut);
 
 
-
+///OTP
 router.route("/verifyOTP").post(verifyOTP);
 router.route("/resendOTP").post(resendOTP);
 module.exports = router;

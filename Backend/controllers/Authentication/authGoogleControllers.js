@@ -9,7 +9,7 @@ const googleCallback = async (req,res,next) =>{
         const refreshToken = generateRefreshToken(user);
         await User.updateOne({_id:user._id},{refreshToken});
 
-        res.cookie("refreshTojen",refreshToken,{
+        res.cookie("refreshToken",refreshToken,{
             httpOnly:true,
             secure:true,
             sameSite:"Strict",

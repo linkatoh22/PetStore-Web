@@ -14,20 +14,22 @@ const userSchema = mongoose.Schema({
 
     password:{
         type:String,
-        required:[true,"Please add the password"]
+        required:function() {
+            // chỉ required nếu không dùng Google (tức verified = false hoặc có flag khác)
+            return !this.isGoogleUser; 
+        },
     },
 
     gender:{
 
         type:String,
-        enum:['Nu','Nam','Khac'],
-        default:'Khac'
+        enum:['Nữ','Nam','Khác'],
+        default:'Khác'
     },
 
     phoneNumber:[{
         type: String,
-        match: [/^\d{10,11}$/, "Số điện thoại phải có 10 hoặc 11 chữ số"],
-        unique: true
+        match: [/^\d{10,11}$/, "Số điện thoại phải có 10 hoặc 11 chữ số"]
     }],
 
     address:[
@@ -62,6 +64,11 @@ const userSchema = mongoose.Schema({
     refreshToken:{
 
         type:String
+    },
+    isGoogleUser:{
+        type:Boolean,
+        required:[true,"Please type of the user"],
+        default:false
     }
     
     }

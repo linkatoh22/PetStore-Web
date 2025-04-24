@@ -11,20 +11,20 @@ const signUp = async (req, res,next)=>{
     try{
         
         const {username,email,password,gender} = req.body;
-
+        
         if(!username || !email || !password || !gender){
             res.status(400);
             throw new Error("All fields are mandatory!");
             
         }
-
+        
         var userAvailable = await User.findOne({email:email});  
         
         if(userAvailable && userAvailable.verified == true){
             res.status(400);
             throw new Error("User already registed!");
         }
-
+        
         const hashedPassword = await bcrypt.hash(password,10);
         
         if(!userAvailable){
@@ -36,17 +36,20 @@ const signUp = async (req, res,next)=>{
                     email,
                     password:hashedPassword,
                     gender,
-                    role:"customer"
+                    role:"customer",
+                    isGoogleUser:false
                 }
             )
             
             userAvailable = user;
         }
-        
+       
+        console.log("HERE")
         await sendOTPVerificationEmail(userAvailable,res);
         
     }
     catch (error){
+        
         next(error);
     }
 
@@ -82,7 +85,6 @@ const logIn = async (req, res,next)=>{
 
         await User.updateOne({_id:user._id},  {refreshToken:refreshToken });
         res.cookie("refreshToken",refreshToken,{
-
             httpOnly:true,
             secure:true,
             sameSite:"Strict",
@@ -114,7 +116,7 @@ const logOut = async(req,res,next) =>{
             res.status(400)
             throw new Error("Invalid Refresh Token");
         }
-
+        
         await User.updateOne({refreshToken:refreshToken},{$unset:{refreshToken:refreshToken}})
         
         res.clearCookie("refreshCookie",{httpOnly:true,secure:true});
