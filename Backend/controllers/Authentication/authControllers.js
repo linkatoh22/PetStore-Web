@@ -9,7 +9,9 @@ const {sendOTPVerificationEmail} = require("./authOTPControllers");
 
 const signUp = async (req, res,next)=>{
     try{
-        
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("signUp: ", fullUrl);
+
         const {username,email,password,gender} = req.body;
         
         if(!username || !email || !password || !gender){
@@ -44,7 +46,7 @@ const signUp = async (req, res,next)=>{
             userAvailable = user;
         }
        
-        console.log("HERE")
+        
         await sendOTPVerificationEmail(userAvailable,res);
         
     }
@@ -59,7 +61,10 @@ const signUp = async (req, res,next)=>{
 
 const logIn = async (req, res,next)=>{
     try{
-        
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("logIn: ", fullUrl);
+
+
         const {email,password} = req.body;
         const user = await User.findOne({email:email});
         
@@ -91,7 +96,16 @@ const logIn = async (req, res,next)=>{
             maxAge:7*24*60*60*1000
         })
 
-        return res.status(200).json({accessToken:accessToken,refreshToken:refreshToken,message:"Login Successfully"});
+        return res.status(200).json({
+            message:"Login Successfully",
+            status:"Sucessfully",
+            code:200,
+            token:{
+                accessToken,
+                refreshToken
+            }
+        
+        });
         
 
     }
@@ -102,7 +116,6 @@ const logIn = async (req, res,next)=>{
 
 const logOut = async(req,res,next) =>{
     try{
-        //MỞ TAB HEADER: KEY cookies VALUE: refreshToken = {refreshToken}
         const refreshToken = req.cookies.refreshToken;
         
         if(!refreshToken){
@@ -120,7 +133,12 @@ const logOut = async(req,res,next) =>{
         await User.updateOne({refreshToken:refreshToken},{$unset:{refreshToken:refreshToken}})
         
         res.clearCookie("refreshCookie",{httpOnly:true,secure:true});
-        return res.status(200).json({message:"Log Out Successfully"});
+        return res.status(200).json({
+            message:"Log Out Successfully",
+            
+            status:"Sucessfully",
+            code:200,
+        });
 
     }   
     catch(error){

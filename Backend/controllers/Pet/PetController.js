@@ -4,9 +4,17 @@ const Pet = require("../../models/PetModel")
 const fetchPetSoldDesc = async (req,res,next)=>{
 
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("fetchPetSoldDesc: ", fullUrl);
+
+
         const pets = await Pet.find().sort({sold:-1}).limit(8);
         // console.log(pets);
-        return res.status(200).json(pets);  
+        return res.status(200).json({
+            status:"Successfully",
+            code:200,
+            message:"Successfully query Pet most sold",
+            pets});  
     }
     catch(error){
 
@@ -16,6 +24,9 @@ const fetchPetSoldDesc = async (req,res,next)=>{
 }
 const PetQuery = async (req,res,next) =>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("PetQuery: ", fullUrl);
+
         let filter = {};
         var pets=[];
         const {search,breed,age,color,maxPrice,minPrice,gender,sort,page,limit} = req.query;
@@ -62,7 +73,13 @@ const PetQuery = async (req,res,next) =>{
             pets = await Pet.find(filter).sort({price:1}).skip(skip).limit(limit);
         }
         
-        res.status(200).json({page:page,amount:limit,totalItems:totalRecords,pets})
+        res.status(200).json({
+            status:"Successfully",
+            code:200,
+            message:"Successfully query Pet",
+            page:page,
+            amount:limit,
+            totalItems:totalRecords,pets})
 
     }
 
@@ -77,6 +94,8 @@ const PetQuery = async (req,res,next) =>{
 
 const SearchPet = async (req,res,next) =>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("SearchPet: ", fullUrl);
         
         var query={}
         var pets=[]
@@ -115,6 +134,9 @@ const SearchPet = async (req,res,next) =>{
             pets = await Pet.find(query).skip(skip).limit(limit).sort({price:1});
         }
         return res.status(200).json({
+            status:"Successfully",
+            code:200,
+            message:"Successfully Search Pet",
             page:page,
             amount:limit,
             totalItems:totalRecords,

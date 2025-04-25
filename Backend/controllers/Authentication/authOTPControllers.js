@@ -8,6 +8,9 @@ const {generateToken} = require("../../utils/TokenFunc")
 
 const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("sendOTPVerificationEmail: ", fullUrl);
+
         const otp =  `${Math.floor(1000 + Math.random() * 9000)}`; 
         const mailOptions ={
 
@@ -31,7 +34,8 @@ const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
         await transporter.sendMail(mailOptions); //gui mail
         res.json({
 
-            status:"PENDING",
+            status:"Successfully",
+            code:200,
             message:"Verification otp email sent",
             data:{
                 userid:_id,
@@ -50,6 +54,8 @@ const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
 }
 
 const verifyOTP  = async (req,res,next)=>{
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log("verifyOTP: ", fullUrl);
 
     try{
         console.log("RAN HERE VERIFY")
@@ -97,7 +103,8 @@ const verifyOTP  = async (req,res,next)=>{
                         await UserOTPVerification.deleteMany({userId})
                         
                         return res.status(200).json({
-                            
+                            status:"Successfully",
+                            code:200,
                             message:"User email verified successfully"
                         })
 
@@ -116,6 +123,8 @@ const verifyOTP  = async (req,res,next)=>{
 }
 //resend OTP
 const resendOTP = async (req,res,next) =>{
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log("resendOTP: ", fullUrl);
 
     try{
         let{userId,email}  = req.body;

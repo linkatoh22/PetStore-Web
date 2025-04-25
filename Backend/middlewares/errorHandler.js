@@ -8,29 +8,36 @@ const errorHandler = (err,req,res,next)=>{
 
         case constant.VALIDATION_ERROR:
             res.json({
+                status:"FAILED",
                 title:"Validation Failed",
+                code:statusCode,
+                
                 message:err.message,
                 stackTrace:err.stack
             });
             break;
             case constant.NOT_FOUND:
-                res.json({title:"Not Found",
+                res.json({
+                status:"FAILED",
+                title:"Not Found",
                 message:err.message,
                 stackTrace:err.stack});
-                
+                break;
             case constant.UNAUTHORIZED:
-                    res.json({title:"UNAUTHORIZED",
+                    res.json({status:"FAILED",title:"UNAUTHORIZED",
                     message:err.message,
                     stackTrace:err.stack});
-                    
+                    break;
             case constant.FORBIDDEN:
-                        res.json({title:"FORBIDDEN",
+                        res.json({status:"FAILED",title:"FORBIDDEN",
                         message:err.message,
-                        stackTrace:err.stack});   
+                        stackTrace:err.stack}); 
+                        break;  
             case constant.SERVER_ERROR:
-                            res.json({title:"SERVER ERROR",
+                            res.json({status:"FAILED",title:"SERVER ERROR",
                             message:err.message,
-                            stackTrace:err.stack});             
+                            stackTrace:err.stack});     
+                            break;        
             default:
                 console.log("No error, All good!");
                 break;

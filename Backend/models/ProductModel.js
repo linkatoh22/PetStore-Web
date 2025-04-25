@@ -2,14 +2,12 @@ const mongoose = require("mongoose")
 
 const variantsSchema = new mongoose.Schema({
     weight: String,
-    color:String,
-    size:String,
-
-    price:Number,
-    stock:Number,
-    sold:Number
-
-},{_id:false})
+    color: String,
+    size: String,
+    price: Number,
+    stock: Number,
+    sold: Number
+}, { _id: true })
 
 const ProductSchema = mongoose.Schema({
     name:{
@@ -38,8 +36,8 @@ const ProductSchema = mongoose.Schema({
         type: [String]
     },
     species:{
-        type:String,
-        enum:["Chó","Mèo"],
+        type:[String],
+        // enum:["Chó","Mèo"],
         require:[true,"Please add the Product's species"]
     },
     features:{

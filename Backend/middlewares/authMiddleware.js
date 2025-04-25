@@ -1,27 +1,28 @@
 const jwt = require("jsonwebtoken");
 
-const AuthMiddleware = (req,res)=>{
+const AuthMiddleware = (req,res,next)=>{
 
     try{
-        const token = req.header("Authorization")?.split(" ")[1];
+        const authHeader = req.headers['authorization'];
+
+        const token = authHeader && authHeader.split(' ')[1];
+
         if(!token){
-            res.status(400)
-            throw Error("No token found");
+            res.status(404)
+            throw Error("Access token missing or invalid");
         }
-        const decoded = jwt.verify(token,process.env.JWT_KEY);
-        req.user = decoded;
-        next();
+        jwt.verify(token,process.env.ACCESS_TOKEN_KEY,(err,decoded)=>{
+            if(err){
+                res.status(401)
+                throw Error("Token is not valid or expired")
+            }
+            req.user = decoded;
+            next();
+        })
+        
     }
     catch(error){
-
-        if(error.name == "TokenExpiredError"){
-            
-            return res.status(401).json({ message: "Token expired" });
-            
-        }
-        return res.status(401).json({ message: "Unauthorized: Invalid token" });
-        
-        
+        next(error);
     }
 }
 

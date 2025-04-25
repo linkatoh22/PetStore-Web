@@ -6,6 +6,8 @@ const {verifyOTP,resendOTP} = require("../controllers/Authentication/authOTPCont
 
 const {googleCallback} = require("../controllers/Authentication/authGoogleControllers.js")
 const passport = require("passport");
+
+const {handleAccessToken} = require("../controllers/Authentication/tokenControllers.js")
 require('../config/google.js')
 
 //LOG IN AND SIGN UP GOOGLE
@@ -22,16 +24,20 @@ router.get(
     
 )
 
+//RESET REFRESH TOKEN
+
+router.route("/reset-access-token").post(handleAccessToken)
+
 
 //LOGIN AND SIGN UP NORMAL
-router.route("/signup").post(signUp);
+router.route("/sign-up").post(signUp);
 
-router.route("/login").post(logIn);
+router.route("/log-in").post(logIn);
 
-router.route("/logout").post(logOut);
+router.route("/log-out").post(logOut);
 
 
 ///OTP
-router.route("/verifyOTP").post(verifyOTP);
-router.route("/resendOTP").post(resendOTP);
+router.route("/verify-OTP").post(verifyOTP);
+router.route("/resend-OTP").post(resendOTP);
 module.exports = router;

@@ -1,6 +1,9 @@
 const Product = require("../../models/ProductModel")
 
 const ProductTopSold = async (req,res,next) =>{
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log("ProductTopSold: ", fullUrl);
+        
     try{
         const products = await Product.aggregate(
             [
@@ -28,7 +31,13 @@ const ProductTopSold = async (req,res,next) =>{
                 }
             ]
         )
-        return res.status(200).json(products);
+        return res.status(200).json({
+            status:"Successfully",
+            code:200,
+            message:"Successfully query Product most sold",
+            products
+        
+        });
     }
     catch(error){
         next(error);
@@ -37,6 +46,9 @@ const ProductTopSold = async (req,res,next) =>{
 }
 const ProductQuery = async (req,res,next) =>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("ProductQuery: ", fullUrl);
+
         let filter = {};
         let products = [];
         const {subcategory,category,sort,page,limit} = req.query;
@@ -147,7 +159,14 @@ const ProductQuery = async (req,res,next) =>{
             
         }
 
-    return res.status(200).json({page:page,amount:limit,totalItems:totalRecords,products});
+    return res.status(200).json({
+        status:"Successfully",
+        code:200,
+        message:"Successfully query Product",
+        page:page,
+        amount:limit,
+        totalItems:totalRecords,
+        products});
     }
     catch(error){
         next(error);
@@ -157,6 +176,10 @@ const ProductQuery = async (req,res,next) =>{
 
 const ProductSearch = async (req, res, next) => {
     try {
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("ProductSearch: ", fullUrl);
+
+
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const keyword = req.query.keyword || '';
@@ -200,6 +223,9 @@ const ProductSearch = async (req, res, next) => {
 
         
         res.status(200).json({
+            status:"Successfully",
+            code:200,
+            message:"Successfully Searching Product",
             page,
             amount: limit,
             totalRecords: totalRecords,
@@ -215,6 +241,10 @@ const ProductSearch = async (req, res, next) => {
 
 const SearchAll = async (req,res,next) =>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("SearchAll: ", fullUrl);
+
+
         console.log("HERE")
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
@@ -279,6 +309,9 @@ const SearchAll = async (req,res,next) =>{
         const paginatedResults = results.slice(skip, skip + limit);
 
         res.status(200).json({
+            status:"Successfully",
+            code:200,
+            message:"Successfully Searching All",
             page:page,
             amount:limit,
             totalRecords:results.length,

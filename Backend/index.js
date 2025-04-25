@@ -17,6 +17,9 @@ app.use(cookieParser());
 app.use("/api/auth",require("./routes/authenticationRoutes"));
 app.use("/api/pet",require("./routes/PetRoutes"));
 app.use("/api/product",require("./routes/ProductRoutes"));
+app.use("/api/user",require("./routes/UserRoutes"))
+app.use("/api/cart",require("./routes/CartRoutes"))
+
 app.use(errorHandler);
 app.listen(PORT,()=>{
     console.log("Currently listening on port 3000.....");

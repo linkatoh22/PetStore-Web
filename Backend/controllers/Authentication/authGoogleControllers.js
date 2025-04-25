@@ -3,7 +3,9 @@ const User = require("../../models/userModel")
 const googleCallback = async (req,res,next) =>{
 
     try{
-        
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("googleCallback: ", fullUrl);
+
         const user = req.user;
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
@@ -17,9 +19,14 @@ const googleCallback = async (req,res,next) =>{
         })
 
         res.status(200).json({
-            accessToken,
-            refreshToken,
-            message:"Google login successfully"
+            message:"Google Login Successfully",
+            status:"Sucessfully",
+            code:200,
+            token:{
+                accessToken,
+                refreshToken
+            }
+            
         })
     }   
     catch(error){
