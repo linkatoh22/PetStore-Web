@@ -11,7 +11,7 @@ const fetchPetSoldDesc = async (req,res,next)=>{
         const pets = await Pet.find().sort({sold:-1}).limit(8);
         // console.log(pets);
         return res.status(200).json({
-            status:"Successfully",
+            status:"Success",
             code:200,
             message:"Successfully query Pet most sold",
             pets});  
@@ -73,8 +73,8 @@ const PetQuery = async (req,res,next) =>{
             pets = await Pet.find(filter).sort({price:1}).skip(skip).limit(limit);
         }
         
-        res.status(200).json({
-            status:"Successfully",
+        return res.status(200).json({
+            status:"Success",
             code:200,
             message:"Successfully query Pet",
             page:page,
@@ -134,7 +134,7 @@ const SearchPet = async (req,res,next) =>{
             pets = await Pet.find(query).skip(skip).limit(limit).sort({price:1});
         }
         return res.status(200).json({
-            status:"Successfully",
+            status:"Success",
             code:200,
             message:"Successfully Search Pet",
             page:page,

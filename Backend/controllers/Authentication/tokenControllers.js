@@ -25,7 +25,7 @@ const handleAccessToken = async (req,res,next) =>{
         const accessToken = generateAccessToken(user);
         return res.status(200).json({
             message:"Generate Access Token Successfully",
-            status:"Sucessfully",
+            status:"Success",
             code:200,
             accessToken:accessToken
         })

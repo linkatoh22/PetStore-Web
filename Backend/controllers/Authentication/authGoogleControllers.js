@@ -18,9 +18,9 @@ const googleCallback = async (req,res,next) =>{
             maxAge:7 * 24 * 60 * 60 * 1000,
         })
 
-        res.status(200).json({
+        return res.status(200).json({
             message:"Google Login Successfully",
-            status:"Sucessfully",
+            status:"Success",
             code:200,
             token:{
                 accessToken,

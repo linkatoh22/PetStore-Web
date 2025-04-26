@@ -98,7 +98,7 @@ const logIn = async (req, res,next)=>{
 
         return res.status(200).json({
             message:"Login Successfully",
-            status:"Sucessfully",
+            status:"Success",
             code:200,
             token:{
                 accessToken,
@@ -136,7 +136,7 @@ const logOut = async(req,res,next) =>{
         return res.status(200).json({
             message:"Log Out Successfully",
             
-            status:"Sucessfully",
+            status:"Success",
             code:200,
         });
 

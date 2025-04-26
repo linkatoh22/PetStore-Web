@@ -1,10 +1,17 @@
 const mongoose = require("mongoose")
 
 const CartItemSchema = new mongoose.Schema({
-    product:{
+    itemType:{
+        type:String,
+        enum:['Product','Pet'],
+        required:true
+    },
+    item:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Product",
-        require:true
+        refPath:function(){
+            return this.itemType;
+        },
+        required:true
     },
     quantity:{
         type:Number,
@@ -13,11 +20,15 @@ const CartItemSchema = new mongoose.Schema({
     },
     variant:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Product.variants",
-        required:true
+        ref:"Product.variants"
     },
     price:{
         type:Number,
+        required:true
+    },
+    status:{
+        type:String,
+        enum:["Đủ hàng","Không đủ hàng","Hết hàng"],
         required:true
     }
 })
@@ -29,9 +40,10 @@ const CartSchema = new mongoose.Schema({
         required:true
     },
     items:[CartItemSchema],
-    totalAmount:{
+    totalPrice:{
         type:Number,
         required:true,
+        default:0,
         min:0
     }
 },{timestamps:true})

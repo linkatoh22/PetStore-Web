@@ -32,7 +32,7 @@ const ProductTopSold = async (req,res,next) =>{
             ]
         )
         return res.status(200).json({
-            status:"Successfully",
+            status:"Success",
             code:200,
             message:"Successfully query Product most sold",
             products
@@ -160,7 +160,7 @@ const ProductQuery = async (req,res,next) =>{
         }
 
     return res.status(200).json({
-        status:"Successfully",
+        status:"Success",
         code:200,
         message:"Successfully query Product",
         page:page,
@@ -222,8 +222,8 @@ const ProductSearch = async (req, res, next) => {
         
 
         
-        res.status(200).json({
-            status:"Successfully",
+        return res.status(200).json({
+            status:"Success",
             code:200,
             message:"Successfully Searching Product",
             page,
@@ -308,8 +308,8 @@ const SearchAll = async (req,res,next) =>{
 
         const paginatedResults = results.slice(skip, skip + limit);
 
-        res.status(200).json({
-            status:"Successfully",
+        return res.status(200).json({
+            status:"Success",
             code:200,
             message:"Successfully Searching All",
             page:page,

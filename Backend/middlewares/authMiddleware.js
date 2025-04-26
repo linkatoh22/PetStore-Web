@@ -16,7 +16,9 @@ const AuthMiddleware = (req,res,next)=>{
                 res.status(401)
                 throw Error("Token is not valid or expired")
             }
+
             req.user = decoded;
+            console.log("req.user: ", req.user)
             next();
         })
         

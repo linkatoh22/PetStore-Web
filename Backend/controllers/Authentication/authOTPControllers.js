@@ -32,9 +32,9 @@ const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
 
         await newUserOTPVerification.save(); //save lai
         await transporter.sendMail(mailOptions); //gui mail
-        res.json({
+        return res.status(200).json({
 
-            status:"Successfully",
+            status:"Success",
             code:200,
             message:"Verification otp email sent",
             data:{
@@ -100,10 +100,11 @@ const verifyOTP  = async (req,res,next)=>{
                     else{
                         //success
                         await User.updateOne({_id:userId}, {verified:true} );
+                        
                         await UserOTPVerification.deleteMany({userId})
                         
                         return res.status(200).json({
-                            status:"Successfully",
+                            status:"Success",
                             code:200,
                             message:"User email verified successfully"
                         })
