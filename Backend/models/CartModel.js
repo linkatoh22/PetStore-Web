@@ -31,7 +31,7 @@ const CartItemSchema = new mongoose.Schema({
         enum:["Đủ hàng","Không đủ hàng","Hết hàng"],
         required:true
     }
-})
+}, { timestamps: true })
 
 const CartSchema = new mongoose.Schema({
     user:{
