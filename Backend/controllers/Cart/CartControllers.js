@@ -186,8 +186,103 @@ const GetCart = async(req,res,next)=>{
 
 const EditCart = async(req,res,next)=>{
     try{
+        
+        const {add,minus,amount,cartItem} = req.query;
+        const userId = req.user._id;
+        if(!userId){
+            res.status(400);
+            throw Error("User not found")
+        }
+        if(!cartItem){
+            res.status(400);
+            throw Error("Cart Item's id is required")
+        }
 
-        res.status(200).json({
+        const cart = await Cart.findOne({user:userId});
+        
+        if(!add && !minus && !amount){
+            res.status(400);
+            throw Error("Choose one operation (add, minus, amount) must be specified");
+        }
+
+        if(!cart){
+            res.status(404);
+            throw Error("Cart not found")
+        }
+        
+        const itemIndex = cart.items.findIndex(item => item._id.toString() === cartItem);
+        
+        if(itemIndex === -1){
+            res.status(404);
+            throw Error("Cart item not found")
+        }
+        const product = await Product.findOne({_id:cart.items[itemIndex].item});
+        
+        
+        const variant = product.variants.id(cart.items[itemIndex].variant);
+        console.log('variant',variant)
+        if(itemIndex===-1){
+            res.status(404);
+            throw Error("Cart item not found");
+        }
+
+        if(add){
+
+            const cartItemAdd = cart.items[itemIndex].quantity+1;
+            
+            if(cartItemAdd>variant.stock){
+                res.status(400)
+                throw Error("Don't have enough stock to add to cart")
+            }
+            
+            cart.items[itemIndex].quantity+=1;
+            cart.totalPrice+=cart.items[itemIndex].price;
+
+
+        }
+        else if(minus){
+            //Trừ bth => Check xem có đổi state đc ko
+            //Trừ 1 thành 0 => Delete item luôn
+            if(cart.items[itemIndex].quantity > 1){
+                const cartItemMinus = cart.items[itemIndex].quantity-1;
+
+                cart.items[itemIndex].quantity-=1;
+                cart.totalPrice-=cart.items[itemIndex].price;
+
+                if(cartItemMinus<=variant.stock && (cart.items[itemIndex].status !="Đủ hàng")){
+                    
+                    cart.items[itemIndex].status ="Đủ hàng"
+                    
+                }
+                
+
+            }
+            else if(cart.items[itemIndex].quantity == 1){
+
+                cart.items.splice(itemIndex,1);
+                cart.totalPrice = cart.items.reduce((total,item)=>total + (item.price * item.quantity),0);
+            }
+            
+        }
+        else if(amount){
+            if(variant.stock<amount){
+                res.status(400)
+                throw Error("Amount edit greater than variant stock");
+            }
+
+            cart.items[itemIndex].quantity=amount;
+            cart.totalPrice = cart.items.reduce((total,item)=>total + (item.price * item.quantity),0);
+            if((cart.items[itemIndex].status !="Đủ hàng")){
+                cart.items[itemIndex].status ="Đủ hàng"
+            }
+
+            
+            
+        }
+        
+        await cart.save();
+        
+        return res.status(200).json({
             message:"Get Detail Cart Successfully",
             status:"Success",
             code:200,
@@ -201,14 +296,38 @@ const EditCart = async(req,res,next)=>{
 
 const DeleteItem= async (req,res,next)=>{
     try{
-        // const cartItemId = req.params;
-        // const userId = req.user._id;
-        // if(!cartItemId){
-        //     res.status(400)
-        //     throw Error("Cart Item Id is required");
-        // }
-        // const cart = await Cart.findOne({user:userId});
-        res.status(200).json({
+        
+        const {cartItemId} = req.query;
+        const userId = req.user._id;
+        if(!userId){
+            res.status(404);
+            throw Error("User not found")
+        }
+        if(!cartItemId){
+            res.status(400)
+            throw Error("Cart Item Id is required");
+        }
+        const cart = await Cart.findOne({user:userId});
+        
+        if(!cart){
+            res.status(404);
+            throw Error("Cart not found")
+        }
+
+        const itemIndex = cart.items.findIndex(item=> item._id.toString() === cartItemId);
+
+        if(itemIndex === -1){
+            res.status(404);
+            throw Error("Cart item not found")
+        }
+
+        cart.items.splice(itemIndex,1);
+        
+        cart.totalPrice = cart.items.reduce((total,item)=>total + (item.price * item.quantity),0);
+        
+        await cart.save();
+
+        return res.status(200).json({
             message:"Delete item in Cart Successfully",
             status:"Success",
             code:200,
@@ -219,4 +338,4 @@ const DeleteItem= async (req,res,next)=>{
         next(error)
     }
 }
-module.exports = {AddToCart,GetCart,EditCart}
+module.exports = {AddToCart,GetCart,EditCart,DeleteItem}
