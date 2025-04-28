@@ -9,6 +9,7 @@ const AddToCart = async (req,res,next) =>{
         console.log("AddToCart: ", fullUrl);
         let price=0;
         const {itemType,item,variant,quantity} = req.body;
+        const userId = req.user._id;
         
         
         if(!itemType||!item||!quantity) {
@@ -21,22 +22,49 @@ const AddToCart = async (req,res,next) =>{
             throw Error(`Invalid itemType: ${itemType}`)
         }
 
-        if(itemType==='Product'){
+        let cart = await Cart.findOne({user:userId});
+        
+        if(!cart){
+            cart = new Cart({user:userId,items:[],totalPrice:0})
+        }
 
-            const foundProduct = await Product.findById(item);
-            
-            if(!foundProduct){
-                res.status(404);
-                throw Error("Product not found")
-            }
+        if(itemType==='Product'){
 
             if(!variant){
                 res.status(400);
                 throw Error("Variant is required for product")
             }
 
+            const foundProduct = await Product.findById(item);
+            if(!foundProduct){
+                res.status(404);
+                throw Error("Product not found")
+            }
             const foundVariants = foundProduct.variants.id(variant)
 
+            
+            const itemIndex= cart.items.findIndex(CartItem=>(CartItem.variant.toString() === variant && CartItem.item.toString() === item))
+            
+            if(itemIndex!=-1){
+
+                const updateQuantity = cart.items[itemIndex].quantity + quantity;
+                if(updateQuantity>foundVariants.stock){
+                    res.status(400);
+                    throw Error("Quantity exceed stock")
+                }
+                cart.items[itemIndex].quantity = updateQuantity;
+                await cart.save();
+                return res.status(200).json({
+                    message:"Updated Quantity Successfully",
+                    status:"Success",
+                    code:200,
+                    cart
+                })
+
+            }
+            
+
+            
             if(quantity<1){
                 
                 res.status(400)
@@ -59,13 +87,9 @@ const AddToCart = async (req,res,next) =>{
                 throw Error("Pet not found");
             }
         }
-        const userId = req.user._id;
         
-        let cart = await Cart.findOne({user:userId});
         
-        if(!cart){
-            cart = new Cart({user:userId,items:[],totalPrice:0})
-        }
+        
 
         cart.items.push({
             itemType,
