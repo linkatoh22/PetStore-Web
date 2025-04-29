@@ -73,7 +73,7 @@ const PetSchema = mongoose.Schema({
     sold:
     { 
         type: Number, 
-        required: [true,"Please add the Pet's sold quantity"], 
+        // required: [true,"Please add the Pet's sold quantity"], 
         min: 0 
     }
 },
