@@ -79,4 +79,9 @@ const ProductSchema = mongoose.Schema({
     }
 },{timepstamps:true})
 
+ProductSchema.index(
+    { name: 'text', category:'text',subcategory:'text',description: 'text', brand: 'text',weight:'text',color:'text',size:'text' },
+    { weights: { name: 10,subcategory:9,category:8, description: 2, brand: 7,weight:1,color:1,size:1 } }
+  );
+
 module.exports = mongoose.model("Product",ProductSchema);

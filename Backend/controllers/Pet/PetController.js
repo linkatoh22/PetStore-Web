@@ -7,8 +7,9 @@ const fetchPetSoldDesc = async (req,res,next)=>{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("fetchPetSoldDesc: ", fullUrl);
 
+        const query = { quantity: {$gt:0}    };
 
-        const pets = await Pet.find().sort({sold:-1}).limit(8);
+        const pets = await Pet.find(query).sort({sold:-1}).limit(8);
         // console.log(pets);
         return res.status(200).json({
             status:"Success",
@@ -22,6 +23,7 @@ const fetchPetSoldDesc = async (req,res,next)=>{
     }
 
 }
+
 const PetQuery = async (req,res,next) =>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
@@ -32,7 +34,8 @@ const PetQuery = async (req,res,next) =>{
         const {search,breed,age,color,maxPrice,minPrice,gender,sort,page,limit} = req.query;
         const skip = (page-1)*limit;
         var totalRecords= 0;
-
+        
+        filter.quantity = { $gt: 0 };
         if(breed)
             filter.breed = breed;
         if (age)
@@ -73,12 +76,15 @@ const PetQuery = async (req,res,next) =>{
             pets = await Pet.find(filter).sort({price:1}).skip(skip).limit(limit);
         }
         
+        const totalPage = Math.ceil(totalRecords / limit);
+
         return res.status(200).json({
             status:"Success",
             code:200,
             message:"Successfully query Pet",
             page:page,
             amount:limit,
+            totalPage:totalPage,
             totalItems:totalRecords,pets})
 
     }
@@ -108,6 +114,8 @@ const SearchPet = async (req,res,next) =>{
         const species = req.query.species ||'Chó';
         const skip = (page-1)*limit;
         
+        query.quantity = { $gt: 0 };
+
         if(keyword){
             query.$text = {$search:keyword};
         }
@@ -133,6 +141,9 @@ const SearchPet = async (req,res,next) =>{
         else if (sort == 4){
             pets = await Pet.find(query).skip(skip).limit(limit).sort({price:1});
         }
+
+        const totalPage = Math.ceil(totalRecords / limit);
+
         return res.status(200).json({
             status:"Success",
             code:200,
@@ -140,6 +151,7 @@ const SearchPet = async (req,res,next) =>{
             page:page,
             amount:limit,
             totalItems:totalRecords,
+            totalPage:totalPage,
             pets
         })
 

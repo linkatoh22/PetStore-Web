@@ -82,4 +82,9 @@ const PetSchema = mongoose.Schema({
     }
 );
 
+
+PetSchema.index(
+    { name: 'text', color:'text',breed:'text',color: 'text' },
+    { weights: { name: 10,breed:9,color:8} }
+  );
 module.exports = mongoose.model("Pet",PetSchema);

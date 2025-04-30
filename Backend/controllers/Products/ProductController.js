@@ -17,7 +17,15 @@ const ProductTopSold = async (req,res,next) =>{
                         },
                         maxPrice:{
                             $max:"$variants.price"
+                        },
+                        totalStock:{
+                            $sum:"$variants.stock"
                         }
+                    }
+                },
+                {
+                    $match: {
+                        totalStock: { $gt: 0 }
                     }
                 },
                 {
@@ -51,114 +59,97 @@ const ProductQuery = async (req,res,next) =>{
 
         let filter = {};
         let products = [];
-        const {subcategory,category,sort,page,limit} = req.query;
+        const {subcategory,category} = req.query;
+
+        const limit = parseInt(req.query.limit) || 10;
+        const page = parseInt(req.query.page) || 1;
+        const sort = parseInt(req.query.sort);
         const skip = (page-1)*limit;
+        
         var totalRecords = 0;
         
+
         if(subcategory) filter.subcategory = subcategory;
         if(category) filter.category = category;
 
         totalRecords = await Product.find(filter).countDocuments();
         
-        if(sort==0||!sort)
-            products = await Product.find(filter).skip(skip).limit(limit);
-        else if(sort == 1){
-            products = await Product.aggregate(
-                [
-                    {
-                        $addFields:{
-                            totalSold:{
-                                $sum:"$variants.sold"
-                            }
-                        }
-                    },
-                    {
+        const pipeline = [{ $match: filter }]
+        
+        if(sort == 1){
 
-                        $sort:{
-                            totalSold:-1
-                        }
-                    },
-                    {
-                        $skip:skip
-                    },
-                    {
-                        $limit:limit
-                    }
-                ]
+            pipeline.push(
+            { 
+                $addFields:{  
+                    totalSold:{ $sum:"$variants.sold"},
+                    totalStock:{ $sum:"$variants.stock" }
+                }
+            },
+                {   $sort:{     totalSold:-1    }}
+                ,
+                { $match: { totalStock: { $gt: 0 } } }
             )
+
+            
         }
         else if(sort==2){
-            products = await Product.aggregate(
-                [
-                    { $match: filter },
-                    {
-                        $addFields:{
-                            totalSold:{
-                                $sum:"$variants.sold"
-                            }
-                        }
-                    },
-                    {
-
-                        $sort:{
-                            totalSold:1
-                        }
-                    },
-                    {
-                        $skip:skip
-                    },
-                    {
-                        $limit:limit
+            pipeline.push(
+                { 
+                    $addFields:{  
+                        totalSold:{ $sum:"$variants.sold"},
+                        totalStock:{ $sum:"$variants.stock" }
                     }
-                ]
+                },
+                {   $sort:{     totalSold:1    }}
+                ,
+                {   $match: { totalStock: { $gt: 0 }  } }
             )
+
+            
         }
         else if(sort==3){
-            products = await Product.aggregate([
-                { $match: filter },
-                {
-                    $addFields:{
-                        minPrice:{
-                            $min:"$variants.price"
-                        }
-                    }
+
+            pipeline.push(
+                {   
+                    $addFields:
+                    {    
+                        minPrice:{  $min:"$variants.price"  },
+                        totalStock:{ $sum:"$variants.stock" }  
+                    }   
                 },
-                {
-                    $sort:{
-                        minPrice:-1
-                    }
-                },
-                {
-                    $skip:skip
-                },
-                {
-                    $limit:limit
-                }
-            ])
+                {   $sort:{ minPrice:-1 } }
+                ,
+                {   $match: { totalStock: { $gt: 0 }  } }
+            )
+
+            
         }
         else if (sort==4){
-            products = await Product.aggregate([
-                { $match: filter },
-                {
-                    $addFields:{
-                        minPrice:{$min:"$variants.price"}
-                    }
+
+            pipeline.push(
+                {   
+                    $addFields:
+                        {    
+                            minPrice:{  $min:"$variants.price"  },
+                            totalStock:{ $sum:"$variants.stock" } 
+                        } 
                 },
-                {
-                    $sort:{
-                        minPrice:1
-                    }
+                {   
+                    $sort:{ minPrice:1 } 
                 },
-                {
-                    $skip:skip
-                },
-                {
-                    $limit:limit
-                }
-            ])
+                {   $match: { totalStock: { $gt: 0 }  } }
+            )
+
             
         }
 
+
+        pipeline.push(  
+            { $skip:skip    },
+            {   $limit:limit    }
+        )
+        products = await Product.aggregate(pipeline);
+        const totalPage = Math.ceil(totalRecords / limit);
     return res.status(200).json({
         status:"Success",
         code:200,
@@ -166,6 +157,7 @@ const ProductQuery = async (req,res,next) =>{
         page:page,
         amount:limit,
         totalItems:totalRecords,
+        totalPage:totalPage,
         products});
     }
     catch(error){
@@ -194,6 +186,19 @@ const ProductSearch = async (req, res, next) => {
             }
         ];
 
+        pipeline.push({
+            $addFields: {
+                totalStock: { $sum: "$variants.stock" }
+            }
+        });
+
+        // Filter products with stock > 0
+        pipeline.push({
+            $match: {
+                totalStock: { $gt: 0 }
+            }
+        });
+
         if (sort === 1) {
             pipeline.push(
                 { $addFields: { totalSold: { $sum: "$variants.sold" } } },
@@ -219,7 +224,7 @@ const ProductSearch = async (req, res, next) => {
         totalRecords= products.length;
         pipeline.push({ $skip: skip }, { $limit: limit });
         products = await Product.aggregate(pipeline);
-        
+        const totalPage = Math.ceil(totalRecords / limit);
 
         
         return res.status(200).json({
@@ -229,6 +234,7 @@ const ProductSearch = async (req, res, next) => {
             page,
             amount: limit,
             totalRecords: totalRecords,
+            totalPage,
             products
         });
 
@@ -243,7 +249,7 @@ const SearchAll = async (req,res,next) =>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("SearchAll: ", fullUrl);
-
+        const query={};
 
         
         const page = parseInt(req.query.page) || 1;
@@ -251,6 +257,9 @@ const SearchAll = async (req,res,next) =>{
         const keyword = req.query.keyword || '';
         const sort = parseInt(req.query.sort);
         const skip = (page - 1) * limit;
+
+        query.quantity = { $gt: 0 };
+        query.$text = {$search:keyword};
 
         const pipeline = [
             {
@@ -265,7 +274,20 @@ const SearchAll = async (req,res,next) =>{
             
             }
          ];
+        
+         pipeline.push({
+            $addFields: {
+                totalStock: { $sum: "$variants.stock" }
+            }
+        });
 
+        // Filter products with stock > 0
+        pipeline.push({
+            $match: {
+                totalStock: { $gt: 0 }
+            }
+        });
+        
         //Tìm Product
         const productsDocs = await Product.aggregate(pipeline);
         const products = productsDocs.map((p)=>({
@@ -280,7 +302,7 @@ const SearchAll = async (req,res,next) =>{
         }))
 
         //Tìm Pet
-        const petsDocs = await Product.find({   $text : {$search:keyword}   })
+        const petsDocs = await Product.find(query);
         const pets = petsDocs.map((p)=>({
             id:p._id,
             name:p.name,
@@ -307,7 +329,7 @@ const SearchAll = async (req,res,next) =>{
         }
 
         const paginatedResults = results.slice(skip, skip + limit);
-
+        const totalPage = Math.ceil(results.length / limit);
         return res.status(200).json({
             status:"Success",
             code:200,
@@ -315,6 +337,7 @@ const SearchAll = async (req,res,next) =>{
             page:page,
             amount:limit,
             totalRecords:results.length,
+            totalPage,
             results:paginatedResults
         })
     } 
