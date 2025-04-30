@@ -117,7 +117,7 @@ const logIn = async (req, res,next)=>{
 const logOut = async(req,res,next) =>{
     try{
         const refreshToken = req.cookies.refreshToken;
-        
+        console.log(refreshToken);
         if(!refreshToken){
             res.status(404)
             throw new Error("No refresh token found");
@@ -132,7 +132,8 @@ const logOut = async(req,res,next) =>{
         
         await User.updateOne({refreshToken:refreshToken},{$unset:{refreshToken:refreshToken}})
         
-        res.clearCookie("refreshCookie",{httpOnly:true,secure:true});
+        res.clearCookie("refreshToken", { httpOnly: true, secure: true, sameSite: 'None' });
+        
         return res.status(200).json({
             message:"Log Out Successfully",
             
