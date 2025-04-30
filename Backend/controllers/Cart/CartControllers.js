@@ -86,6 +86,7 @@ const AddToCart = async (req,res,next) =>{
                 res.status(404);
                 throw Error("Pet not found");
             }
+            price=foundPet.price;
         }
         
         
