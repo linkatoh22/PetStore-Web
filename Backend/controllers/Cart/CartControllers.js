@@ -119,11 +119,17 @@ const AddToCart = async (req,res,next) =>{
 
 const GetCart = async(req,res,next)=>{
     try{
-        
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("GetCart: ", fullUrl);
+
         const FindProductVariants = async (item,variant,products)=>{
             const product = products.find(product=>product.id.toString() === item.toString())
             const VariantFound = product.variants.id(variant);
             return VariantFound;
+        }
+
+        const FindPet = async (item,pets)=>{
+
         }
 
         const userId = req.user._id;
@@ -147,9 +153,17 @@ const GetCart = async(req,res,next)=>{
                 {variants:1}
             )
 
+            const pets = await Pet.find({_id:{$in:itemIds}})
+           
             for(const cartItem of cart.items){
-                
-                    const variantFound = await FindProductVariants(cartItem.item,cartItem.variant,products);
+                    var variantFound; //Variant is ITEM (PET or Product)  
+
+                    if(cartItem.itemType ==="Product"){
+                        variantFound = await FindProductVariants(cartItem.item,cartItem.variant,products);
+                    }
+                    else if(cartItem.itemType ==="Pet"){
+                        variantFound = await pets.find(pet=>pet.id.toString() === cartItem.item.toString())
+                    }
                     
                     if(variantFound.stock==0 && cartItem.status!=="Hết hàng"){
                         
@@ -204,14 +218,17 @@ const GetCart = async(req,res,next)=>{
 
     }
     catch(error){
-        console.log(error);
+        
         next(error)
     }
 }
 
 const EditCart = async(req,res,next)=>{
     try{
-        
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("EditCart: ", fullUrl);
+
+
         const {add,minus,amount,cartItem} = req.query;
         const userId = req.user._id;
         if(!userId){
@@ -245,7 +262,7 @@ const EditCart = async(req,res,next)=>{
         
         
         const variant = product.variants.id(cart.items[itemIndex].variant);
-        console.log('variant',variant)
+        
         if(itemIndex===-1){
             res.status(404);
             throw Error("Cart item not found");
@@ -321,6 +338,9 @@ const EditCart = async(req,res,next)=>{
 
 const DeleteItem= async (req,res,next)=>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("DeleteItem: ", fullUrl);
+        
         
         const {cartItemId} = req.query;
         const userId = req.user._id;

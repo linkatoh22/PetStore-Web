@@ -245,7 +245,7 @@ const SearchAll = async (req,res,next) =>{
         console.log("SearchAll: ", fullUrl);
 
 
-        console.log("HERE")
+        
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const keyword = req.query.keyword || '';
