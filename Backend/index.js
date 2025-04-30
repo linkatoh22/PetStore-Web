@@ -15,11 +15,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth",require("./routes/authenticationRoutes"));
-app.use("/api/pet",require("./routes/PetRoutes"));
-app.use("/api/product",require("./routes/ProductRoutes"));
-app.use("/api/user",require("./routes/UserRoutes"))
-app.use("/api/cart",require("./routes/CartRoutes"))
-app.use("/api/order",require("./routes/OrderRoutes"))
+app.use("/api/pet",require("./routes/petRoutes"));
+app.use("/api/product",require("./routes/productRoutes"));
+app.use("/api/user",require("./routes/userRoutes"))
+app.use("/api/cart",require("./routes/cartRoutes"))
+app.use("/api/order",require("./routes/orderRoutes"))
 
 // app.use("/api/order",require("./routes/OrderRoutes"))
 
