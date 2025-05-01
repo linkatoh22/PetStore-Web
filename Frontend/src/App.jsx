@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage'
 import RegistrationPage from './pages/RegistrationPage'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage.jsx'
-import Test from './pages/test.jsx'
+// import Test from './pages/Test.jsx'
 function App() {
   
   return (
@@ -31,7 +31,7 @@ function App() {
           <Route path="/signup" element={<RegistrationPage></RegistrationPage>}></Route>
           <Route path="/cart" element={<CartPage></CartPage>}></Route>
           <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
-          <Route path="/test" element={<Test></Test>}></Route>
+          {/* <Route path="/test" element={<Test></Test>}></Route> */}
         </Routes>
       </Router>
         
