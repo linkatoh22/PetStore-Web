@@ -199,7 +199,7 @@ function Homepage(){
 
                     Có gì hot?</div>
 
-                <HomepageTitleContainer div className="homepage-title-container">
+                <HomepageTitleContainer className="homepage-title-container">
 
                     <div className="homepage-title-2-pets"
                         style={{
@@ -293,7 +293,7 @@ function Homepage(){
 
                 <CardContainer>
                     {
-                        ProductData.length >0?
+                        ProductData.length>0?
                         (
                             ProductData.map(
                                 item =>

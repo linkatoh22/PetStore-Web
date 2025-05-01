@@ -92,7 +92,7 @@ const BlueButton = styled.button`
 `;
 const SlideShow =[Background,HoldHandPic,CategoryPic]
 function BackgroundMenu(){
-    const [slideShowIndex,setSlideShowIndex] = useState(2)
+    const [slideShowIndex,setSlideShowIndex] = useState(0)
     return (
 
         <>
