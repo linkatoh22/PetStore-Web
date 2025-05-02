@@ -8,11 +8,12 @@ import KnowledgeCard from "../components/Card/KnowledgedCard.jsx";
 import Footer from "../components/Footer";
 import BackgroundMenu from "../components/Homepage/BackgroundMenu.jsx";
 import {useState,useEffect} from 'react';
-import { PetFetch,ProductFetch } from '../services/homepageAPI.js';
+import { PetFetch,ProductFetch } from '../services/api/homepageAPI.js';
 import styled from 'styled-components';
 
 import MainMenu from "../components/MainMenu.jsx";
 
+import { PetFetchHook,ProductFetchHook } from "../services/hook/homepageHook.js";
 const PetsHomepageContainer = styled.div`
     margin-top: 20px;
     display: flex;
@@ -167,19 +168,29 @@ const KnowledgeCardContainer = styled.div`
 
 
 function Homepage(){
+
+    const { data: pet, isLoading: loadingUser, error: errorUser } = PetFetchHook()
+    const { data: product, isLoading: loadingPosts, error: errorPosts } = ProductFetchHook()
+
     const [PetData,setPetData] = useState([])
     const [ProductData,setProductData] = useState([])
+
     useEffect(()=>{
-        const fetchData = async () =>{
-            const Pet = await PetFetch();
-            const Product = await ProductFetch();
-            await setPetData(Pet);
-            await setProductData(Product);
+        // console.log('pet',pet)
+        if(pet){
+            setPetData(pet)
         }
+    },[pet]);
+
+    useEffect(()=>{
+        // console.log('product',product)
+        if(product){
+            setProductData(product)
+        }
+    },[product]);
 
 
-        fetchData();
-    },[]);
+    
 
     return(
         

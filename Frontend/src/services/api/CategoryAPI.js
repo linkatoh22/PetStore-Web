@@ -1,5 +1,5 @@
 import axios from "axios"
-const BASE_URL = "http://localhost:3000/api/pet/"
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const petQueryFetch =async(query) =>{
     try{
         const response = await axios.get(BASE_URL+`pet-query?${query}`);
@@ -13,7 +13,7 @@ export const petQueryFetch =async(query) =>{
     }
 }
 
-export const petQueryFetchFilter = async (gender,color,maxPrice,minPrice,sort,breed) =>{
+export const petQueryFetchFilter = async (gender,color,maxPrice,minPrice,sort,breed,page,limit) =>{
     try{
         var queryParams = {}; 
         if(gender !== "")
@@ -26,9 +26,15 @@ export const petQueryFetchFilter = async (gender,color,maxPrice,minPrice,sort,br
             queryParams.minPrice = minPrice
         if(sort)
             queryParams.sort = sort;
+        
         queryParams.breed=breed;
-        console.log("Filter NE",queryParams)
-        const response  = await axios.get(BASE_URL+`pet-query`,{params:queryParams})
+        queryParams.page=page;
+        queryParams.limit=limit;
+        
+        // console.log("Filter NE",queryParams)
+
+        // console.log(BASE_URL+`pet-query`,{params:queryParams})
+        const response  = await axios.get(BASE_URL+`/pet/pet-query`,{params:queryParams})
         console.log("KET QUA NE", response.data)
         return response.data;
     }

@@ -1,20 +1,20 @@
 import styled from "styled-components";
 import {useNavigate} from 'react-router-dom'
 import { IoIosArrowForward } from "react-icons/io";
-const ProductFoodDog = ["Thức ăn Hạt","Sữa Cho Bé Lớn Và Nhỏ","Pate - Nước Sốt","Bánh thưởng & Xương Gặm"]
-const ProductFoodCat = ["Thức ăn Hạt","Sữa Cho Bé Lớn Và Nhỏ","Pate - Nước Sốt","Bánh thưởng & Xương Gặm"]
+const ProductFoodDog = ["Thức ăn Hạt","Sữa Cho Bé Lớn Và Nhỏ","Pate & Nước Sốt","Bánh thưởng & Xương Gặm"]
+const ProductFoodCat = ["Thức ăn Hạt","Sữa Cho Bé Lớn Và Nhỏ","Pate & Nước Sốt","Bánh thưởng & Xương Gặm"]
 
-const ProductAccessoriesDog=["Quần áo","Đồ chơi","Vòng cổ & Dây Dắt & Phụ kiện","Bình nước & Bát ăn & Lược Chải"];
-const ProductAccessoriesCat=["Quần áo","Đồ chơi","Vòng cổ & Dây Dắt & Phụ kiện","Bình nước & Bát ăn & Lược Chải"];
+const ProductAccessoriesDog=["Quần áo","Đồ chơi","Vòng cổ & Dây Dắt & Rọ mỏm","Bình nước & Bát ăn & Lược Chải"];
+const ProductAccessoriesCat=["Quần áo","Đồ chơi","Vòng cổ & Dây Dắt & Phụ Kiện","Bình nước & Bát ăn & Lược Chải"];
 
 const ProductHygineCareDog=["Sữa Tắm & Khăn Tắm & Nước Hoa","Bỉm & Tã & Khay Vệ Sinh"];
 const ProductHygineCareCat=["Sữa Tắm & Khăn Tắm & Nước Hoa","Cát vệ sinh cho mèo"];
 
-const ProductCageDog=["Chuồng & Nhà & Chậu Cát","Balo & Túi Vận Chuyển","Đệm & Nệm - Ổ nằm"];
-const ProductCageCat=["Chuồng & Nhà & Chậu Cát","Balo & Túi Vận Chuyển","Đệm & Nệm - Ổ nằm"];
+const ProductCageDog=["Chuồng & Nhà & Chậu Cát","Balo & Túi Vận Chuyển","Đệm & Nệm & Ổ nằm"];
+const ProductCageCat=["Chuồng & Nhà & Chậu Cát","Balo & Túi Vận Chuyển","Đệm & Nệm & Ổ nằm"];
 
-const ProductMedicineDog=["Thuốc Thú Y và thiết bị y Tế","Thực Phẩm Chức Năng"];
-const ProductMedicineCat=["Thuốc Thú Y và thiết bị y Tế","Thực Phẩm Chức Năng"];
+const ProductMedicineDog=["Thuốc Thú Y & Thiết bị y Tế","Thực Phẩm Chức Năng"];
+const ProductMedicineCat=["Thuốc Thú Y & Thiết bị y Tế","Thực Phẩm Chức Năng"];
 const DropdownProductContainer  = styled.div`
     display:flex;
     width:1200px;
@@ -74,8 +74,13 @@ const DropdownProductCategoryBtn = styled.div`
 
 export function DropdownProduct(){
     const navigate = useNavigate();
-    const HandleNav = (category,subcategory)=>{
-        navigate(`/category/phu-kien/${category}/${subcategory}`)
+    const HandleNavDog = (category,subcategory)=>{
+        navigate(`/category/phu-kien/phu-kien-cua-cho/${category}/${subcategory}`)
+
+    }
+
+    const HandleNavCat = (category,subcategory)=>{
+        navigate(`/category/phu-kien/phu-kien-cua-meo/${category}/${subcategory}`)
 
     }
 
@@ -92,7 +97,7 @@ export function DropdownProduct(){
                                     { ProductFoodDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNav("Thức ăn và thực phẩm dinh dưỡng",item)}> 
+                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Thức ăn & Thực phẩm dinh dưỡng",item)}> 
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -106,7 +111,7 @@ export function DropdownProduct(){
                                     { ProductAccessoriesDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNav("Đồ dùng & đồ chơi & phụ kiện",item)}> 
+                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Đồ dùng & Đồ chơi & Phụ kiện",item)}> 
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -123,7 +128,7 @@ export function DropdownProduct(){
                                     { ProductHygineCareDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNav("Vệ sinh & Chăm sóc",item)}>
+                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Vệ sinh & Chăm sóc",item)}>
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -141,7 +146,7 @@ export function DropdownProduct(){
                                     { ProductCageDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNav("Chuồng, nhà , balo, quây, đệm",item)}>
+                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Chuồng & Nhà & Balo & Quây & Đệm",item)}>
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -156,7 +161,7 @@ export function DropdownProduct(){
 
                                         return (
                                             <DropdownProductCategoryBtn 
-                                            onClick={()=>HandleNav("Thuốc và thực phẩm chức năng",item)}
+                                            onClick={()=>HandleNavDog("Thuốc & Thực phẩm chức năng",item)}
                                             >
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
@@ -188,7 +193,7 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn 
-                                                onClick={()=>HandleNav("Thức ăn và thực phẩm dinh dưỡng",item)}
+                                                onClick={()=>HandleNavCat("Thức ăn & Thực phẩm dinh dưỡng",item)}
                                                 > 
                                                     <IoIosArrowForward /> {item}
                                                 </DropdownProductCategoryBtn>
@@ -205,7 +210,7 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn
-                                                onClick={()=>HandleNav("Đồ dùng & đồ chơi & phụ kiện",item)}
+                                                onClick={()=>HandleNavCat("Đồ dùng & Đồ chơi & Phụ kiện",item)}
                                                 
                                                 > 
                                                     <IoIosArrowForward /> {item}
@@ -226,7 +231,7 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn
-                                                onClick={()=>HandleNav("Vệ sinh & Chăm sóc",item)}>
+                                                onClick={()=>HandleNavCat("Vệ sinh & Chăm sóc",item)}>
                                                     <IoIosArrowForward /> {item}
                                                 </DropdownProductCategoryBtn>
                                             )
@@ -243,7 +248,7 @@ export function DropdownProduct(){
 
                                         return (
                                             <DropdownProductCategoryBtn
-                                            onClick={()=>HandleNav("Chuồng, nhà , balo, quây, đệm",item)}
+                                            onClick={()=>HandleNavCat("Chuồng & Nhà & Balo & Quây & Đệm",item)}
                                             > 
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
@@ -260,7 +265,7 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn
-                                                onClick={()=>HandleNav("Thuốc và thực phẩm chức năng",item)}
+                                                onClick={()=>HandleNavCat("Thuốc & Thực phẩm chức năng",item)}
                                                 > 
                                                     <IoIosArrowForward /> {item}
                                                 </DropdownProductCategoryBtn>

@@ -9,11 +9,14 @@ import LoginPage from './pages/LoginPage'
 import RegistrationPage from './pages/RegistrationPage'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage.jsx'
+import CategoryProductPage from './pages/CategoryProductPage.jsx'
+import CustomQueryClientProvider from './QueryClientProvider';
 // import Test from './pages/Test.jsx'
 function App() {
   
   return (
     <>
+    <CustomQueryClientProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Homepage/>}/>
@@ -22,9 +25,11 @@ function App() {
 
           <Route path="/category/meo-canh/:breed" element={<CategoryPage type={"meo-canh"}/>}/>
 
-          <Route path="/category/phu-kien/:ProductCategory/:ProductSubCategory" element={<CategoryPage type={"phu-kien"}/>}/>
+          <Route path="/category/phu-kien/phu-kien-cua-cho/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Chó"}/>}/>
 
-          <Route path="/category/search" element={<CategoryPage type={"search"}/>}/>
+          <Route path="/category/phu-kien/phu-kien-cua-meo/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Mèo"}/>}/>
+          
+          <Route path="/category/search" element={<CategoryProductPage type={"search"}/>}/>
 
           <Route path="/detail/:id" element={<ProductDetail/>}></Route>
           <Route path="/login" element={<LoginPage/>}></Route>
@@ -34,7 +39,7 @@ function App() {
           {/* <Route path="/test" element={<Test></Test>}></Route> */}
         </Routes>
       </Router>
-        
+      </CustomQueryClientProvider>
     </>
   )
 }

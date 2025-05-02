@@ -54,7 +54,7 @@ const PcCardContainer = styled.div`
 
 
 
-function PetCardBody({Pet,SetPet,Header,SetSort}){
+function PetCardBody({Pet,SetPet,Header,SetSort,Petlength,type}){
   
     const options =[
         {label: "Sắp xếp theo: Tất cả",value:0},
@@ -74,7 +74,7 @@ function PetCardBody({Pet,SetPet,Header,SetSort}){
                         </PcTitleName>
 
                         <PcTitleQuantity className="pc-title-quantity">
-                                {Pet.length} Kết quả
+                                {Petlength} Kết quả
                         </PcTitleQuantity>
                     </PcTitle>
 
@@ -104,11 +104,7 @@ function PetCardBody({Pet,SetPet,Header,SetSort}){
                                 Pet.map((item)=>{
                                   return (<PetsCard 
                                   key={item._id}
-                                  petImg = {item.image[0]}
-                                  petName={item.name}
-                                  petGender={item.gender}
-                                  petAge={item.age}
-                                  petPrice={item.price}></PetsCard>)
+                                  Item = {item} type={type}></PetsCard>)
 
                                 }
                               )

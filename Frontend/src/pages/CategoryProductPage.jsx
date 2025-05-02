@@ -9,8 +9,8 @@ import { useParams } from 'react-router-dom';
 import { useState,useEffect } from "react";
 import { petQueryFetch,petQueryFetchFilter } from "../services/api/CategoryAPI";
 
-import { usePetQueryFetch,usePetQueryFetchFilter } from "../services/hook/categoryHook";
 
+import { useProductQueryFetchFilter } from "../services/hook/categoryProductHook";
 const CategoryPageWrapper = styled.div`
   padding-block:1rem;
   display: flex;
@@ -36,72 +36,75 @@ const CategoryPageBody = styled.div`
 
 
 
-function CategoryPage({type}){
+function CategoryProductPage({type}){
     const [Pet,setPet] = useState([])
     const [NavDirect,setNavDirect] = useState([])
     const [header,setHeader] = useState("Sản Phẩm")
-    const { breed } = useParams();
-
-
-    const [Price,SetPrice] =useState([])
-    const [Gender,SetGender] = useState()
-    const [Color,SetColor] = useState([])
+    const { ProductCategory,ProductSubCategory } = useParams();
+    
     const [Sort,SetSort] = useState(0)
 
     const [Page,SetPage] = useState(1);
     const [Limit,SetLimit] = useState(16);
-    const [TotalPage,SetTotalPage] = useState(1);
+    // const [TotalPage,SetTotalPage] = useState(1);
 
-    const isValidPriceMax =  (Price.maxPrice != null)? true:false
-    const isValidPriceMin =  (Price.minPrice != null)? true:false
-    
-    const isValidGender = Gender !== undefined && Gender !== null && Gender !== "";
-    const isValidColor = Array.isArray(Color) && Color.length > 0;
 
-    const {data:filterPet = []} = usePetQueryFetchFilter({
-                  gender: isValidGender ? Gender:"",
-                  color: isValidColor ? Color:[],
-                  maxPrice:isValidPriceMax ? Price.maxPrice:"",
-                  minPrice: isValidPriceMin ? Price.minPrice:"",
+    const {data:filterProduct = []} = useProductQueryFetchFilter({
+                  subcategory: ProductSubCategory ??"",
+                  category: ProductCategory ??"",
                   sort: Sort,
-                  breed: breed,
+                  species:type,
                   page:Page,
-                  limit:Limit
+                  limit:Limit,
+                  
     })
 
-    const pets = filterPet?.pets ?? [];
-    const totalItems = filterPet?.totalItems ?? 0;
+    useEffect(()=>{
+      console.log(Sort)
+    },[Sort])
+
+    const products = filterProduct?.products ?? [];
+    const totalItems = filterProduct?.totalItems ?? 0;
+    const totalPage = filterProduct?.totalPage??0;
+
+
     useEffect(()=>
       {
-          const FetchPet = async ()=>{
-            const query = `breed=${breed}`
+          const ProductNav = async ()=>{
+            
 
-            setNavDirect(type==="cho-canh"? 
+            setNavDirect(type==="Chó"? 
               [
                 { "Nav" : "Trang chủ" , "URL" : "/"}
                 ,
-                { "Nav":"Chó cảnh", "URL":"/category/cho-canh" }
+                { "Nav":"Phụ kiện", "URL":"/category/phu-kien" }
                 ,
-                {  "Nav":`Chó ${breed}`, "URL":`/category/cho-canh/${breed}`}
+                { "Nav":"Phụ kiện của chó", "URL":"/category/phu-kien/phu-kien-cua-cho" }
+                ,
+                {  "Nav":`${ProductCategory}`, "URL":`/category/phu-kien/phu-kien-cua-cho${ProductCategory}`},
+                {  "Nav":`${ProductSubCategory}`, "URL":`/category/phu-kien/phu-kien-cua-cho${ProductCategory}/${ProductSubCategory}`}
               ]
               :
               [
                 { "Nav" : "Trang chủ" , "URL" : "/"}
                 ,
-                { "Nav":"Mèo cảnh", "URL":"/category/meo-canh" }
+                { "Nav":"Phụ kiện", "URL":"/category/phu-kien" }
                 ,
-                {  "Nav":`Mèo ${breed}`, "URL":`/category/meo-canh/${breed}`}
+                { "Nav":"Phụ kiện của mèo", "URL":"/category/phu-kien/phu-kien-cua-meo" }
+                ,
+                {  "Nav":`${ProductCategory}`, "URL":`/category/phu-kien/phu-kien-cua-meo/${ProductCategory}`},
+                {  "Nav":`${ProductSubCategory}`, "URL":`/category/phu-kien/phu-kien-cua-meo/${ProductCategory}/${ProductSubCategory}`}
               ]
           
           )
 
-            setHeader(type==="cho-canh"?`Chó ${breed}`:`Mèo ${breed}`)
+            setHeader(ProductSubCategory??ProductCategory)
 
           }
 
-          FetchPet();
+          ProductNav();
       }
-      ,[breed]);
+      ,[ProductCategory,ProductSubCategory]);
 
 
     return (
@@ -117,8 +120,8 @@ function CategoryPage({type}){
                     <PageDirect NavDirect={NavDirect}/>
 
                     <CategoryPageBody className="CategoryPage-Body">
-                        <FilterBoard GenderChosen={Gender} SetGender={SetGender} ColorChosen={Color} SetColor={SetColor} SetPrice={SetPrice} ></FilterBoard>
-                        <PetCardBody Pet={pets} SetPet={setPet} Header={header}SetSort={SetSort} Petlength={totalItems} type="Pet"></PetCardBody>
+                        {/* <FilterBoard GenderChosen={Gender} SetGender={SetGender} ColorChosen={Color} SetColor={SetColor} SetPrice={SetPrice} ></FilterBoard> */}
+                        <PetCardBody Pet={products} SetPet={setPet} Header={header}SetSort={SetSort} Petlength={totalItems} type="Product"></PetCardBody>
                     </CategoryPageBody>
 
                 </CategoryPageContainer>
@@ -131,4 +134,4 @@ function CategoryPage({type}){
 
 }
 
-export default CategoryPage;
+export default CategoryProductPage;

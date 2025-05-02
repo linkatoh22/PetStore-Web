@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import petImage from '../../assets/pets-card.png'
 import styled from 'styled-components';
 
@@ -48,38 +49,51 @@ const PetPrice = styled.div`
 
 function PetsCard({Item,type} ){
     
+    const imageSrc = Item?.image?.[0] || petImage;
+    const name = Item?.name || "Chưa cập nhật";
+    const gender = Item?.gender || "Không xác định";
+    const age = Item?.age || "Không xác định";
+    // const price = Item?.price ? `${Item.price} VND` : "Chưa cập nhật";
+    const brand = Item?.brand || "Chưa cập nhập";
+    const price = Item?.minPrice?? Item.price;
+        const formattedPrice = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(price);
+    
+
     return(
         <>
             <CardContainer>
-            <PetImage src= {Item.image[0] ? Item.image[0] : petImage}  ></PetImage>
+            <PetImage src= {imageSrc}  ></PetImage>
                 {type=="Pet"?
                         <InfoContainer>
                             <PetName>
-                                {Item.name ? Item.name : "Chưa cập nhập"}
+                                {name}
                             </PetName>
 
                             <PetInfo>
-                                Giới Tính: {Item.gender? Item.gender : "Female"} - Tuổi: {Item.age ?Item.age : "02 months"}
+                                Giới Tính: {gender} - Tuổi: {age}
                             </PetInfo>
 
                             <PetPrice>
-                                {Item.price ? Item.price +" VND" : "Chưa cập nhập"}
+                                {formattedPrice}
                             </PetPrice>
                         </InfoContainer>
                 :
                 <>
                     <InfoContainer>
                             <PetName>
-                                {Item.name ? Item.name : "Chưa cập nhập"}
+                                {name}
                             </PetName>
 
                             <PetInfo>
-                                Thương hiệu: {Item.brand? Item.brand : "Chưa cập nhập"} 
+                                Thương hiệu: {brand} 
                                 {/* - Tuổi: {Item.age ?Item.age : "02 months"} */}
                             </PetInfo>
 
                             <PetPrice>
-                                {Item.minPrice ? Item.minPrice +" VND" : "Chưa cập nhập"}
+                                {formattedPrice}
                             </PetPrice>
                     </InfoContainer>
                 

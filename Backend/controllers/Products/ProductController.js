@@ -54,12 +54,13 @@ const ProductTopSold = async (req,res,next) =>{
 }
 const ProductQuery = async (req,res,next) =>{
     try{
+        console.log("HERE")
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("ProductQuery: ", fullUrl);
 
         let filter = {};
         let products = [];
-        const {subcategory,category} = req.query;
+        const {subcategory,category,species} = req.query;
 
         const limit = parseInt(req.query.limit) || 10;
         const page = parseInt(req.query.page) || 1;
@@ -71,20 +72,30 @@ const ProductQuery = async (req,res,next) =>{
 
         if(subcategory) filter.subcategory = subcategory;
         if(category) filter.category = category;
+        if(species) filter.species = species;
 
         totalRecords = await Product.find(filter).countDocuments();
         
         const pipeline = [{ $match: filter }]
+       
+        pipeline.push({   
+            $addFields:
+            {    
+                minPrice:{  $min:"$variants.price"  },
+                totalSold:{ $sum:"$variants.sold"},
+                totalStock:{ $sum:"$variants.stock" }  
+            }   
+        })
         
         if(sort == 1){
 
             pipeline.push(
-            { 
-                $addFields:{  
-                    totalSold:{ $sum:"$variants.sold"},
-                    totalStock:{ $sum:"$variants.stock" }
-                }
-            },
+            // { 
+            //     $addFields:{  
+            //         totalSold:{ $sum:"$variants.sold"},
+            //         totalStock:{ $sum:"$variants.stock" }
+            //     }
+            // },
                 {   $sort:{     totalSold:-1    }}
                 ,
                 { $match: { totalStock: { $gt: 0 } } }
@@ -94,12 +105,12 @@ const ProductQuery = async (req,res,next) =>{
         }
         else if(sort==2){
             pipeline.push(
-                { 
-                    $addFields:{  
-                        totalSold:{ $sum:"$variants.sold"},
-                        totalStock:{ $sum:"$variants.stock" }
-                    }
-                },
+                // { 
+                //     $addFields:{  
+                //         totalSold:{ $sum:"$variants.sold"},
+                //         totalStock:{ $sum:"$variants.stock" }
+                //     }
+                // },
                 {   $sort:{     totalSold:1    }}
                 ,
                 {   $match: { totalStock: { $gt: 0 }  } }
@@ -110,13 +121,13 @@ const ProductQuery = async (req,res,next) =>{
         else if(sort==3){
 
             pipeline.push(
-                {   
-                    $addFields:
-                    {    
-                        minPrice:{  $min:"$variants.price"  },
-                        totalStock:{ $sum:"$variants.stock" }  
-                    }   
-                },
+                // {   
+                //     $addFields:
+                //     {    
+                //         minPrice:{  $min:"$variants.price"  },
+                //         totalStock:{ $sum:"$variants.stock" }  
+                //     }   
+                // },
                 {   $sort:{ minPrice:-1 } }
                 ,
                 {   $match: { totalStock: { $gt: 0 }  } }
@@ -127,13 +138,13 @@ const ProductQuery = async (req,res,next) =>{
         else if (sort==4){
 
             pipeline.push(
-                {   
-                    $addFields:
-                        {    
-                            minPrice:{  $min:"$variants.price"  },
-                            totalStock:{ $sum:"$variants.stock" } 
-                        } 
-                },
+                // {   
+                //     $addFields:
+                //         {    
+                //             minPrice:{  $min:"$variants.price"  },
+                //             totalStock:{ $sum:"$variants.stock" } 
+                //         } 
+                // },
                 {   
                     $sort:{ minPrice:1 } 
                 },
