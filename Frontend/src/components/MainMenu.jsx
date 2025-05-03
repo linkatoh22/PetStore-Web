@@ -149,10 +149,20 @@ function MainMenu() {
     }
 
     const handleNavHome = ()=>{
-        
             navigate("/")
-
-        
+    }
+    const handleNavItem = (type)=>{
+        switch(type){
+            case "Dog":
+                navigate("/category/cho-canh")
+                break;
+            case "Cat":
+                navigate("/category/meo-canh")
+                break;
+            case "Product":
+                navigate("/category/phu-kien")
+                break;
+        }
     }
 
     return (
@@ -175,6 +185,7 @@ function MainMenu() {
                 <TitleBtnMenu 
                     onMouseOver={()=>handleHoverIn("Dog")} 
                     onMouseOut={()=>handleHoverOut("Dog")}
+                    onClick={()=>handleNavItem("Dog")}
                 >
 
 
@@ -190,6 +201,7 @@ function MainMenu() {
                 
                 <TitleBtnMenu onMouseOver={()=>handleHoverIn("Cat")} 
                     onMouseOut={()=>handleHoverOut("Cat")}
+                    onClick={()=>handleNavItem("Cat")}  
                     >
                     Mèo cảnh
 
@@ -201,7 +213,8 @@ function MainMenu() {
                 </TitleBtnMenu>
 
                 <TitleBtnMenu onMouseOver={()=>handleHoverIn("Product")} 
-                    onMouseOut={()=>handleHoverOut("Product")}>
+                    onMouseOut={()=>handleHoverOut("Product")}
+                    onClick={()=>handleNavItem("Product")}>
                     Phụ kiện
                     <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
                     />

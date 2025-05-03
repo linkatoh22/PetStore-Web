@@ -13,9 +13,11 @@ export const petQueryFetch =async(query) =>{
     }
 }
 
-export const petQueryFetchFilter = async (gender,color,maxPrice,minPrice,sort,breed,page,limit) =>{
+export const petQueryFetchFilter = async (gender,color,maxPrice,minPrice,sort,breed,species,page,limit) =>{
     try{
         var queryParams = {}; 
+        if(species!=="")
+            queryParams.species = species
         if(gender !== "")
             queryParams.gender = gender;
         if(Array.isArray(color) && color.length > 0)

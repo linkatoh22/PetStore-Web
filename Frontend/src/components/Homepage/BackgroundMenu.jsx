@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { IconButton } from "@mui/material";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useNavigate } from 'react-router-dom';
 const BackgroundMenuContainer = styled.img`
   
   // background-size: cover;
@@ -92,7 +93,24 @@ const BlueButton = styled.button`
 `;
 const SlideShow =[Background,HoldHandPic,CategoryPic]
 function BackgroundMenu(){
+    const navigate = useNavigate()
     const [slideShowIndex,setSlideShowIndex] = useState(0)
+
+    const handleNavItem = (type)=>{
+      switch(type){
+          case "Dog":
+              navigate("/category/cho-canh")
+              break;
+          case "Cat":
+              navigate("/category/meo-canh")
+              break;
+          case "Product":
+              navigate("/category/phu-kien")
+              break;
+      }
+  }
+
+
     return (
 
         <>
@@ -117,10 +135,10 @@ function BackgroundMenu(){
 
                     <BtnGroupMenu>
 
-                        <TransparentBlueButton className="transparent-blue-button"> Mèo cảnh</TransparentBlueButton>
+                        <TransparentBlueButton className="transparent-blue-button" onClick={()=>handleNavItem("Cat")}> Mèo cảnh</TransparentBlueButton>
 
-                        <TransparentBlueButton className="transparent-blue-button"> Chó cảnh</TransparentBlueButton>
-                        <TransparentBlueButton className="transparent-blue-button"> Phụ kiện thú cưng</TransparentBlueButton>
+                        <TransparentBlueButton className="transparent-blue-button" onClick={()=>handleNavItem("Dog")}> Chó cảnh</TransparentBlueButton>
+                        <TransparentBlueButton className="transparent-blue-button" onClick={()=>handleNavItem("Product")}> Phụ kiện thú cưng</TransparentBlueButton>
 
                     </BtnGroupMenu>
 

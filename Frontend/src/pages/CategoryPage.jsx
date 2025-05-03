@@ -7,10 +7,9 @@ import Footer from "../components/Footer";
 import styled from "styled-components";
 import { useParams } from 'react-router-dom';
 import { useState,useEffect } from "react";
-import { petQueryFetch,petQueryFetchFilter } from "../services/api/CategoryAPI";
-
 import { usePetQueryFetch,usePetQueryFetchFilter } from "../services/hook/categoryHook";
-
+import { GenHeaderPet } from "../utils/GenHeader";
+import { GenNavPet } from "../utils/GenNav";
 const CategoryPageWrapper = styled.div`
   padding-block:1rem;
   display: flex;
@@ -36,8 +35,8 @@ const CategoryPageBody = styled.div`
 
 
 
-function CategoryPage({type}){
-    const [Pet,setPet] = useState([])
+function CategoryPage({type,typePage}){
+  const [Pet,setPet] = useState([])
     const [NavDirect,setNavDirect] = useState([])
     const [header,setHeader] = useState("Sản Phẩm")
     const { breed } = useParams();
@@ -65,6 +64,7 @@ function CategoryPage({type}){
                   minPrice: isValidPriceMin ? Price.minPrice:"",
                   sort: Sort,
                   breed: breed,
+                  species:type,
                   page:Page,
                   limit:Limit
     })
@@ -73,35 +73,12 @@ function CategoryPage({type}){
     const totalItems = filterPet?.totalItems ?? 0;
     useEffect(()=>
       {
-          const FetchPet = async ()=>{
-            const query = `breed=${breed}`
+            setNavDirect( GenNavPet(type,typePage,breed)  )
+            setHeader(  GenHeaderPet(type,typePage,breed) );
 
-            setNavDirect(type==="cho-canh"? 
-              [
-                { "Nav" : "Trang chủ" , "URL" : "/"}
-                ,
-                { "Nav":"Chó cảnh", "URL":"/category/cho-canh" }
-                ,
-                {  "Nav":`Chó ${breed}`, "URL":`/category/cho-canh/${breed}`}
-              ]
-              :
-              [
-                { "Nav" : "Trang chủ" , "URL" : "/"}
-                ,
-                { "Nav":"Mèo cảnh", "URL":"/category/meo-canh" }
-                ,
-                {  "Nav":`Mèo ${breed}`, "URL":`/category/meo-canh/${breed}`}
-              ]
-          
-          )
-
-            setHeader(type==="cho-canh"?`Chó ${breed}`:`Mèo ${breed}`)
-
-          }
-
-          FetchPet();
+         
       }
-      ,[breed]);
+      ,[typePage,type]);
 
 
     return (

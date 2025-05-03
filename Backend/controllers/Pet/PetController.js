@@ -31,11 +31,13 @@ const PetQuery = async (req,res,next) =>{
 
         let filter = {};
         var pets=[];
-        const {search,breed,age,color,maxPrice,minPrice,gender,sort,page,limit} = req.query;
+        const {search,breed,age,color,maxPrice,minPrice,gender,sort,page,limit,species} = req.query;
         const skip = (page-1)*limit;
         var totalRecords= 0;
         
         filter.quantity = { $gt: 0 };
+        if(species)
+            filter.species = species;
         if(breed)
             filter.breed = breed;
         if (age)

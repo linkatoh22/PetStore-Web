@@ -7,8 +7,8 @@ export const usePetQueryFetch =(query)=>useQuery({
     keepPreviousData: true,
 })
 
-export const usePetQueryFetchFilter =({gender,color,maxPrice,minPrice,sort,breed,page,limit})=>useQuery({
-    queryKey:['Category/PetQueryFetchFilter',gender,color,maxPrice,minPrice,sort,breed,page,limit],
-    queryFn: ()=>petQueryFetchFilter(gender,color,maxPrice,minPrice,sort,breed,page,limit),
+export const usePetQueryFetchFilter =({gender,color,maxPrice,minPrice,sort,breed,species,page,limit})=>useQuery({
+    queryKey:['Category/PetQueryFetchFilter',gender,color,maxPrice,minPrice,sort,breed,species,page,limit],
+    queryFn: ()=>petQueryFetchFilter(gender,color,maxPrice,minPrice,sort,breed,species,page,limit),
     keepPreviousData: true,
 })

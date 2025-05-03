@@ -10,7 +10,7 @@ import BackgroundMenu from "../components/Homepage/BackgroundMenu.jsx";
 import {useState,useEffect} from 'react';
 import { PetFetch,ProductFetch } from '../services/api/homepageAPI.js';
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom';
 import MainMenu from "../components/MainMenu.jsx";
 
 import { PetFetchHook,ProductFetchHook } from "../services/hook/homepageHook.js";
@@ -168,7 +168,7 @@ const KnowledgeCardContainer = styled.div`
 
 
 function Homepage(){
-
+    const navigate = useNavigate()
     const { data: pet, isLoading: loadingUser, error: errorUser } = PetFetchHook()
     const { data: product, isLoading: loadingPosts, error: errorPosts } = ProductFetchHook()
 
@@ -189,7 +189,19 @@ function Homepage(){
         }
     },[product]);
 
-
+    const handleNavItem = (type)=>{
+        switch(type){
+            case "Dog":
+                navigate("/category/cho-canh")
+                break;
+            case "Cat":
+                navigate("/category/meo-canh")
+                break;
+            case "Product":
+                navigate("/category/phu-kien")
+                break;
+        }
+    }
     
 
     return(
@@ -259,9 +271,9 @@ function Homepage(){
 
                             <div  style={{display: "flex",gap: "20px"}}>
 
-                                <SubTransparentBlueButton> Mèo cảnh</SubTransparentBlueButton>
+                                <SubTransparentBlueButton onClick={()=>handleNavItem("Cat")} > Mèo cảnh</SubTransparentBlueButton>
 
-                                <SubBlueButton>Chó cảnh</SubBlueButton>
+                                <SubBlueButton onClick={()=>handleNavItem("Dog")} >Chó cảnh</SubBlueButton>
 
                             </div>
 
@@ -297,7 +309,7 @@ function Homepage(){
                     
                     </div>
 
-                    <HomepageTitleBtn>View More</HomepageTitleBtn>
+                    <HomepageTitleBtn onClick={()=>handleNavItem("Product")}> Xem thêm</HomepageTitleBtn>
                 </HomepageTitleContainer>
 
 

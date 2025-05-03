@@ -202,7 +202,7 @@ function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
 
                    
                         <FBtnPrice className="f-btn-price" onClick={()=>ApplyPrice()}>
-                                Apply Price
+                                Áp dụng
                         </FBtnPrice>
                    
                    

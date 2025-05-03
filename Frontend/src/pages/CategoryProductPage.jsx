@@ -5,11 +5,11 @@ import FilterBoard from "../components/CategoryPage/FilterBoard";
 import PetCardBody from "../components/CategoryPage/PetCardBody";
 import Footer from "../components/Footer";
 import styled from "styled-components";
-import { useParams } from 'react-router-dom';
+import { Router, useParams } from 'react-router-dom';
 import { useState,useEffect } from "react";
 import { petQueryFetch,petQueryFetchFilter } from "../services/api/CategoryAPI";
-
-
+import { GenNavProduct } from "../utils/GenNav";
+import { GenHeaderProduct } from "../utils/GenHeader";
 import { useProductQueryFetchFilter } from "../services/hook/categoryProductHook";
 const CategoryPageWrapper = styled.div`
   padding-block:1rem;
@@ -36,32 +36,26 @@ const CategoryPageBody = styled.div`
 
 
 
-function CategoryProductPage({type}){
+function CategoryProductPage({type,typePage}){
     const [Pet,setPet] = useState([])
     const [NavDirect,setNavDirect] = useState([])
     const [header,setHeader] = useState("Sản Phẩm")
     const { ProductCategory,ProductSubCategory } = useParams();
     
     const [Sort,SetSort] = useState(0)
-
     const [Page,SetPage] = useState(1);
     const [Limit,SetLimit] = useState(16);
-    // const [TotalPage,SetTotalPage] = useState(1);
 
 
     const {data:filterProduct = []} = useProductQueryFetchFilter({
                   subcategory: ProductSubCategory ??"",
                   category: ProductCategory ??"",
                   sort: Sort,
-                  species:type,
+                  species:type??"",
                   page:Page,
                   limit:Limit,
                   
     })
-
-    useEffect(()=>{
-      console.log(Sort)
-    },[Sort])
 
     const products = filterProduct?.products ?? [];
     const totalItems = filterProduct?.totalItems ?? 0;
@@ -70,41 +64,12 @@ function CategoryProductPage({type}){
 
     useEffect(()=>
       {
-          const ProductNav = async ()=>{
-            
-
-            setNavDirect(type==="Chó"? 
-              [
-                { "Nav" : "Trang chủ" , "URL" : "/"}
-                ,
-                { "Nav":"Phụ kiện", "URL":"/category/phu-kien" }
-                ,
-                { "Nav":"Phụ kiện của chó", "URL":"/category/phu-kien/phu-kien-cua-cho" }
-                ,
-                {  "Nav":`${ProductCategory}`, "URL":`/category/phu-kien/phu-kien-cua-cho${ProductCategory}`},
-                {  "Nav":`${ProductSubCategory}`, "URL":`/category/phu-kien/phu-kien-cua-cho${ProductCategory}/${ProductSubCategory}`}
-              ]
-              :
-              [
-                { "Nav" : "Trang chủ" , "URL" : "/"}
-                ,
-                { "Nav":"Phụ kiện", "URL":"/category/phu-kien" }
-                ,
-                { "Nav":"Phụ kiện của mèo", "URL":"/category/phu-kien/phu-kien-cua-meo" }
-                ,
-                {  "Nav":`${ProductCategory}`, "URL":`/category/phu-kien/phu-kien-cua-meo/${ProductCategory}`},
-                {  "Nav":`${ProductSubCategory}`, "URL":`/category/phu-kien/phu-kien-cua-meo/${ProductCategory}/${ProductSubCategory}`}
-              ]
-          
-          )
-
-            setHeader(ProductSubCategory??ProductCategory)
-
-          }
-
-          ProductNav();
+        setNavDirect( GenNavProduct(type,typePage,ProductCategory,ProductSubCategory) );
+        
+        setHeader(GenHeaderProduct(type,typePage,ProductCategory,ProductSubCategory));
+        
       }
-      ,[ProductCategory,ProductSubCategory]);
+      ,[typePage,type]);
 
 
     return (

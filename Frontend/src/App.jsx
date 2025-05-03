@@ -21,15 +21,34 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage/>}/>
 
-          <Route path="/category/cho-canh/:breed" element={<CategoryPage type={"cho-canh"}/>}/>
+          <Route path="/category/cho-canh" element={<CategoryPage type={"Chó"} typePage={"All"}/>}/>
+          <Route path="/category/meo-canh" element={<CategoryPage type={"Mèo"} typePage={"All"}/>}/>
 
-          <Route path="/category/meo-canh/:breed" element={<CategoryPage type={"meo-canh"}/>}/>
 
-          <Route path="/category/phu-kien/phu-kien-cua-cho/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Chó"}/>}/>
 
-          <Route path="/category/phu-kien/phu-kien-cua-meo/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Mèo"}/>}/>
-          
-          <Route path="/category/search" element={<CategoryProductPage type={"search"}/>}/>
+          <Route path="/category/cho-canh/:breed" element={<CategoryPage type={"Chó"} typePage={"Breed"}/>}/>
+          <Route path="/category/meo-canh/:breed" element={<CategoryPage type={"Mèo"} typePage={"Breed"}/>}/>
+
+
+
+          {/* PRODUCT */}
+          <Route path="/category/phu-kien" element={<CategoryProductPage type={""} typePage={"Phụ kiện"}/>}/>
+
+          <Route path="/category/phu-kien/phu-kien-cua-cho/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Chó"} typePage={"Subcategory"}/>}/>
+          <Route path="/category/phu-kien/phu-kien-cua-cho/:ProductCategory" element={<CategoryProductPage type={"Chó"} typePage={"Category"}/>}/>
+          <Route path="/category/phu-kien/phu-kien-cua-cho" element={<CategoryProductPage type={"Chó"} typePage={"Phụ kiện của pet"}/>}/>
+
+
+          <Route path="/category/phu-kien/phu-kien-cua-meo/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Mèo"} typePage={"Subcategory"}/>}/>
+          <Route path="/category/phu-kien/phu-kien-cua-meo/:ProductCategory" element={<CategoryProductPage type={"Mèo"} typePage={"Category"}/>}/>
+          <Route path="/category/phu-kien/phu-kien-cua-meo" element={<CategoryProductPage type={"Mèo"} typePage={"Phụ kiện của pet"}/>}/>
+
+
+
+          {/* SEARCH */}
+          <Route path="/category/search" element={<CategoryProductPage typePage={"Search"}/>}/>
+
+
 
           <Route path="/detail/:id" element={<ProductDetail/>}></Route>
           <Route path="/login" element={<LoginPage/>}></Route>
