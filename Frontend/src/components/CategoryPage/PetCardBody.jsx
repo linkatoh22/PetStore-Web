@@ -56,6 +56,7 @@ const PcCardContainer = styled.div`
 
 function PetCardBody({Pet,SetPet,Header,SetSort,Petlength,type}){
   
+  
     const options =[
         {label: "Sắp xếp theo: Tất cả",value:0},
         {label: "Phổ biến nhất",value:1},
@@ -101,10 +102,16 @@ function PetCardBody({Pet,SetPet,Header,SetSort,Petlength,type}){
                   {
                     Pet.length>0?
                     (
+
                                 Pet.map((item)=>{
-                                  return (<PetsCard 
+                                  return (
+                                  <PetsCard 
                                   key={item._id}
-                                  Item = {item} type={type}></PetsCard>)
+                                  Item = {item} 
+                                  type={type=="All"?item.type:type}>
+
+                                  </PetsCard>
+                                  )
 
                                 }
                               )

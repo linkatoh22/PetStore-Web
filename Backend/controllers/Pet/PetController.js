@@ -113,35 +113,36 @@ const SearchPet = async (req,res,next) =>{
         const limit = parseInt(req.query.limit) || 10;
         const keyword = req.query.keyword || '';
         const sort = parseInt(req.query.sort);
-        const species = req.query.species ||'Chó';
+        const species = req.query.species ||'';
         const skip = (page-1)*limit;
         
         query.quantity = { $gt: 0 };
 
         if(keyword){
-            query.$text = {$search:keyword};
+            query.$text = { $search: keyword };
         }
         if(species){
             query.species = species
         }
 
         const totalRecords = await Pet.find(query).countDocuments();
+        const Petseee = await Pet.find(query);
         
         if(sort == 0||!sort)
         {
-            pets = await Pet.find(query).skip(skip).limit(limit);
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({ score: { $meta: "textScore" } })
         }
         else if (sort == 1){
-            pets = await Pet.find(query).skip(skip).limit(limit).sort({sold:-1});
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({sold:-1},{ score: { $meta: "textScore" } });
         }
         else if (sort == 2){
-            pets = await Pet.find(query).skip(skip).limit(limit).sort({sold:1});
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({sold:1},{ score: { $meta: "textScore" } });
         }
         else if (sort == 3){
-            pets = await Pet.find(query).skip(skip).limit(limit).sort({price:-1});
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({price:-1},{ score: { $meta: "textScore" } });
         }
         else if (sort == 4){
-            pets = await Pet.find(query).skip(skip).limit(limit).sort({price:1});
+            pets = await Pet.find(query).skip(skip).limit(limit).sort({price:1},{ score: { $meta: "textScore" } });
         }
 
         const totalPage = Math.ceil(totalRecords / limit);

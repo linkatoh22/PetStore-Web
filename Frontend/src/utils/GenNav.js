@@ -10,7 +10,29 @@ const levelPet = {
     "Breed":2,
 }
 
-
+export const GenNavSearch = (type)=>{
+    switch(type){
+        case "Chó":
+            return [
+                { "Nav" : "Trang chủ" , "URL" : "/"}
+                ,{ "Nav":"Chó cảnh", "URL":"/category/cho-canh"}
+            ]
+        case "Mèo":
+            return [
+                { "Nav" : "Trang chủ" , "URL" : "/"}
+                ,{ "Nav":"Mèo cảnh", "URL":"/category/meo-canh"}
+            ]
+        case "Phụ kiện":
+            return [
+                { "Nav" : "Trang chủ" , "URL" : "/"}
+                ,{ "Nav":"Phụ kiện", "URL":"/category/phu-kien"}
+            ]
+        default:
+            return [
+                
+            ]
+    }
+}
 export const GenNavPet = (type,typePage,breed)=>{
     var navDirect =[];
     if(levelPet[typePage]>0){

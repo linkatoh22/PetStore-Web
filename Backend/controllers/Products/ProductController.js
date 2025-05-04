@@ -90,12 +90,6 @@ const ProductQuery = async (req,res,next) =>{
         if(sort == 1){
 
             pipeline.push(
-            // { 
-            //     $addFields:{  
-            //         totalSold:{ $sum:"$variants.sold"},
-            //         totalStock:{ $sum:"$variants.stock" }
-            //     }
-            // },
                 {   $sort:{     totalSold:-1    }}
                 ,
                 { $match: { totalStock: { $gt: 0 } } }
@@ -105,12 +99,6 @@ const ProductQuery = async (req,res,next) =>{
         }
         else if(sort==2){
             pipeline.push(
-                // { 
-                //     $addFields:{  
-                //         totalSold:{ $sum:"$variants.sold"},
-                //         totalStock:{ $sum:"$variants.stock" }
-                //     }
-                // },
                 {   $sort:{     totalSold:1    }}
                 ,
                 {   $match: { totalStock: { $gt: 0 }  } }
@@ -121,13 +109,6 @@ const ProductQuery = async (req,res,next) =>{
         else if(sort==3){
 
             pipeline.push(
-                // {   
-                //     $addFields:
-                //     {    
-                //         minPrice:{  $min:"$variants.price"  },
-                //         totalStock:{ $sum:"$variants.stock" }  
-                //     }   
-                // },
                 {   $sort:{ minPrice:-1 } }
                 ,
                 {   $match: { totalStock: { $gt: 0 }  } }
@@ -138,13 +119,6 @@ const ProductQuery = async (req,res,next) =>{
         else if (sort==4){
 
             pipeline.push(
-                // {   
-                //     $addFields:
-                //         {    
-                //             minPrice:{  $min:"$variants.price"  },
-                //             totalStock:{ $sum:"$variants.stock" } 
-                //         } 
-                // },
                 {   
                     $sort:{ minPrice:1 } 
                 },
@@ -199,7 +173,9 @@ const ProductSearch = async (req, res, next) => {
 
         pipeline.push({
             $addFields: {
-                totalStock: { $sum: "$variants.stock" }
+                totalStock: { $sum: "$variants.stock" },
+                totalSold: { $sum: "$variants.sold" },
+                minPrice: { $min: "$variants.price" }
             }
         });
 
@@ -212,22 +188,18 @@ const ProductSearch = async (req, res, next) => {
 
         if (sort === 1) {
             pipeline.push(
-                { $addFields: { totalSold: { $sum: "$variants.sold" } } },
                 { $sort: { totalSold: 1 } }
             );
         } else if (sort === 2) {
             pipeline.push(
-                { $addFields: { totalSold: { $sum: "$variants.sold" } } },
                 { $sort: { totalSold: -1 } }
             );
         } else if (sort === 3) {
             pipeline.push(
-                { $addFields: { minPrice: { $min: "$variants.price" } } },
                 { $sort: { minPrice: 1 } }
             );
         } else if (sort === 4) {
             pipeline.push(
-                { $addFields: { minPrice: { $min: "$variants.price" } } },
                 { $sort: { minPrice: -1 } }
             );
         }
@@ -244,7 +216,7 @@ const ProductSearch = async (req, res, next) => {
             message:"Successfully Searching Product",
             page,
             amount: limit,
-            totalRecords: totalRecords,
+            totalItems: totalRecords,
             totalPage,
             products
         });
@@ -347,7 +319,7 @@ const SearchAll = async (req,res,next) =>{
             message:"Successfully Searching All",
             page:page,
             amount:limit,
-            totalRecords:results.length,
+            totalItems:results.length,
             totalPage,
             results:paginatedResults
         })

@@ -46,6 +46,7 @@ export function Dropdown({menuType,setHover}){
     const navigate  = useNavigate();
 
     const handleNavigate = (type,breed)=>{
+        
         navigate(`/category/${type}/${breed}`)
         
     }

@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaRegUser,FaCartPlus } from "react-icons/fa";
 import styled from "styled-components";
 import { Dropdown } from './Dropdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -81,6 +81,18 @@ const InputMenu = styled.input`
     }
 `
 
+const SearchContainer = styled.div`
+    
+    display: flex;
+    flex-direction: row;
+    gap:0.5rem;
+    
+`
+const SearchSelect = styled.select`
+    border-radius: 15px;
+    font-size: 0.9rem;
+    padding-inline: 0.5rem;
+`
 const btnMenu = styled.button`
     margin-left: 25px;
     font-size: 16px;
@@ -128,7 +140,11 @@ function MainMenu() {
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);
     const [isHoverProduct,setIsHoverProduct] = useState(false);
+    const [Keyword,setKeyword] = useState("");
+    const [searchOption,setSearchOption] = useState("All");
     const navigate = useNavigate()
+
+    
     const handleHoverIn = (menu) =>{
         if(menu==="Dog")
             setIsHoverDog(true)
@@ -164,7 +180,26 @@ function MainMenu() {
                 break;
         }
     }
+    const handleKeyDown = (event) =>{
+        if (event.key === 'Enter') {
+            switch(searchOption){
+                case "All":
+                    navigate(`/category/tim-kiem/all/${Keyword}`)
+                    break;
+                case "Chó":
+                    navigate(`/category/tim-kiem/cho-canh/${Keyword}`)
+                    break;
+                case "Mèo":
+                    navigate(`/category/tim-kiem/meo-canh/${Keyword}`)
+                    break;
+                case "Phụ kiện":
+                    navigate(`/category/tim-kiem/phu-kien/${Keyword}`)
+                    break;
+            }
+            
+        }
 
+    }
     return (
       <>
         <MainMenuContainer>
@@ -185,11 +220,11 @@ function MainMenu() {
                 <TitleBtnMenu 
                     onMouseOver={()=>handleHoverIn("Dog")} 
                     onMouseOut={()=>handleHoverOut("Dog")}
-                    onClick={()=>handleNavItem("Dog")}
+                    
                 >
 
 
-                    Chó cảnh
+                    <div onClick={()=>handleNavItem("Dog")} >Chó cảnh</div>
                     <RiArrowDropDownLine style={{width:"30px",height:"30px"}} />
 
                     { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
@@ -201,9 +236,9 @@ function MainMenu() {
                 
                 <TitleBtnMenu onMouseOver={()=>handleHoverIn("Cat")} 
                     onMouseOut={()=>handleHoverOut("Cat")}
-                    onClick={()=>handleNavItem("Cat")}  
+                     
                     >
-                    Mèo cảnh
+                    <div onClick={()=>handleNavItem("Cat")} >Mèo cảnh</div>
 
                     <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
                      />
@@ -214,8 +249,8 @@ function MainMenu() {
 
                 <TitleBtnMenu onMouseOver={()=>handleHoverIn("Product")} 
                     onMouseOut={()=>handleHoverOut("Product")}
-                    onClick={()=>handleNavItem("Product")}>
-                    Phụ kiện
+                    >
+                    <div onClick={()=>handleNavItem("Product")}>Phụ kiện</div>
                     <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
                     />
 
@@ -224,14 +259,33 @@ function MainMenu() {
                 </TitleBtnMenu>
             </ButtonMenu>
 
+            <SearchContainer>
 
+                    <SearchSelect onChange={(e)=>setSearchOption(e.target.value)}>
+                        <option value="All">Tất cả</option>
+                        <option value="Chó">Chó cảnh</option>
+                        <option value="Mèo">Mèo cảnh</option>
+                        <option value="Phụ kiện">Phụ kiện</option>
+                    </SearchSelect>
 
-            <div className='search-input-container'>
-                <SearchInputWrapper>
-                    <CiSearch id="search-icon" style={{width: "2rem",height: "2rem"}}/>
-                    <InputMenu className='input-menu' placeholder='Search something here!' classtype="text"></InputMenu>
-                </SearchInputWrapper>
-            </div>
+                    <div className='search-input-container'>
+                        <SearchInputWrapper>
+                            <CiSearch id="search-icon" style={{width: "2rem",height: "2rem"}}/>
+
+                            <InputMenu 
+
+                                className='input-menu' 
+                                placeholder='Nhập từ khóa tìm kiếm' 
+                                classtype="text" 
+                                onChange={(e)=>setKeyword(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                            ></InputMenu>
+                        
+                        </SearchInputWrapper>
+                    </div>
+
+            </SearchContainer>
+
             
 
             <ButtonMenu2>

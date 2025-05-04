@@ -16,9 +16,9 @@ export const productQueryFetch = async(subcategory,category,sort,limit,page,spec
         queryParams.sort=sort?sort:0;
         queryParams.limit=limit?limit:16;
         queryParams.page=page?page:1;
-        console.log(BASE_URL+'/product/product-query',{params:queryParams});
+        
         const response = await axios.get(BASE_URL+'/product/product-query',{params:queryParams})
-        console.log("Ketqua",response.data);
+        
         return response.data;
     }
     catch{

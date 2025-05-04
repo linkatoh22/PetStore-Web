@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
 import Homepage from './pages/HomePage'
 import CategoryPage from './pages/CategoryPage'
 import ProductDetail from './pages/ProductDetailPage'
@@ -10,6 +9,8 @@ import RegistrationPage from './pages/RegistrationPage'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage.jsx'
 import CategoryProductPage from './pages/CategoryProductPage.jsx'
+import CategorySearchPage from './pages/CategorySearchPage.jsx'
+
 import CustomQueryClientProvider from './QueryClientProvider';
 // import Test from './pages/Test.jsx'
 function App() {
@@ -33,7 +34,6 @@ function App() {
 
           {/* PRODUCT */}
           <Route path="/category/phu-kien" element={<CategoryProductPage type={""} typePage={"Phụ kiện"}/>}/>
-
           <Route path="/category/phu-kien/phu-kien-cua-cho/:ProductCategory/:ProductSubCategory" element={<CategoryProductPage type={"Chó"} typePage={"Subcategory"}/>}/>
           <Route path="/category/phu-kien/phu-kien-cua-cho/:ProductCategory" element={<CategoryProductPage type={"Chó"} typePage={"Category"}/>}/>
           <Route path="/category/phu-kien/phu-kien-cua-cho" element={<CategoryProductPage type={"Chó"} typePage={"Phụ kiện của pet"}/>}/>
@@ -46,7 +46,10 @@ function App() {
 
 
           {/* SEARCH */}
-          <Route path="/category/search" element={<CategoryProductPage typePage={"Search"}/>}/>
+          <Route path="/category/tim-kiem/all/:keyword" element={<CategorySearchPage type={"All"}/>}/>
+          <Route path="/category/tim-kiem/cho-canh/:keyword" element={<CategorySearchPage type={"Chó"}/>}/>
+          <Route path="/category/tim-kiem/meo-canh/:keyword" element={<CategorySearchPage type={"Mèo"}/>}/>
+          <Route path="/category/tim-kiem/phu-kien/:keyword" element={<CategorySearchPage type={"Phụ kiện"}/>}/>
 
 
 

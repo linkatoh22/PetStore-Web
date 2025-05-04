@@ -75,7 +75,6 @@ function CategoryPage({type,typePage}){
       {
             setNavDirect( GenNavPet(type,typePage,breed)  )
             setHeader(  GenHeaderPet(type,typePage,breed) );
-
          
       }
       ,[typePage,type]);

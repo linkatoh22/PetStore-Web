@@ -22,7 +22,7 @@ function CartPage(){
             
             <CartContainer className="CartContainer">
                 
-                {/* <MainMenu></MainMenu> */}
+                
 
                 <CartProductContainer className="CartProductContainer">
                     <CartProduct></CartProduct>
