@@ -10,7 +10,7 @@ import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage.jsx'
 import CategoryProductPage from './pages/CategoryProductPage.jsx'
 import CategorySearchPage from './pages/CategorySearchPage.jsx'
-
+import OtpVerificationPage from './pages/OTPVerificationPage.jsx'
 import CustomQueryClientProvider from './QueryClientProvider';
 // import Test from './pages/Test.jsx'
 function App() {
@@ -55,7 +55,10 @@ function App() {
 
           <Route path="/detail/:id" element={<ProductDetail/>}></Route>
           <Route path="/login" element={<LoginPage/>}></Route>
-          <Route path="/signup" element={<RegistrationPage></RegistrationPage>}></Route>
+          
+          <Route path="/dang-ky" element={<RegistrationPage></RegistrationPage>}></Route>
+          <Route path="/dang-ky/otp/:id" element={<OtpVerificationPage></OtpVerificationPage>}></Route>
+
           <Route path="/cart" element={<CartPage></CartPage>}></Route>
           <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
           {/* <Route path="/test" element={<Test></Test>}></Route> */}

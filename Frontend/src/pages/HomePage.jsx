@@ -8,7 +8,7 @@ import KnowledgeCard from "../components/Card/KnowledgedCard.jsx";
 import Footer from "../components/Footer";
 import BackgroundMenu from "../components/Homepage/BackgroundMenu.jsx";
 import {useState,useEffect} from 'react';
-import { PetFetch,ProductFetch } from '../services/api/homepageAPI.js';
+
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import MainMenu from "../components/MainMenu.jsx";

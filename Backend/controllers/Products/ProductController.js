@@ -196,11 +196,11 @@ const ProductSearch = async (req, res, next) => {
             );
         } else if (sort === 3) {
             pipeline.push(
-                { $sort: { minPrice: 1 } }
+                { $sort: { minPrice: -1 } }
             );
         } else if (sort === 4) {
             pipeline.push(
-                { $sort: { minPrice: -1 } }
+                { $sort: { minPrice: 1 } }
             );
         }
         products = await Product.aggregate(pipeline);
@@ -305,10 +305,11 @@ const SearchAll = async (req,res,next) =>{
             results.sort((a,b)=>a.sold-b.sold);
         }
         else if(sort === 3){
-            results.sort((a,b)=>a.price-b.price)
+            results.sort((a,b)=>b.price-a.price)
+            
         }
         else if(sort === 4 ){
-            results.sort((a,b)=>b.price-a.price)
+            results.sort((a,b)=>a.price-b.price)
         }
 
         const paginatedResults = results.slice(skip, skip + limit);

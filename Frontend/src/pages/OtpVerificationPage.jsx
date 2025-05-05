@@ -1,10 +1,10 @@
 
 import Footer from "../components/Footer";
 import Logo from "../assets/logo.png";
-import SignUpForm from "../components/RegistrationPage/SignUpForm";
+import OtpVerificationForm from "../components/OtpVerificationPage/OtpVerification"
 import styled from "styled-components";
 import MainMenu from "../components/MainMenu";
-const SignupContainer = styled.div`
+const OtpVerifyContainer = styled.div`
     
    
     display: flex;
@@ -25,30 +25,30 @@ const BackgroundAccount = styled.div`
   
 `
 
-function RegistrationPage(){
+function OtpVerificationPage(){
 
     return(
         <>
           
           <MainMenu></MainMenu>
 
-            <SignupContainer className="signup-container">
+            <OtpVerifyContainer className="signup-container">
 
               
                 <BackgroundAccount className="background-account">
 
                 
-                        <SignUpForm>
+                        <OtpVerificationForm>
                             
-                        </SignUpForm>
+                        </OtpVerificationForm>
                 
                 </BackgroundAccount>
 
-            </SignupContainer>
+            </OtpVerifyContainer>
 
             <Footer></Footer>
         </>
     )
 }
 
-export default RegistrationPage;
+export default OtpVerificationPage;

@@ -58,10 +58,9 @@ const verifyOTP  = async (req,res,next)=>{
     console.log("verifyOTP: ", fullUrl);
 
     try{
-        console.log("RAN HERE VERIFY")
+        
         let {userId,otp} = req.body; //lay id va otp ng dung
-        console.log("userid ",userId);
-        console.log("otp ",otp);
+        
         if(!userId||!otp){
             res.status(400)
             throw Error("Empty otp details are not allowed"); //empty
@@ -95,7 +94,7 @@ const verifyOTP  = async (req,res,next)=>{
                     if(!validOTP){
                         //supplied otp is wrong
                         res.status(401)
-                        throw new Error("Invalid code passed. Check your inbox")
+                        throw new Error("Invalid code. Check your inbox then re-enter the code.")
                     }
                     else{
                         //success

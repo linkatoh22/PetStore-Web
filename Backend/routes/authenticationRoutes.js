@@ -11,7 +11,6 @@ const {handleAccessToken} = require("../controllers/Authentication/tokenControll
 require('../config/google.js')
 
 //LOG IN AND SIGN UP GOOGLE
-
 router.get('/google',
     passport.authenticate('google',{
         scope:['profile','email']
@@ -25,7 +24,6 @@ router.get(
 )
 
 //RESET REFRESH TOKEN
-
 router.route("/reset-access-token").post(handleAccessToken)
 
 

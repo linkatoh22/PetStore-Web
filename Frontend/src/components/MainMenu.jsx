@@ -15,7 +15,7 @@ const MainMenuContainer = styled.div`
 `
 const MainMenuItem = styled.div`
     margin: auto;
-    width:80%;
+    width:85%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -136,7 +136,7 @@ const StyledUserIcon = styled(FaRegUser)`
   }
 `
 function MainMenu() {
-    const isLogin = true;
+    const isLogin = false;
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);
     const [isHoverProduct,setIsHoverProduct] = useState(false);
@@ -302,11 +302,11 @@ function MainMenu() {
                 :
                 <>
                     <TitleBtnMenu>
-                        Sign up
+                        Đăng ký
                     </TitleBtnMenu>
 
                     <TitleBtnMenu>
-                        Log in
+                        Đăng nhập
                     </TitleBtnMenu>
                  </>
 

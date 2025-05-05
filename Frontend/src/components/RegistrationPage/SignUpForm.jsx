@@ -3,7 +3,11 @@ import { GrMailOption } from "react-icons/gr";
 import { MdLockOutline } from "react-icons/md";
 import Google from "../../assets/svg/google/google";
 import styled from 'styled-components';
+import React, { useState } from 'react';
+import { useLogin } from "../../services/hook/LoginHook";
+import { useNavigate } from 'react-router-dom';
 const SignUpFormContainer = styled.div`
+  
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -19,10 +23,6 @@ const SignUpFormTitle = styled.h2`
   font-size: 1.8em;
 `;
 
-const GoogleIcon = styled.img`
-  width: 50px;
-  height: 50px;
-`;
 
 const SignUpGgBtn = styled.button`
   justify-content: center;
@@ -32,8 +32,8 @@ const SignUpGgBtn = styled.button`
   padding: 10px;
   background-color: rgba(255, 248, 248, 0.568);
   border: 1px solid rgb(170, 169, 169);
-  font-size: var(--fs-m);
-  font-weight: bold;
+  font-size: 1.3rem;
+  font-weight: 600; 
   cursor: pointer;
 `;
 
@@ -82,57 +82,135 @@ const InputForm = styled.input`
 `;
 
 const SignUpButton = styled.button`
-  background-color: var(--clr-dark-blue);
+  background-color: var(--main-blue);
   color: white;
   font-size: var(--fs-m);
   font-weight: bold;
   border: none;
   padding-block: 10px;
+  cursor: pointer;
+  &:active{
+    background-color: var(--clr-dark-blue);
+  }
 `;
 
 
 function SignUpForm()
 {
-    return(
+  const navigate = useNavigate()
+  var message = "";
+  var FilterItem = [];
+  const[formData, setFormData] = useState({ 
+        email: '',
+        password: '',
+        confirmPassword: ''
+  });
+  const handleChange = (e) => {
+    setFormData(prev => ({
+        ...prev,
+        [e.target.name]: e.target.value
+    }));
+    };
 
+    const isValidEmail = (email) => {
+      return /\S+@\S+\.\S+/.test(email);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if (!isValidEmail(formData.email)) {
+          alert("Email không hợp lệ");
+          return;
+        }
+        if(formData.password !== formData.confirmPassword) {
+          alert('Mật khẩu không khớp!');
+          return;
+        }
+        else if(formData.password.length < 8) {
+          alert('Mật khẩu phải có ít nhất 8 ký tự!');
+          return;
+        }
+        
+
+        const {data} = useLogin({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        FilterItem = data.data??[];
+        message = data.message??"";
+
+        if(data.status=="Success"){ 
+          console.log(FilterItem);
+          navigate(`/dang-ky/otp/${formData._id}`);
+        }
+        
+        alert(message);
+        
+
+
+    };
+  
+  
+    return(
+        
         <>
             <SignUpFormContainer className="signup-form-container">
                 
-                <SignUpFormTitle className="signup-form-title">Sign Up with</SignUpFormTitle>
+                <SignUpFormTitle className="signup-form-title">Đăng ký với</SignUpFormTitle>
 
                 <SignUpGgBtn className="signup-gg-btn">
 
                     <Google></Google>
-                    Sign up with Google
+                    Đăng ký với Google
                 </SignUpGgBtn>
 
                 <SeperatorText className="seperator-text">or</SeperatorText>
 
-                <SignUpFormItem action="#" className="signup-form">
+                <SignUpFormItem className="signup-form" onSubmit={handleSubmit}>
 
                     <InputWrapper className="input-wrapper"> 
 
                         <GrMailOption></GrMailOption>
-                        <InputForm type="email" placeholder="Email Address" className="input-form"></InputForm>
+                        <InputForm 
+                        type="email" 
+                        placeholder="Nhập email của bạn" 
+                        className="input-form"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        ></InputForm>
                         
                     </InputWrapper>
 
                     <InputWrapper className="input-wrapper"> 
                         <MdLockOutline></MdLockOutline>
-                        <InputForm type="password" placeholder="Password (minimum 8 words)" className="input-form"></InputForm>
+                        <InputForm 
+                        type="password"
+                        name="password"
+                        placeholder="Nhập mật khẩu (ít nhất 8 ký tự)"
+                        value={formData.password}
+                        onChange={handleChange}></InputForm>
                         
                     </InputWrapper>
 
                     <InputWrapper className="input-wrapper"> 
                         <MdLockOutline></MdLockOutline>
-                        <InputForm type="password" placeholder="Confirm Password" className="input-form"></InputForm>
+                        <InputForm 
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Nhập mật khẩu lại" 
+                        className="input-form"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}></InputForm>
                         
                     </InputWrapper>
 
 
                     
 
-                    <SignUpButton className="signup-button">Sign Up</SignUpButton>
+                    <SignUpButton type="submit" className="signup-button">Đăng ký</SignUpButton>
 
                 </SignUpFormItem>
 
