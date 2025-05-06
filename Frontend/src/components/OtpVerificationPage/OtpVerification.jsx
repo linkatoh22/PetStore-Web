@@ -1,8 +1,10 @@
 // import '../../styles/components/SignUpForm.css'
 
 import { MdLockOutline } from "react-icons/md";
-
+import { useNavigate,useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import React, { useState } from 'react';
+import { useVerifyOtp, useResendOtp} from "../../services/hook/OtpVerificationHook";
 const OtpVerifyContainer = styled.div`
   background-color: white;
   display: flex;
@@ -67,14 +69,89 @@ const OtpVerifyButton = styled.button`
   font-weight: bold;
   border: none;
   padding-block: 10px;
+  cursor: pointer;
+  &:active{
+    background-color: var(--main-blue);
+  }
 `;
 const ResendOTPButton = styled.div`
     text-decoration: underline;
     color: var(--clr-dark-blue);
+    
     cursor: pointer;
+    &:active{
+        color: var(--main-blue);
+    }
 `
 function OtpVerificationForm()
 {
+    
+    const { mutate:otpData } = useVerifyOtp();
+    const {mutate: resendOtpData} = useResendOtp();
+    const{id}= useParams();
+    const navigate = useNavigate();
+    const [formData,setFormData]= useState({
+      otp:"",
+      userId:id
+    })
+
+    const handleChange = (e)=>{
+      setFormData(prev =>({
+        ...prev,
+        [e.target.name]:e.target.value
+      }))
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData.otp);
+        otpData(
+          {
+              userId: formData.userId,
+              otp: formData.otp
+          },
+          {
+            onSuccess: (data) => {
+              if (data.status === "Success") {
+                alert("Tạo tài khoản thành công");
+                navigate("/");
+              }
+            },
+            onError: (error) => {
+              
+              const message = error.response?.data?.message || error.message;
+              alert("Lỗi xác thực OTP: " + message);
+            }
+          }
+
+
+          
+        )
+    }
+
+    const ResendOTP = () =>{
+      resendOtpData
+      (
+          {
+            userId:id
+          },
+          {
+            onSuccess:(data)=>{
+              if(data.status === "Success"){
+                alert("Mã OTP đã được gửi lại vào email của bạn")
+              }
+            }
+          },
+          {
+            onError:(error)=>{
+              const message = error.response?.data?.message || error.message;
+              alert("Lỗi khi gửi lại OTP: " + message);
+            }
+          }
+      )
+        
+    }
+
     return(
 
         <>
@@ -86,21 +163,27 @@ function OtpVerificationForm()
 
                 <SeperatorText className="seperator-text"></SeperatorText>
 
-                <OtpVerifyFormItem action="#" className="signup-form">
+                <OtpVerifyFormItem onSubmit={handleSubmit} >
 
                     
                     <InputWrapper className="input-wrapper"> 
                         <MdLockOutline></MdLockOutline>
-                        <InputForm type="number" placeholder="Nhập mật khẩu (ít nhất 8 ký tự)" className="input-form"></InputForm>
+                        <InputForm type="number"
+                        name="otp"
+                        value = {formData.otp}
+                        onChange={handleChange}
+                        placeholder="Nhập mã OTP ở đây" 
+                        className="input-form"
+                        ></InputForm>
                         
                     </InputWrapper>
-                    <ResendOTPButton>Gửi lại mã OTP</ResendOTPButton>
+                    <ResendOTPButton onClick={()=>ResendOTP()}>Gửi lại mã OTP</ResendOTPButton>
                     
 
 
                     
 
-                    <OtpVerifyButton className="signup-button">Xác nhận</OtpVerifyButton>
+                    <OtpVerifyButton className="signup-button" type="submit">Xác nhận</OtpVerifyButton>
 
                 </OtpVerifyFormItem>
 

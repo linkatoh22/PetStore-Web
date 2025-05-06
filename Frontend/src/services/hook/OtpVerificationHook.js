@@ -1,18 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery,useMutation } from "@tanstack/react-query";
 import { VerifyOtp,ResendOtp } from "../api/OtpVerificationAPI";
 
-export const useVerifyOtp = (userId, otp) => {
-    return useQuery({
-        queryKey: ['Auth/VerifyOtp', userId, otp],
-        queryFn: () => VerifyOtp(userId, otp),
-        enabled: !!userId && !!otp,
-    });
+
+export const useVerifyOtp = () => {
+    return useMutation
+    (
+        {
+            mutationKey: ['Auth/VerifyOtp'],
+            mutationFn: ({userId, otp}) => VerifyOtp({userId, otp})
+        }
+    );
 }
 
-export const useResendOtp = (email) => {
-    return useQuery({
-        queryKey: ['Auth/ResendOtp', email],
-        queryFn: () => ResendOtp(email),
-        enabled: !!email,
-    });
+export const useResendOtp = () => {
+    return useMutation(
+        {
+            mutationKey: ['Auth/ResendOtp'],
+            mutationFn: ({userId}) => ResendOtp({userId}),
+        }
+);
 }

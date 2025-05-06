@@ -54,7 +54,7 @@ function App() {
 
 
           <Route path="/detail/:id" element={<ProductDetail/>}></Route>
-          <Route path="/login" element={<LoginPage/>}></Route>
+          <Route path="/dang-nhap" element={<LoginPage/>}></Route>
           
           <Route path="/dang-ky" element={<RegistrationPage></RegistrationPage>}></Route>
           <Route path="/dang-ky/otp/:id" element={<OtpVerificationPage></OtpVerificationPage>}></Route>

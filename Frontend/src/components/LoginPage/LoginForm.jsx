@@ -3,7 +3,9 @@ import { MdLockOutline } from "react-icons/md";
 
 import Google from "../../assets/svg/google/google";
 import styled from "styled-components";
-
+import { useLogin } from "../../services/hook/LoginHook";
+import { useState } from "react";
+  import { useNavigate } from 'react-router-dom';
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,11 +19,6 @@ const LoginFormTitle = styled.div`
   text-align: center;
   font-weight: bold;
   font-size: 1.8em;
-`;
-
-const GoogleIcon = styled.img`
-  width: 50px;
-  height: 50px;
 `;
 
 const LoginGgBtn = styled.div`
@@ -89,46 +86,121 @@ const LoginButton = styled.button`
   font-weight: bold;
   border: none;
   padding-block: 10px;
+  cursor:pointer;
+  &:active{
+    background-color: var(--main-blue);
+  }
 `;
 
 function LoginForm(){
+    const navigate = useNavigate()
+    const {mutate:logIn}  = useLogin();
+    const [formData,setFormData] = useState({
+        email: "",
+        password:"",
+    })
+    const handleChange = (e)=>{
+        setFormData(prev=>(
+          {
+            ...prev,
+            [e.target.name] :e.target.value
+          }
+        ))
+    }
+    const handleSubmit = (e)=>{
+      e.preventDefault();
+      if(formData.email == "" || formData.password == ""){
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+      }
+      logIn(
+
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+
+        {
+          onSuccess:(data)=>{
+            if(data.status == "Success"){
+              alert("Đăng nhập thành công!");
+              navigate(`/`);
+            } 
+          },
+          onError:(error)=>{
+            const message = error.response?.data?.message || error.message;
+              alert("Lỗi đăng nhập " + message);
+          }
+        }
+      )
+
+    }
+
+
 
     return(
 
         <>
+
             <LoginFormContainer className="login-form-container">
                 
-                <LoginFormTitle className="login-form-title">Log in with</LoginFormTitle>
+                <LoginFormTitle className="login-form-title">Đăng nhập với</LoginFormTitle>
 
                 <LoginGgBtn className="login-gg-btn">
 
                     <Google></Google>
-                    Log in Google
+                    Đăng nhập với Google
+
                 </LoginGgBtn>
 
-                <SeperatorText className="seperator-text">or</SeperatorText>
-                <LoginFormMain action="#" className="login-form">
+                <SeperatorText className="seperator-text">hoặc</SeperatorText>
+
+
+
+
+                <LoginFormMain className="login-form" onSubmit={handleSubmit}>
 
                     <InputWrapper className="input-wrapper"> 
+
                         <GrMailOption></GrMailOption>
-                        <InputFormItem type="email" placeholder="Email Address" className="input-form"></InputFormItem>
+                        <InputFormItem 
+                        name="email"
+                        type="email" 
+                        placeholder="Nhập địa chỉ email" className="input-form"
+                        value = {formData.email}
+                        onChange = {handleChange}
+
+                        ></InputFormItem>
                         
                     </InputWrapper>
 
                     <InputWrapper className="input-wrapper"> 
+
                         <MdLockOutline></MdLockOutline>
-                        <InputFormItem type="password" placeholder="Password" className="input-form"></InputFormItem>
+                        <InputFormItem 
+                          name="password"
+                          type="password" 
+                          placeholder="Mật khẩu" 
+                          className="input-form"
+                          value = {formData.password}
+                          onChange = {handleChange}
+                          ></InputFormItem>
                         
                     </InputWrapper>
 
+                      <a href="#" className="forgot-pass-link">Quên mật khẩu?</a>
 
-                    <a href="#" className="forgot-pass-link">Forgot Password?</a>
-
-                    <LoginButton className="login-button">Log In</LoginButton>
+                    <LoginButton 
+                      type="submit" 
+                      className="login-button"
+                    > Đăng nhập</LoginButton>
 
                 </LoginFormMain>
 
-                <p>Don't have an account <a href="#">Sign up now</a></p>
+
+
+
+                <p>Không có tài khoản <a href="#">Đăng ký ngay</a></p>
                 
 
             </LoginFormContainer>

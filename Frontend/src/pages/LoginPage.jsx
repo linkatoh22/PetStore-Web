@@ -3,28 +3,23 @@ import Footer from "../components/Footer"
 import Logo from "../assets/logo.png"
 import LoginForm from "../components/LoginPage/LoginForm"
 import styled from "styled-components"
-
+import MainMenu from "../components/MainMenu" 
 const LoginContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding-bottom: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `;
-
-const LoginHeader = styled.div`
-  margin-top: 20px;
+const BackgroundAccount = styled.div`
+  
+  width: 100%;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 1.5rem;
-  font-size: var(--fs-l);
-  font-weight: bold;
-`;
-
-const LoginWrapper = styled.div`
-  width: 80%;
-  margin: auto;
-`;
+    justify-content: center;
+    padding-block: 5rem;
+  
+  
+`
 
 
 function LoginPage(){
@@ -32,20 +27,17 @@ function LoginPage(){
     return (
 
         <>
-            
+            <MainMenu></MainMenu>
+
             <LoginContainer className="login-container">
 
-                <LoginHeader className="login-header">
+                <BackgroundAccount>
+                  <LoginForm>
 
-                    <img src={Logo} className="logo-img"></img>
-                    <div className="login-title">Log In</div>
+                      
+                  </LoginForm>
+                </BackgroundAccount>
 
-                </LoginHeader>
-
-                <LoginForm>
-
-                    
-                </LoginForm>
 
             </LoginContainer>
 

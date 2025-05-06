@@ -8,8 +8,8 @@ const {generateToken} = require("../../utils/TokenFunc")
 
 const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
     try{
-        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        console.log("sendOTPVerificationEmail: ", fullUrl);
+        // const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("sendOTPVerificationEmail ");
 
         const otp =  `${Math.floor(1000 + Math.random() * 9000)}`; 
         const mailOptions ={
@@ -98,7 +98,16 @@ const verifyOTP  = async (req,res,next)=>{
                     }
                     else{
                         //success
-                        await User.updateOne({_id:userId}, {verified:true} );
+                        await User.updateOne({_id:userId}, 
+                            {verified:true},
+                            {
+                                $set: {
+                                  verified: true,
+                                  username: `Người dùng ${userId}`,
+                                },
+                              }
+                        
+                        );
                         
                         await UserOTPVerification.deleteMany({userId})
                         
@@ -123,21 +132,30 @@ const verifyOTP  = async (req,res,next)=>{
 }
 //resend OTP
 const resendOTP = async (req,res,next) =>{
+    
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     console.log("resendOTP: ", fullUrl);
 
     try{
-        let{userId,email}  = req.body;
+        
+        const {userId}  = req.body;
 
-        if(!userId||!email){
+        if(!userId){
+            
             res.status(400)
             throw Error("Empty user details are not allowed");
         }
-        else{
+        
+            const user = await User.findById(userId);
 
+            if (!user) {
+                res.status(404);
+                throw new Error("User not found");
+            }
+            const email = user.email;
             await UserOTPVerification.deleteMany({userId});
-            sendOTPVerificationEmail({_id:userId,email},res)
-        }
+            sendOTPVerificationEmail({_id:userId,email:email},res)
+        
     }
     catch(error){
 

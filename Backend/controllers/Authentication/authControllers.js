@@ -12,9 +12,9 @@ const signUp = async (req, res,next)=>{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("signUp: ", fullUrl);
 
-        const {username,email,password,gender} = req.body;
+        const {email,password} = req.body;
         
-        if(!username || !email || !password || !gender){
+        if( !email || !password){
             res.status(400);
             throw new Error("All fields are mandatory!");
             
@@ -33,11 +33,9 @@ const signUp = async (req, res,next)=>{
             
             const user = await User.create(
                 {
-
-                    username,
                     email,
                     password:hashedPassword,
-                    gender,
+
                     role:"customer",
                     isGoogleUser:false
                 }
