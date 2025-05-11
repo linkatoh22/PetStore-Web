@@ -91,7 +91,8 @@ const SearchContainer = styled.div`
 const SearchSelect = styled.select`
     border-radius: 15px;
     font-size: 0.9rem;
-    padding-inline: 0.5rem;
+    padding-inline: 0.2rem;
+    padding-left:0.3rem;
 `
 const btnMenu = styled.button`
     margin-left: 25px;
@@ -136,7 +137,8 @@ const StyledUserIcon = styled(FaRegUser)`
   }
 `
 function MainMenu() {
-    const isLogin = false;
+    const accessToken = localStorage.getItem('accessToken');
+    // const [isLogin,setIsLogin] = useState(false);
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);
     const [isHoverProduct,setIsHoverProduct] = useState(false);
@@ -177,6 +179,12 @@ function MainMenu() {
                 break;
             case "Product":
                 navigate("/category/phu-kien")
+                break;
+            case "Log In":
+                navigate("/dang-nhap")
+                break;
+            case "Sign Up":
+                navigate("/dang-ky")
                 break;
         }
     }
@@ -270,7 +278,7 @@ function MainMenu() {
 
                     <div className='search-input-container'>
                         <SearchInputWrapper>
-                            <CiSearch id="search-icon" style={{width: "2rem",height: "2rem"}}/>
+                            <CiSearch id="search-icon" style={{width: "1.5rem",height: "1.5rem"}}/>
 
                             <InputMenu 
 
@@ -290,7 +298,7 @@ function MainMenu() {
 
             <ButtonMenu2>
 
-            {isLogin?
+            {accessToken?
                     <>
                         <FaCartPlus 
                         id="menu-icon-info" 
@@ -301,11 +309,11 @@ function MainMenu() {
                     </>
                 :
                 <>
-                    <TitleBtnMenu>
+                    <TitleBtnMenu onClick={()=>handleNavItem("Sign Up")}>
                         Đăng ký
                     </TitleBtnMenu>
 
-                    <TitleBtnMenu>
+                    <TitleBtnMenu  onClick={()=>handleNavItem("Log In")}>
                         Đăng nhập
                     </TitleBtnMenu>
                  </>

@@ -19,7 +19,7 @@ function CartPage(){
 
     return(
         <>
-            
+            <MainMenu></MainMenu>
             <CartContainer className="CartContainer">
                 
                 

@@ -7,6 +7,7 @@
 
   import { useSignUp } from "../../services/hook/SignUpHook";
   import { useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from "@react-oauth/google";
 
   const SignUpFormContainer = styled.div`
     
@@ -122,7 +123,17 @@
         return /\S+@\S+\.\S+/.test(email);
       };
 
-      
+      const signUpWithGoogle = useGoogleLogin({
+          onSuccess: (tokenResponse) => {
+            console.log('Đăng ký thành công: ',tokenResponse);
+            localStorage.setItem("accessToken",tokenResponse.access_token)
+            navigate("/")
+          },
+
+          onError: () => {
+            console.log('Login Failed');
+          },
+      })
 
       const handleSubmit = (e) => {
           e.preventDefault();
@@ -173,7 +184,7 @@
                   
                   <SignUpFormTitle className="signup-form-title">Đăng ký với</SignUpFormTitle>
 
-                  <SignUpGgBtn className="signup-gg-btn">
+                  <SignUpGgBtn className="signup-gg-btn" onClick={()=>signUpWithGoogle()}>
 
                       <Google></Google>
                       Đăng ký với Google

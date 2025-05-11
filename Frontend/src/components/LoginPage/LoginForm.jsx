@@ -5,7 +5,9 @@ import Google from "../../assets/svg/google/google";
 import styled from "styled-components";
 import { useLogin } from "../../services/hook/LoginHook";
 import { useState } from "react";
-  import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
+
+import { useGoogleLogin } from '@react-oauth/google';
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -91,10 +93,12 @@ const LoginButton = styled.button`
     background-color: var(--main-blue);
   }
 `;
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 function LoginForm(){
     const navigate = useNavigate()
+    const location = useLocation();
     const {mutate:logIn}  = useLogin();
+    
     const [formData,setFormData] = useState({
         email: "",
         password:"",
@@ -123,7 +127,9 @@ function LoginForm(){
         {
           onSuccess:(data)=>{
             if(data.status == "Success"){
+              console.log(data)
               alert("Đăng nhập thành công!");
+              localStorage.setItem("accessToken",data.token.accessToken)
               navigate(`/`);
             } 
           },
@@ -136,6 +142,20 @@ function LoginForm(){
 
     }
 
+  const loginWithGoogle = useGoogleLogin({
+
+    onSuccess: (tokenResponse) => {
+      console.log('Đăng nhập thành công: ',tokenResponse);
+      localStorage.setItem("accessToken",tokenResponse.access_token)
+      navigate("/")
+    },
+
+    onError: () => {
+      console.log('Login Failed');
+    },
+
+
+  });
 
 
     return(
@@ -146,12 +166,22 @@ function LoginForm(){
                 
                 <LoginFormTitle className="login-form-title">Đăng nhập với</LoginFormTitle>
 
-                <LoginGgBtn className="login-gg-btn">
+                {/* <GoogleLogin
+                    onSuccess={handleSuccess}
+                    onError={handleFailure}
+                  >
 
-                    <Google></Google>
-                    Đăng nhập với Google
+                  </GoogleLogin> */}
 
-                </LoginGgBtn>
+
+               
+                  <LoginGgBtn className="login-gg-btn" onClick={()=>loginWithGoogle()}>
+
+                      <Google></Google>
+                      Đăng nhập với Google
+
+                  </LoginGgBtn>
+                
 
                 <SeperatorText className="seperator-text">hoặc</SeperatorText>
 

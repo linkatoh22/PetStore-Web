@@ -27,10 +27,10 @@ const userSchema = mongoose.Schema({
         default:'Khác'
     },
 
-    phoneNumber:[{
-        type: String,
-        match: [/^\d{10,11}$/, "Số điện thoại phải có 10 hoặc 11 chữ số"]
-    }],
+    phoneNumber:{
+        type: String
+        // match: [/^\d{10,11}$/, "Số điện thoại phải có 10 hoặc 11 chữ số"]
+    },
 
     address:[
         {

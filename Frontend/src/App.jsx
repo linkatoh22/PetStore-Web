@@ -12,11 +12,15 @@ import CategoryProductPage from './pages/CategoryProductPage.jsx'
 import CategorySearchPage from './pages/CategorySearchPage.jsx'
 import OtpVerificationPage from './pages/OTPVerificationPage.jsx'
 import CustomQueryClientProvider from './QueryClientProvider';
-// import Test from './pages/Test.jsx'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import PrivateRoute from './PrivateRoute.jsx'
+
+
 function App() {
-  
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
     <>
+    <GoogleOAuthProvider clientId={clientId}>
     <CustomQueryClientProvider>
       <Router>
         <Routes>
@@ -53,18 +57,25 @@ function App() {
 
 
 
-          <Route path="/detail/:id" element={<ProductDetail/>}></Route>
+          
           <Route path="/dang-nhap" element={<LoginPage/>}></Route>
           
           <Route path="/dang-ky" element={<RegistrationPage></RegistrationPage>}></Route>
           <Route path="/dang-ky/otp/:id" element={<OtpVerificationPage></OtpVerificationPage>}></Route>
 
-          <Route path="/cart" element={<CartPage></CartPage>}></Route>
-          <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
-          {/* <Route path="/test" element={<Test></Test>}></Route> */}
+          
+          <Route element={<PrivateRoute/>}>
+              <Route path="/detail/:id" element={<ProductDetail/>}></Route>
+              <Route path="/cart" element={<CartPage></CartPage>}></Route>
+              <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
+          </Route>
+
+         
         </Routes>
       </Router>
       </CustomQueryClientProvider>
+
+    </GoogleOAuthProvider>
     </>
   )
 }
