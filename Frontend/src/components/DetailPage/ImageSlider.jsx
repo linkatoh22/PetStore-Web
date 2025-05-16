@@ -9,8 +9,10 @@ import { useState,useRef } from 'react';
 import styled from 'styled-components';
 const ITEM_WIDTH=50;
 const ImageSliderContainer = styled.div`
+    padding:1.5rem;
   display: flex;
   flex-direction: column;
+  width:40%;
   gap: 10px;
 `;
 
@@ -19,10 +21,11 @@ const MainPicContainer = styled.div`
 `;
 
 const MainPic = styled.img`
-  width: 100%;
+  width: 90%;
   border-radius: 50px;
   object-fit: cover;
-  height: 100%;
+  object-position: center;
+  height:450px;
 `;
 
 const PrevBtn = styled.button`
@@ -69,22 +72,11 @@ const PicItem = styled.img`
 
 
 
-function ImageSlider(){
+function ImageSlider({PicImg}){
     var [index,useIndex]=useState(0);
     const ContainerRef = useRef();
     const [ScrollPosition,setScrollPosition] = useState(0);
-    const myPic=[
-        {pic:detail1},
-        {pic:detail2},
-        {pic:detail3},
-        {pic:detail4},
-        {pic:detail5},
-        {pic:detail6},
-        {pic:detail6},
-        
-        
     
-    ]
 
     const handleScroll = (scrollAmount) =>{
         const newScrollPosition = ScrollPosition +scrollAmount;
@@ -96,13 +88,10 @@ function ImageSlider(){
     const Next =(val)=>{
         
         let temp= val+1
-        if(temp<myPic.length)
-        {
+        if(temp<PicImg.length)
             useIndex(index+=1);
-        }
-        else{
+        else
             useIndex(0);
-        }
 
         handleScroll(ITEM_WIDTH);
         
@@ -110,15 +99,10 @@ function ImageSlider(){
 
     const Prev =(val)=>{
         console.log("HERRE");
-        if(val>0){
+        if(val>0)
             useIndex(val-=1);
-        }
-        else{
-            useIndex(myPic.length-1);
-            
-            
-        }
-
+        else
+            useIndex(PicImg.length-1);
         handleScroll(-ITEM_WIDTH);
         
     }
@@ -135,7 +119,7 @@ function ImageSlider(){
             <ImageSliderContainer className="Image-Silder-Container">
                 <MainPicContainer className='Main-Pic-Container'>
 
-                    <MainPic className="Main-Pic" src={myPic[index].pic}></MainPic>
+                    <MainPic className="Main-Pic" src={PicImg[index].pic}></MainPic>
 
                     <PrevBtn onClick={()=>{Prev(index)}} className='prev-btn'>{"<"}</PrevBtn> 
 
@@ -150,7 +134,7 @@ function ImageSlider(){
 
                 <PicSlider ref={ContainerRef}className="Pic-Slider">
                     
-                        {myPic.map((pic,index)=>{
+                        {PicImg.map((pic,index)=>{
                             return <PicItem key={index} src={pic.pic} className="Pic-Item" onClick={()=>{ClickImg(index)}}/> 
                         })}
                         

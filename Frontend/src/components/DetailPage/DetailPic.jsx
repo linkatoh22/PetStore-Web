@@ -11,7 +11,7 @@ const DetailPicContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 40%;
+  width: 35%;
 `;
 
 const PerkContainer = styled.div`

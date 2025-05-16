@@ -14,8 +14,9 @@ import OtpVerificationPage from './pages/OTPVerificationPage.jsx'
 import CustomQueryClientProvider from './QueryClientProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import PrivateRoute from './PrivateRoute.jsx'
-
-
+import setUpAxiosInterceptors from './services/interceptor/axiosClient.js'
+import 'bootstrap/dist/css/bootstrap.min.css';
+setUpAxiosInterceptors();
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
@@ -57,15 +58,18 @@ function App() {
 
 
 
-          
+          {/* AUTH */}
           <Route path="/dang-nhap" element={<LoginPage/>}></Route>
-          
           <Route path="/dang-ky" element={<RegistrationPage></RegistrationPage>}></Route>
           <Route path="/dang-ky/otp/:id" element={<OtpVerificationPage></OtpVerificationPage>}></Route>
 
+          {/* DETAIL */}
+          <Route path="/detail/thu-cung/:id" element={<ProductDetail type="Pet"/>}></Route>
+          <Route path="/detail/phu-kien/:id" element={<ProductDetail type="Product"/>}></Route>
+
           
           <Route element={<PrivateRoute/>}>
-              <Route path="/detail/:id" element={<ProductDetail/>}></Route>
+              
               <Route path="/cart" element={<CartPage></CartPage>}></Route>
               <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
           </Route>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const DetailInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  
   gap: 15px;
   width: 60%;
 `;
@@ -56,16 +57,16 @@ const CartBtn = styled.button`
   padding: 10px 20px;
 `;
 
-const DetailTable = styled.table`
-  width: 90%;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-color: rgb(175, 175, 175);
-  border-collapse: collapse;
-  font-size: 18px;
-  color: rgb(87, 86, 86);
-`;
+// const DetailTable = styled.table`
+//   width: 90%;
+//   border-left: none;
+//   border-right: none;
+//   border-top: none;
+//   border-color: rgb(175, 175, 175);
+//   border-collapse: collapse;
+//   font-size: 18px;
+//   color: rgb(87, 86, 86);
+// `;
 
 const DetailTableItemHeader = styled.td`
   width: 25%;
@@ -97,7 +98,7 @@ function DetailInfo(){
 
         <>
             <DetailInfoContainer>
-                <PageDirect></PageDirect>
+                {/* <PageDirect></PageDirect> */}
                 <DetailNameContainer>
 
                     <DetailNameId>
@@ -115,143 +116,143 @@ function DetailInfo(){
                 </DetailNameContainer>
 
                 <DetailBtnGroup>
-                    <BuyBtn>Purchase Now</BuyBtn>
-                    <CartBtn>Put It In Cart</CartBtn>
+                    <BuyBtn>Mua ngay</BuyBtn>
+                    <CartBtn>Bỏ vào giỏ hàng</CartBtn>
                 </DetailBtnGroup>
 
 
-                <div className='Detail-Table-Container'>
-                    <DetailTable>
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader>SKU</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                
-                                    : #1000078
-                                </DetailItemContent>
-                            </DetailTableItem>
-                        </tr>
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader>Gender</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Female
-                                </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-                        
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Age</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
                 
-                                    : 2 Months
-                                    </DetailItemContent>
-                            </DetailTableItem>
+                {/* <DetailTable>
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader>SKU</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
                             
-                        </tr>
+                                : #1000078
+                            </DetailItemContent>
+                        </DetailTableItem>
+                    </tr>
 
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Size</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Small
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                        </tr>
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Color</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Apricot & Tan
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Vaccinated</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Yes
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Dewormed</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Yes
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Cert</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Yes
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Microchip</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Small
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Location</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : Vietnam
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Published Date</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                    : 12-Oct-2022
-                                    </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
-
-                        <tr className='Detail-Table-Row'>
-                            <DetailTableItemHeader className='Detail-Table-Item-Header'>Additional Information</DetailTableItemHeader>
-                            <DetailTableItem>
-                                <DetailItemContent>
-                                : Pure breed Shih Tzu. Good body structure. With MKA cert and Microchip. Father from champion lineage.
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader>Gender</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Female
+                            </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+                    
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Age</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+            
+                                : 2 Months
                                 </DetailItemContent>
-                            </DetailTableItem>
-                            
-                        </tr>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Size</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Small
+                                </DetailItemContent>
+                        </DetailTableItem>
+                    </tr>
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Color</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Apricot & Tan
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Vaccinated</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Yes
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
 
 
-                    </DetailTable>
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Dewormed</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Yes
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
 
 
-                </div>
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Cert</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Yes
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Microchip</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Small
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Location</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : Vietnam
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Published Date</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                                : 12-Oct-2022
+                                </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+                    <tr className='Detail-Table-Row'>
+                        <DetailTableItemHeader className='Detail-Table-Item-Header'>Additional Information</DetailTableItemHeader>
+                        <DetailTableItem>
+                            <DetailItemContent>
+                            : Pure breed Shih Tzu. Good body structure. With MKA cert and Microchip. Father from champion lineage.
+                            </DetailItemContent>
+                        </DetailTableItem>
+                        
+                    </tr>
+
+
+                </DetailTable> */}
+
+
+                
             </DetailInfoContainer>
         </>
     )
