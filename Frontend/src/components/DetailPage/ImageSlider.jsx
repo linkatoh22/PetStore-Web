@@ -21,11 +21,11 @@ const MainPicContainer = styled.div`
 `;
 
 const MainPic = styled.img`
-  width: 90%;
+  width: 100%;
   border-radius: 50px;
   object-fit: cover;
   object-position: center;
-  height:450px;
+  height:500px;
 `;
 
 const PrevBtn = styled.button`

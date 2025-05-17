@@ -1,6 +1,11 @@
 // import '../../styles/components/Recommend.css'
 import PetsCard from '../Card/PetsCard'
 import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/bundle'
+
 const RecommendContainer = styled.div`
   width: 100%;
   display: flex;
@@ -15,9 +20,7 @@ const RecommendContext = styled.div`
 `;
 
 const RecommendPetcard = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 10px;
+  padding-block:1rem;
 `;
 
 
@@ -26,17 +29,33 @@ function Recommmend(){
     return(
         <>
             <RecommendContainer className='recommend-container'>
-                <RecommendContainer className='recommend-container'>
-                    What's now
-                </RecommendContainer>
+                
 
-                <RecommendContext className='recommend-context'>See more puppies</RecommendContext>
+                <RecommendContext className='recommend-context'>Các sản phẩm tương tự</RecommendContext>
 
                 <RecommendPetcard className='recommend-petcard'>
-                        <PetsCard/>
-                        <PetsCard/>
-                        <PetsCard/>
-                        <PetsCard/>
+                        <Swiper
+                          modules={[Navigation, Pagination, Scrollbar, A11y]}
+                        spaceBetween={50}
+                        slidesPerView={4}
+                        navigation
+                        pagination={{ clickable: true }}
+                        scrollbar={{ draggable: true }}
+                        onSwiper={(swiper) => console.log(swiper)}
+                        onSlideChange={() => console.log('slide change')}
+                        >
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                          <SwiperSlide><PetsCard/></SwiperSlide>
+                        </Swiper>
+                        
+                        
+                        
                 </RecommendPetcard>
             </RecommendContainer>
 

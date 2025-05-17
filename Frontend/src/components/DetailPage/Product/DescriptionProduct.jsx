@@ -38,7 +38,7 @@ const FeedbackItemContainer = styled.div`
 
 
 
-export function DescriptionPet(){
+export function DescriptionProduct(){
     return(
 
         <Accordion defaultActiveKey="0"  alwaysOpen>

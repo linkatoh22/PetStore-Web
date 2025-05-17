@@ -7,9 +7,8 @@ import detail4 from "../../../assets/pic/detail-product/detail4.png";
 import detail5 from "../../../assets/pic/detail-product/detail5.png";
 import detail6 from "../../../assets/pic/detail-product/detail6.png";
 import ImageSlider from "../ImageSlider";
-import { DetailPetTable } from "./DetailPetTable";
-
-import { DescriptionPet } from "./DescriptionPet";
+import { DetailProduct } from "./DetailProduct";
+import { DescriptionProduct } from "./DescriptionProduct";
 
 import Recommmend from "../Recommend";
 
@@ -78,7 +77,7 @@ const myPic=[
         {pic:detail6},
         {pic:detail6},
     ]
-export function PetDetailConainter(){
+export function ProductDetailConainter(){
     return(
         <>
             <DetailContainer>
@@ -86,10 +85,10 @@ export function PetDetailConainter(){
                 <DetailItem>
 
                     <ImageSlider PicImg={myPic}></ImageSlider>
-                    <DetailPetTable label={PetLabel} value={PetValue}></DetailPetTable>
+                    <DetailProduct label={PetLabel} value={PetValue}></DetailProduct>
                 </DetailItem>
 
-                <DescriptionPet></DescriptionPet>
+                <DescriptionProduct></DescriptionProduct>
                 <Recommmend></Recommmend>
                 
 

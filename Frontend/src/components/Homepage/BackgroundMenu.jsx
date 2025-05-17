@@ -4,9 +4,8 @@ import Background from "../../assets/background.png"
 import HoldHandPic from "../../assets/holdhand.png"
 import CategoryPic from "../../assets/background-0.jpg"
 import { useState } from 'react';
-import { IconButton } from "@mui/material";
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+
+
 import { useNavigate } from 'react-router-dom';
 const BackgroundMenuContainer = styled.img`
   
@@ -118,14 +117,10 @@ function BackgroundMenu(){
             </BackgroundMenuContainer>
 
                     
-                    {/* <IconButton style={{position:"absolute",}} >
-                          <KeyboardArrowRightIcon  color="info" size="large" />
-                    </IconButton> */}
+                   
 
                 <DescriptionMenu>
-                <IconButton style={{position:"absolute",top:"100%"}} >
-                          <KeyboardArrowLeftIcon  color="primary" fontSize='large' />
-                    </IconButton>
+               
 
                     <Header1Menu>Thêm một người bạn</Header1Menu>
                     <Header2Menu>Thêm vạn niềm vui!</Header2Menu>

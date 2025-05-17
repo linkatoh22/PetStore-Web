@@ -55,12 +55,13 @@ function PetsCard({Item,type} ){
     const age = Item?.age || "Không xác định";
     // const price = Item?.price ? `${Item.price} VND` : "Chưa cập nhật";
     const brand = Item?.brand || "Chưa cập nhập";
-    const price = Item?.minPrice?? Item.price;
-        const formattedPrice = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(price);
+    // const price = Item?.minPrice?? Item.price;
+    //     const formattedPrice = new Intl.NumberFormat('vi-VN', {
+    //         style: 'currency',
+    //         currency: 'VND'
+    //     }).format(price);
     
+        const formattedPrice ="Chưa cập nhập"
 
     return(
         <>
