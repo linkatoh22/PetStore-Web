@@ -53,7 +53,6 @@ export function FeedBackItem({feedback}){
     
     const ContentBtn=()=>{
         if(ContinueTruncate){
-            console.log("Display:",displayText.length)
             return <TruncateBtn onClick={()=>SetExpanded(Expaned+1)}>Xem thêm</TruncateBtn>
             
         }

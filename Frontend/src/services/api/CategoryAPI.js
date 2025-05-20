@@ -37,7 +37,7 @@ export const petQueryFetchFilter = async (gender,color,maxPrice,minPrice,sort,br
 
         // console.log(BASE_URL+`pet-query`,{params:queryParams})
         const response  = await axios.get(BASE_URL+`/pet/pet-query`,{params:queryParams})
-        console.log("KET QUA NE", response.data)
+        
         return response.data;
     }
     catch(error){

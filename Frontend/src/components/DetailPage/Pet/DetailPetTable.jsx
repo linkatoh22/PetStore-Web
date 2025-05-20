@@ -107,9 +107,45 @@ const QuantityInput = styled.input`
     }
     
 `
-export function DetailPetTable({label,value}){
-      const labelMap = Object.assign({}, ...label);
-    const valueMap = Object.assign({}, ...value);
+
+const PetLabel = [
+    
+    { "sku": "SKU"},
+    { "age": "Tháng tuổi" },
+    { "gender": "Giới tính"},
+    { "breed": "Giống"},
+    {"species":"Loài"},
+    { "color": "Màu"},
+    { "status": "Tình trạng" },
+    { "dewormed": "Tẩy giun" },
+    { "source": "Nguồn gốc" },
+    { "health": "Sức khỏe" },
+    { "shipping": "Vận chuyển"},
+    { "vaccinated": "Tiêm phòng"}
+];
+
+export function DetailPetTable({pet}){
+
+    const PetValue = [
+   
+    {"sku":pet.sku},
+    {"age":pet.age},
+    {"gender":pet.gender},
+    {"breed":pet.breed},
+     {"species":pet.species},
+     { "color": pet.color},
+    { "status": pet.status },
+    { "dewormed":pet.dewormed ==true?"Đã tẩy giun":"Chưa tẩy giun" },
+    { "source": pet.source },
+    { "health": pet.health },
+    { "shipping": pet.shipping},
+    { "vaccinated": pet.vaccinated ==true? "Đã tiêm phòng":"Chưa tiêm phòng"}
+
+
+  ]
+
+      const labelMap = Object.assign({}, ...PetLabel);
+    const valueMap = Object.assign({}, ...PetValue);
 
      const entries = Object.keys(labelMap).map((key) => ({
             key,
@@ -119,7 +155,11 @@ export function DetailPetTable({label,value}){
   for (let i = 0; i < entries.length; i += 2) {
     rows.push(entries.slice(i, i + 2));
   }
-
+     const price = pet.price;
+      const formattedPrice = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(price);
 
     return(
         <DetailPetContainer>  
@@ -127,15 +167,15 @@ export function DetailPetTable({label,value}){
             <DetailNameContainer>
 
                     <DetailNameId>
-                        SKU #1000078
+                        #{pet.sku}
                     </DetailNameId>
 
                     <DetailName>
-                        Shiba Inu Sepia
+                        {pet.name}
                     </DetailName>
 
                     <DetailPrice>
-                        34.000.000 VND
+                       {formattedPrice}
                     </DetailPrice>
 
                 </DetailNameContainer>

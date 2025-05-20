@@ -1,6 +1,21 @@
 const Pet = require("../../models/PetModel")
 
+const getDetailPet = async (req,res,next)=>{
+    try{
+        const {id} = req.query;
+        const PetDetail =  await Pet.findById(id)
+        return res.status(200).json({
+            status:"Success",
+            code:200,
+            message:"Successfully query Pet most sold",
+            PetDetail});  
 
+    }
+    catch(error){
+        next(error)
+    }
+    
+}
 const fetchPetSoldDesc = async (req,res,next)=>{
 
     try{
@@ -165,4 +180,4 @@ const SearchPet = async (req,res,next) =>{
     }
 }
 
-module.exports = {fetchPetSoldDesc,PetQuery,SearchPet}
+module.exports = {fetchPetSoldDesc,PetQuery,SearchPet,getDetailPet}

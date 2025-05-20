@@ -5,32 +5,24 @@ import MainMenu from '../components/MainMenu'
 // import Recommmend from '../components/DetailPage/Recommend'
 import { PetDetailConainter } from '../components/DetailPage/Pet/PetDetailContainer';
 import { ProductDetailConainter } from '../components/DetailPage/Product/ProductDetailContainer';
+import {Router,useParams} from "react-router-dom"
 import Footer from '../components/Footer'
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 
 function ProductDetail({type}){
+    const {id} = useParams();
+    
     return(
         <>
             <MainMenu></MainMenu>
-            {type=="Pet"? <PetDetailConainter></PetDetailConainter>:<ProductDetailConainter></ProductDetailConainter>}
+            {type=="Pet"? 
+            <PetDetailConainter id={id}></PetDetailConainter>
+            :
+            <ProductDetailConainter></ProductDetailConainter>}
 
-            {/* <ProductDetailContainer>
-                
-                
-                
-                <ProductDetailItem>
-
-                    <DetailPic/>
-                    <DetailInfo/>
-                    
-
-                </ProductDetailItem>
-
-                <Feedback/>
-                <Recommmend/>
-
-            </ProductDetailContainer> */}
+            
             <Footer></Footer>
         </>
     )

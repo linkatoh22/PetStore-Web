@@ -8,7 +8,7 @@ import detail5 from "../../../assets/pic/detail-product/detail5.png";
 import detail6 from "../../../assets/pic/detail-product/detail6.png";
 import ImageSlider from "../ImageSlider";
 import { DetailPetTable } from "./DetailPetTable";
-
+import { useGetDetailPet } from "../../../services/hook/DetailHook";
 import { DescriptionPet } from "./DescriptionPet";
 
 import Recommmend from "../Recommend";
@@ -78,15 +78,16 @@ const myPic=[
         {pic:detail6},
         {pic:detail6},
     ]
-export function PetDetailConainter(){
+export function PetDetailConainter({id}){
+    const {data:pet} = useGetDetailPet(id);
     return(
         <>
             <DetailContainer>
 
                 <DetailItem>
 
-                    <ImageSlider PicImg={myPic}></ImageSlider>
-                    <DetailPetTable label={PetLabel} value={PetValue}></DetailPetTable>
+                    <ImageSlider PicImg={pet.PetDetail.image}></ImageSlider>
+                    <DetailPetTable pet={pet.PetDetail} label={PetLabel} value={PetValue}></DetailPetTable>
                 </DetailItem>
 
                 <DescriptionPet></DescriptionPet>

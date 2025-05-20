@@ -119,7 +119,7 @@ function ImageSlider({PicImg}){
             <ImageSliderContainer className="Image-Silder-Container">
                 <MainPicContainer className='Main-Pic-Container'>
 
-                    <MainPic className="Main-Pic" src={PicImg[index].pic}></MainPic>
+                    <MainPic className="Main-Pic" src={PicImg[index]}></MainPic>
 
                     <PrevBtn onClick={()=>{Prev(index)}} className='prev-btn'>{"<"}</PrevBtn> 
 
@@ -135,7 +135,7 @@ function ImageSlider({PicImg}){
                 <PicSlider ref={ContainerRef}className="Pic-Slider">
                     
                         {PicImg.map((pic,index)=>{
-                            return <PicItem key={index} src={pic.pic} className="Pic-Item" onClick={()=>{ClickImg(index)}}/> 
+                            return <PicItem key={index} src={pic} className="Pic-Item" onClick={()=>{ClickImg(index)}}/> 
                         })}
                         
 
