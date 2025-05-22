@@ -137,7 +137,10 @@ const StyledUserIcon = styled(FaRegUser)`
   }
 `
 function MainMenu() {
-    const accessToken = localStorage.getItem('accessToken');
+    const [accessToken,SetAccessToken] = useState(localStorage.getItem('accessToken'));
+    useEffect(()=>{
+        console.log('Access Token: ',accessToken)
+    },[accessToken])
     // const [isLogin,setIsLogin] = useState(false);
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);

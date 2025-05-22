@@ -69,15 +69,7 @@ const PetValue = [
 
 
 ]
-const myPic=[
-        {pic:detail1},
-        {pic:detail2},
-        {pic:detail3},
-        {pic:detail4},
-        {pic:detail5},
-        {pic:detail6},
-        {pic:detail6},
-    ]
+
 export function PetDetailConainter({id}){
     const {data:pet} = useGetDetailPet(id);
     return(
@@ -86,8 +78,8 @@ export function PetDetailConainter({id}){
 
                 <DetailItem>
 
-                    <ImageSlider PicImg={pet.PetDetail.image}></ImageSlider>
-                    <DetailPetTable pet={pet.PetDetail} label={PetLabel} value={PetValue}></DetailPetTable>
+                    <ImageSlider PicImg={pet?.PetDetail?.image}></ImageSlider>
+                    <DetailPetTable pet={pet?.PetDetail} label={PetLabel} value={PetValue}></DetailPetTable>
                 </DetailItem>
 
                 <DescriptionPet></DescriptionPet>

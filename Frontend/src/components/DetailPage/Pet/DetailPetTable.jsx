@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 const DetailPetContainer = styled.div`
     display:flex;
@@ -98,7 +99,8 @@ const QuantityBtn = styled.button`
 
 `
 const QuantityInput = styled.input`
-    width:20%;
+    width:25%;
+    text-align:center;
     padding:0.15rem;
     font-size:1.4rem;
     border:1px solid var(--grey-600)
@@ -125,41 +127,59 @@ const PetLabel = [
 ];
 
 export function DetailPetTable({pet}){
-
+    const userId = "6819db13fca75fe19f49027c"
+    const petQuantity = pet?.quantity??0;
+    const price = pet?.price;
+    const [cartQuantity,SetCartQuantity] = useState(0);
+    const formattedPrice = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(price);
+    // useEffect(
+    //   ()=>{
+    //     console.log(petQuantity)
+    //   },[petQuantity]
+    // )
     const PetValue = [
    
-    {"sku":pet.sku},
-    {"age":pet.age},
-    {"gender":pet.gender},
-    {"breed":pet.breed},
-     {"species":pet.species},
-     { "color": pet.color},
-    { "status": pet.status },
-    { "dewormed":pet.dewormed ==true?"Đã tẩy giun":"Chưa tẩy giun" },
-    { "source": pet.source },
-    { "health": pet.health },
-    { "shipping": pet.shipping},
-    { "vaccinated": pet.vaccinated ==true? "Đã tiêm phòng":"Chưa tiêm phòng"}
+    {"sku":pet?.sku??"Chưa cập nhập"},
+    {"age":pet?.age??"Chưa cập nhập"},
+    {"gender":pet?.gender??"Chưa cập nhập"},
+    {"breed":pet?.breed??"Chưa cập nhập"},
+     {"species":pet?.species??"Chưa cập nhập"},
+     { "color": pet?.color??"Chưa cập nhập"},
+    { "status": pet?.status ??"Chưa cập nhập"},
+    { "dewormed":pet?.dewormed ==true?"Đã tẩy giun":"Chưa tẩy giun" },
+    { "source": pet?.source ??"Chưa cập nhập"},
+    { "health": pet?.health ??"Chưa cập nhập"},
+    { "shipping": pet?.shipping??"Chưa cập nhập"},
+    { "vaccinated": pet?.vaccinated ==true? "Đã tiêm phòng":"Chưa tiêm phòng"}
 
 
   ]
 
-      const labelMap = Object.assign({}, ...PetLabel);
+    const labelMap = Object.assign({}, ...PetLabel);
     const valueMap = Object.assign({}, ...PetValue);
+    const rows = [];
 
-     const entries = Object.keys(labelMap).map((key) => ({
+    const entries = Object.keys(labelMap).map((key) => ({
             key,
             text: `${labelMap[key]}: ${valueMap[key] || ""}`,
         }));
-     const rows = [];
-  for (let i = 0; i < entries.length; i += 2) {
-    rows.push(entries.slice(i, i + 2));
-  }
-     const price = pet.price;
-      const formattedPrice = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(price);
+
+    for (let i = 0; i < entries.length; i += 2) {
+        rows.push(entries.slice(i, i + 2));
+      }
+
+     const HandleQuantity = (quantity)=>{
+      console.log(quantity)
+        if(quantity>petQuantity)
+          SetCartQuantity(petQuantity)
+        else if(quantity<0)
+          SetCartQuantity(0)
+        else
+          SetCartQuantity(quantity)
+     }
 
     return(
         <DetailPetContainer>  
@@ -167,11 +187,11 @@ export function DetailPetTable({pet}){
             <DetailNameContainer>
 
                     <DetailNameId>
-                        #{pet.sku}
+                        {pet?.sku}
                     </DetailNameId>
 
                     <DetailName>
-                        {pet.name}
+                        {pet?.name}
                     </DetailName>
 
                     <DetailPrice>
@@ -183,9 +203,22 @@ export function DetailPetTable({pet}){
             <QuantityContainer>
                 <div>Số lượng: </div>
                 <div>
-                    <QuantityBtn>-</QuantityBtn>
-                    <QuantityInput type="number"></QuantityInput>
-                    <QuantityBtn>+</QuantityBtn>
+
+                    <QuantityBtn 
+                      onClick={()=>HandleQuantity(cartQuantity-1)}
+                      >-</QuantityBtn>
+
+                    <QuantityInput 
+                    onChange={(e)=>HandleQuantity(e.target.value)}
+                    value={cartQuantity}
+                    type="number" 
+                    min="0" 
+                    ></QuantityInput>
+
+                    <QuantityBtn 
+                      onClick={()=>HandleQuantity(cartQuantity+1)}
+                      >+</QuantityBtn>
+                      
                 </div>
                 
             </QuantityContainer>

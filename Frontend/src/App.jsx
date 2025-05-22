@@ -16,11 +16,13 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import PrivateRoute from './PrivateRoute.jsx'
 import setUpAxiosInterceptors from './services/interceptor/axiosClient.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthProvider } from './context/AuthProvider.js'
 setUpAxiosInterceptors();
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
     <>
+    <AuthProvider>
     <GoogleOAuthProvider clientId={clientId}>
     <CustomQueryClientProvider>
       <Router>
@@ -80,6 +82,7 @@ function App() {
       </CustomQueryClientProvider>
 
     </GoogleOAuthProvider>
+    </AuthProvider>
     </>
   )
 }

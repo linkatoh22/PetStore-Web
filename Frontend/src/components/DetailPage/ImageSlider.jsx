@@ -69,10 +69,19 @@ const PicItem = styled.img`
   cursor: pointer;
 `;
 
-
+const myPic=[
+        {pic:detail1},
+        {pic:detail2},
+        {pic:detail3},
+        {pic:detail4},
+        {pic:detail5},
+        {pic:detail6},
+        {pic:detail6},
+    ]
 
 
 function ImageSlider({PicImg}){
+    const PicImgMain = PicImg? PicImg:myPic
     var [index,useIndex]=useState(0);
     const ContainerRef = useRef();
     const [ScrollPosition,setScrollPosition] = useState(0);
@@ -88,7 +97,7 @@ function ImageSlider({PicImg}){
     const Next =(val)=>{
         
         let temp= val+1
-        if(temp<PicImg.length)
+        if(temp<PicImgMain.length)
             useIndex(index+=1);
         else
             useIndex(0);
@@ -102,7 +111,7 @@ function ImageSlider({PicImg}){
         if(val>0)
             useIndex(val-=1);
         else
-            useIndex(PicImg.length-1);
+            useIndex(PicImgMain.length-1);
         handleScroll(-ITEM_WIDTH);
         
     }
@@ -119,7 +128,7 @@ function ImageSlider({PicImg}){
             <ImageSliderContainer className="Image-Silder-Container">
                 <MainPicContainer className='Main-Pic-Container'>
 
-                    <MainPic className="Main-Pic" src={PicImg[index]}></MainPic>
+                    <MainPic className="Main-Pic" src={PicImgMain[index]}></MainPic>
 
                     <PrevBtn onClick={()=>{Prev(index)}} className='prev-btn'>{"<"}</PrevBtn> 
 
@@ -132,9 +141,9 @@ function ImageSlider({PicImg}){
                              
                 
 
-                <PicSlider ref={ContainerRef}className="Pic-Slider">
+                <PicSlider ref={ContainerRef} className="Pic-Slider">
                     
-                        {PicImg.map((pic,index)=>{
+                        {PicImgMain.map((pic,index)=>{
                             return <PicItem key={index} src={pic} className="Pic-Item" onClick={()=>{ClickImg(index)}}/> 
                         })}
                         
