@@ -5,9 +5,9 @@ import { CiSearch } from "react-icons/ci";
 import { FaRegUser,FaCartPlus } from "react-icons/fa";
 import styled from "styled-components";
 import { Dropdown } from './Dropdown';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { AuthContext } from '../context/AuthProvider';
 
 const MainMenuContainer = styled.div`
     width: 100%;
@@ -137,11 +137,9 @@ const StyledUserIcon = styled(FaRegUser)`
   }
 `
 function MainMenu() {
-    const [accessToken,SetAccessToken] = useState(localStorage.getItem('accessToken'));
-    useEffect(()=>{
-        console.log('Access Token: ',accessToken)
-    },[accessToken])
-    // const [isLogin,setIsLogin] = useState(false);
+
+    const {accessToken} = useContext(AuthContext);
+    
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);
     const [isHoverProduct,setIsHoverProduct] = useState(false);

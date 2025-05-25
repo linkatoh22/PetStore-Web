@@ -4,9 +4,9 @@ import { MdLockOutline } from "react-icons/md";
 import Google from "../../assets/svg/google/google";
 import styled from "styled-components";
 import { useLogin } from "../../services/hook/LoginHook";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, useLocation  } from 'react-router-dom';
-
+import { AuthContext } from "../../context/AuthProvider";
 import { useGoogleLogin } from '@react-oauth/google';
 const LoginFormContainer = styled.div`
   display: flex;
@@ -95,6 +95,7 @@ const LoginButton = styled.button`
 `;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 function LoginForm(){
+    const {login} = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation();
     const {mutate:logIn}  = useLogin();
@@ -129,7 +130,11 @@ function LoginForm(){
             if(data.status == "Success"){
               console.log(data)
               alert("Đăng nhập thành công!");
-              localStorage.setItem("accessToken",data.token.accessToken)
+
+              if(data.token.accessToken){
+                login(data.token.accessToken)
+              }
+              
               navigate(`/`);
             } 
           },
@@ -146,7 +151,10 @@ function LoginForm(){
 
     onSuccess: (tokenResponse) => {
       console.log('Đăng nhập thành công: ',tokenResponse);
-      localStorage.setItem("accessToken",tokenResponse.access_token)
+      if(tokenResponse){
+                login(tokenResponse)
+              }
+     
       navigate("/")
     },
 
