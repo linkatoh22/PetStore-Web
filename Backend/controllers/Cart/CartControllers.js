@@ -7,7 +7,7 @@ const AddToCart = async (req,res,next) =>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("AddToCart: ", fullUrl);
-        let price=0;
+        var price=0;
         const {itemType,item,variant,quantity} = req.body;
         const userId = req.user._id;
         

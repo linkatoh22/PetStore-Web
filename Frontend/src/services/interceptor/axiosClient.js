@@ -6,8 +6,15 @@ const setUpAxiosInterceptors = ()=>{
         (response)=>response,
 
         async(error)=>{
-            const  originalRequest = error.config;
-            if(originalRequest.useAuth& error.response.status === 401 && !originalRequest._retry){
+            console.log("Axios Interceptor Error: ", error.response.status);
+            
+            var  originalRequest = error.config;
+            
+            console.log(`${originalRequest.useAuth} ${error.response.status} ${originalRequest._retry}`)
+
+
+            if(originalRequest.useAuth && error.response.status === 401 && !originalRequest._retry){
+
                 
                 await resetAccessToken();
                 const newToken = localStorage.getItem("accessToken");

@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext,useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAddToCart } from "../../../services/hook/DetailHook";
+import { AuthContext } from "../../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 const DetailPetContainer = styled.div`
     display:flex;
     flex-direction:column;
@@ -127,19 +130,19 @@ const PetLabel = [
 ];
 
 export function DetailPetTable({pet}){
+    
+    const {accessToken} = useContext(AuthContext);
+    const {mutate:addToCart} = useAddToCart(accessToken);
     const userId = "6819db13fca75fe19f49027c"
     const petQuantity = pet?.quantity??0;
     const price = pet?.price;
+    const navigate = useNavigate();
     const [cartQuantity,SetCartQuantity] = useState(0);
     const formattedPrice = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND'
         }).format(price);
-    // useEffect(
-    //   ()=>{
-    //     console.log(petQuantity)
-    //   },[petQuantity]
-    // )
+    
     const PetValue = [
    
     {"sku":pet?.sku??"Chưa cập nhập"},
@@ -172,7 +175,6 @@ export function DetailPetTable({pet}){
       }
 
      const HandleQuantity = (quantity)=>{
-      console.log(quantity)
         if(quantity>petQuantity)
           SetCartQuantity(petQuantity)
         else if(quantity<0)
@@ -181,6 +183,31 @@ export function DetailPetTable({pet}){
           SetCartQuantity(quantity)
      }
 
+     const HandleAddToCart = () => { 
+        console.log("Thêm vào giỏ hàng với số lượng: " + cartQuantity);
+        if(accessToken){
+            addToCart({
+              itemType:"Pet",
+              item: pet._id,
+              quantity:cartQuantity
+            },
+            {
+              onSuccess:(data)=>{
+                alert("Thêm vào giỏ hàng thành công!");
+              },
+              onError:(error)=>{
+                const message=  error.respnse?.data?.message || error.message;
+                alert("Lỗi thêm vào giỏ hàng: " + message);
+              }
+            }
+          )
+          return;
+        }
+
+        navigate("/dang-nhap");
+        
+
+     }
     return(
         <DetailPetContainer>  
 
@@ -229,7 +256,7 @@ export function DetailPetTable({pet}){
                     {row.map((cell, cellIndex) => (
                         <Cell key={cellIndex}>{cell.text}</Cell>
                     ))}
-                    {row.length === 1 && <Cell />} {/* Nếu lẻ, thêm ô trống */}
+                    {row.length === 1 && <Cell />}
                     </Row>
                 ))}
             </Table>
@@ -240,7 +267,7 @@ export function DetailPetTable({pet}){
                     
 
                     <BuyBtn>Mua ngay</BuyBtn>
-                    <CartBtn>Bỏ vào giỏ hàng</CartBtn>
+                    <CartBtn onClick={()=>HandleAddToCart()}>Bỏ vào giỏ hàng</CartBtn>
             </DetailBtnGroup>
 
             

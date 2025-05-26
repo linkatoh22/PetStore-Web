@@ -17,18 +17,31 @@ export const GetDetailPet = async (id)=>{
     }
 }
 
-export const AddToCart = async({itemType,item,variant,quantity})=>{
+export const AddToCart = async({ itemType, item, variant, quantity }, accessToken)=>{
     try{
-        var reqBody;
+        console.log("ACCESS TOKEN NE",accessToken);
+        console.log("ADD TO CART NE",itemType,item,variant,quantity);
+        var reqBody={};
         if (itemType) reqBody.itemType=itemType;
         if(item) reqBody.item = item;
-        if(variant) reqBody.quantity =quantity;
+        if (quantity) reqBody.quantity =quantity;
+        if (variant) reqBody.variant = variant;
 
-        const response = await axios.post(`${BASE_URL}/cart/add-to-cart`,reqBody);
+        const response = await axios.post(`${BASE_URL}/cart/add-to-cart`,
+            reqBody,
+            {
+                headers:{
+                    Authorization:`Bearer ${accessToken}`
+                }
+                ,
+            useAuth: true
+            }
+        );
+        console.log("DAT HANG THANH CONG", response.data);
         return response.data;
     }
-    catch{
+    catch(error){
         console.error("Lỗi khi fetch data:",error);
-        return [];
+        throw error;
     }
 }
