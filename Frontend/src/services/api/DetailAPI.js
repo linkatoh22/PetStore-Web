@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosClient from "../interceptor/axiosClient";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GetDetailPet = async (id)=>{
@@ -19,22 +20,17 @@ export const GetDetailPet = async (id)=>{
 
 export const AddToCart = async({ itemType, item, variant, quantity }, accessToken)=>{
     try{
-        console.log("ACCESS TOKEN NE",accessToken);
-        console.log("ADD TO CART NE",itemType,item,variant,quantity);
+        
         var reqBody={};
         if (itemType) reqBody.itemType=itemType;
         if(item) reqBody.item = item;
         if (quantity) reqBody.quantity =quantity;
         if (variant) reqBody.variant = variant;
 
-        const response = await axios.post(`${BASE_URL}/cart/add-to-cart`,
+        const response = await axiosClient.post(`/cart/add-to-cart`,
             reqBody,
             {
-                headers:{
-                    Authorization:`Bearer ${accessToken}`
-                }
-                ,
-            useAuth: true
+                useAuth: true
             }
         );
         console.log("DAT HANG THANH CONG", response.data);

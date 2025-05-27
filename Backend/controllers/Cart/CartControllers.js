@@ -7,6 +7,7 @@ const AddToCart = async (req,res,next) =>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("AddToCart: ", fullUrl);
+
         var price=0;
         const {itemType,item,variant,quantity} = req.body;
         const userId = req.user._id;
@@ -36,6 +37,7 @@ const AddToCart = async (req,res,next) =>{
             }
 
             const foundProduct = await Product.findById(item);
+
             if(!foundProduct){
                 res.status(404);
                 throw Error("Product not found")
@@ -63,8 +65,6 @@ const AddToCart = async (req,res,next) =>{
 
             }
             
-
-            
             if(quantity<1){
                 
                 res.status(400)
@@ -78,10 +78,29 @@ const AddToCart = async (req,res,next) =>{
             }
             price=foundVariants.price;
 
-
         }
         else if(itemType==="Pet"){
             const foundPet = await Pet.findById(item);
+            const itemIndex = cart.items.findIndex(CartItem=>(CartItem.item.toString() === item))
+
+            if(itemIndex!=-1){
+                const updatedQuantity = cart.items[itemIndex].quantity +quantity;
+                if(updatedQuantity> foundPet.quantity){
+                    res.status(400);
+                    throw Error("Quantity exceed stock")
+                }
+                cart.items[itemIndex].quantity=updatedQuantity;
+                cart.items[itemIndex].price=foundPet.price* updatedQuantity;
+                
+                await cart.save();
+                return res.status(200).json({
+                    message:"Updated Quantity Successfully",
+                    status:"Success",
+                    code:200,
+                    cart
+                })
+            }
+
             if(!foundPet){
                 res.status(404);
                 throw Error("Pet not found");

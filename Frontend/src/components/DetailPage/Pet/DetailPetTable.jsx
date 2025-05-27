@@ -133,11 +133,10 @@ export function DetailPetTable({pet}){
     
     const {accessToken} = useContext(AuthContext);
     const {mutate:addToCart} = useAddToCart(accessToken);
-    const userId = "6819db13fca75fe19f49027c"
     const petQuantity = pet?.quantity??0;
     const price = pet?.price;
     const navigate = useNavigate();
-    const [cartQuantity,SetCartQuantity] = useState(0);
+    const [cartQuantity,SetCartQuantity] = useState(1);
     const formattedPrice = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND'
@@ -186,6 +185,7 @@ export function DetailPetTable({pet}){
      const HandleAddToCart = () => { 
         console.log("Thêm vào giỏ hàng với số lượng: " + cartQuantity);
         if(accessToken){
+           
             addToCart({
               itemType:"Pet",
               item: pet._id,
@@ -196,17 +196,15 @@ export function DetailPetTable({pet}){
                 alert("Thêm vào giỏ hàng thành công!");
               },
               onError:(error)=>{
-                const message=  error.respnse?.data?.message || error.message;
-                alert("Lỗi thêm vào giỏ hàng: " + message);
+                const message =  error.response?.data?.message || error.message;
               }
             }
           )
-          return;
         }
-
-        navigate("/dang-nhap");
+        else{
+          navigate("/dang-nhap");
+        }
         
-
      }
     return(
         <DetailPetContainer>  
@@ -239,7 +237,7 @@ export function DetailPetTable({pet}){
                     onChange={(e)=>HandleQuantity(e.target.value)}
                     value={cartQuantity}
                     type="number" 
-                    min="0" 
+                    min="1" 
                     ></QuantityInput>
 
                     <QuantityBtn 

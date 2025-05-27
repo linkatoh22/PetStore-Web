@@ -77,7 +77,7 @@ const myPic=[
         {pic:detail6},
         {pic:detail6},
     ]
-export function ProductDetailConainter(){
+export function ProductDetailConainter({id}){
     return(
         <>
             <DetailContainer>
@@ -89,7 +89,7 @@ export function ProductDetailConainter(){
                 </DetailItem>
 
                 <DescriptionProduct></DescriptionProduct>
-                <Recommmend></Recommmend>
+                {/* <Recommmend></Recommmend> */}
                 
 
 

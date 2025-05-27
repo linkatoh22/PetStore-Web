@@ -83,7 +83,7 @@ export function PetDetailConainter({id}){
                 </DetailItem>
 
                 <DescriptionPet></DescriptionPet>
-                <Recommmend></Recommmend>
+                {/* <Recommmend></Recommmend> */}
                 
 
 

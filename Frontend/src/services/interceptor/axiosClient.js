@@ -1,37 +1,57 @@
 import axios from "axios";
 import { resetAccessToken } from "../api/HandleAccessTokenAPI";
 
-const setUpAxiosInterceptors = ()=>{
-    axios.interceptors.response.use(
-        (response)=>response,
+const axiosClient = axios.create({
+    baseURL: import.meta.env.VITE_BASE_URL,
+    headers:{
+        "Content-Type":"application/json"
+    }
+})
+axiosClient.interceptors.request.use((config)=>{
+    if(config.useAuth){
+        const token  = localStorage.getItem("accessToken");
+        if(token){
+            config.headers.Authorization = `Bearer ${token}`
+        }
+    }
+    return config;
+})
+axiosClient.interceptors.response.use(
+    (response)=>response,
 
-        async(error)=>{
-            console.log("Axios Interceptor Error: ", error.response.status);
+    async(error)=>{
+        
+        
+        const  originalRequest = error.config;
+
+        if(
+            originalRequest&&
+            originalRequest.useAuth &&
+            error.response &&
+            error.response.status === 401 &&
+            !originalRequest._retry
+        ){
             
-            var  originalRequest = error.config;
+            originalRequest._retry = true;
+            await resetAccessToken();
+
+            const newToken = localStorage.getItem("accessToken");
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${newToken}`
+
+            return axios(originalRequest)
             
-            console.log(`${originalRequest.useAuth} ${error.response.status} ${originalRequest._retry}`)
 
 
-            if(originalRequest.useAuth && error.response.status === 401 && !originalRequest._retry){
-
-                
-                await resetAccessToken();
-                const newToken = localStorage.getItem("accessToken");
-                axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-                originalRequest.headers['Authorization'] = `Bearer ${newToken}`
-                return axios(originalRequest)
-                
-
-
-
-            }
-            return Promise.reject(error);
 
         }
+        return Promise.reject(error);
+
+    }
 
 
-    )
-}
+)
 
-export default setUpAxiosInterceptors;
+
+export default axiosClient

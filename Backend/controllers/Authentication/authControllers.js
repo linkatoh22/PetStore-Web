@@ -115,14 +115,14 @@ const logIn = async (req, res,next)=>{
 const logOut = async(req,res,next) =>{
     try{
         const refreshToken = req.cookies.refreshToken;
-        
+        console.log("Refresh Token",refreshToken)
         if(!refreshToken){
             res.status(404)
             throw new Error("No refresh token found");
         }
 
         const user = await User.findOne({refreshToken}).lean();
-
+        
         if(!user){
             res.status(400)
             throw new Error("Invalid Refresh Token");

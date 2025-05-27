@@ -9,6 +9,7 @@ const handleAccessToken = async (req,res,next) =>{
         console.log("handleAccessToken: ", fullUrl);
         
         const refreshToken = req.cookies.refreshToken;
+        
         if(!refreshToken){
             res.status(404)
             throw Error("No refresh token found!")

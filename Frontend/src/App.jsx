@@ -14,10 +14,10 @@ import OtpVerificationPage from './pages/OTPVerificationPage.jsx'
 import CustomQueryClientProvider from './QueryClientProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import PrivateRoute from './PrivateRoute.jsx'
-import setUpAxiosInterceptors from './services/interceptor/axiosClient.js'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/AuthProvider.jsx'
-setUpAxiosInterceptors();
+
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (

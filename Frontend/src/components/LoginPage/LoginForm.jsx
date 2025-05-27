@@ -151,8 +151,10 @@ function LoginForm(){
 
     onSuccess: (tokenResponse) => {
       console.log('Đăng nhập thành công: ',tokenResponse);
-      if(tokenResponse){
-                login(tokenResponse)
+      
+      if(tokenResponse.access_token){
+                alert(tokenResponse.access_token)
+                login(tokenResponse.access_token)
               }
      
       navigate("/")

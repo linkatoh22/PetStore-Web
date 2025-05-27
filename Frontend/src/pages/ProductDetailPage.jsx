@@ -20,7 +20,7 @@ function ProductDetail({type}){
             {type=="Pet"? 
             <PetDetailConainter id={id}></PetDetailConainter>
             :
-            <ProductDetailConainter></ProductDetailConainter>}
+            <ProductDetailConainter id={id}></ProductDetailConainter>}
 
             
             <Footer></Footer>

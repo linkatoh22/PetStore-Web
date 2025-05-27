@@ -19,7 +19,8 @@ router.get('/google',
 
 router.get(
     '/google/callback',
-    passport.authenticate('google',{session:false,failureRedirect:'/login'}),googleCallback
+    passport.authenticate('google',{session:false,failureRedirect:'/log-in'}),
+    googleCallback
     
 )
 
