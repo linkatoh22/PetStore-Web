@@ -1,5 +1,41 @@
 const Product = require("../../models/ProductModel")
-
+const mongoose =require("mongoose")
+const getDetailProduct = async (req,res,next)=>{
+    try{
+        
+        const {id} = req.query;
+        const productId = new mongoose.Types.ObjectId(id);
+        const ProductDetail = await Product.aggregate(
+            [
+                {   $match: {   _id : productId }  },
+                {
+                    $addFields:{
+                        totalSold:{
+                            $sum:"$variants.sold"
+                        },
+                        minPrice:{
+                            $min:"$variants.price"
+                        },
+                        maxPrice:{
+                            $max:"$variants.price"
+                        },
+                        totalStock:{
+                            $sum:"$variants.stock"
+                        }
+                    }
+                }
+            ]
+        );
+        return res.status(200).json({
+            status:"Success",
+            code:200,
+            message:"Successfully query Detail Product",
+            ProductDetail:ProductDetail[0]});
+    }
+    catch(error){
+         next(error)
+    }
+}
 const ProductTopSold = async (req,res,next) =>{
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     console.log("ProductTopSold: ", fullUrl);
@@ -331,4 +367,4 @@ const SearchAll = async (req,res,next) =>{
     }
 
 }
-module.exports = {ProductTopSold,ProductQuery,ProductSearch,SearchAll}
+module.exports = {ProductTopSold,ProductQuery,ProductSearch,SearchAll,getDetailProduct}

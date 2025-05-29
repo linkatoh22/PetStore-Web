@@ -3,8 +3,8 @@ import MainMenu from '../components/MainMenu'
 // import DetailInfo from '../components/DetailPage/DetailInfo'
 // import Feedback from '../components/DetailPage/Feedback'
 // import Recommmend from '../components/DetailPage/Recommend'
-import { PetDetailConainter } from '../components/DetailPage/Pet/PetDetailContainer';
-import { ProductDetailConainter } from '../components/DetailPage/Product/ProductDetailContainer';
+import { PetDetailContainter } from '../components/DetailPage/Pet/PetDetailContainer';
+import { ProductDetailContainter } from '../components/DetailPage/Product/ProductDetailContainer';
 import {Router,useParams} from "react-router-dom"
 import Footer from '../components/Footer'
 import styled from 'styled-components';
@@ -18,9 +18,9 @@ function ProductDetail({type}){
         <>
             <MainMenu></MainMenu>
             {type=="Pet"? 
-            <PetDetailConainter id={id}></PetDetailConainter>
+            <PetDetailContainter id={id}></PetDetailContainter>
             :
-            <ProductDetailConainter id={id}></ProductDetailConainter>}
+            <ProductDetailContainter id={id}></ProductDetailContainter>}
 
             
             <Footer></Footer>

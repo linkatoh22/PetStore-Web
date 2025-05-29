@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 const DetailPetContainer = styled.div`
     display:flex;
@@ -6,28 +6,8 @@ const DetailPetContainer = styled.div`
     gap:1rem;
     width: 50%;
     padding:1.5rem;
+    
 `
-
-const Table = styled.div`
-  display: table;
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 600px;
-`;
-
-const Row = styled.div`
-  display: table-row;
-`;
-
-const Cell = styled.div`
-  display: table-cell;
-  border: 1px dashed #aaa;
-  padding: 8px 12px;
-  vertical-align: top;
-  width: 50%;
-`;
-
-
 const DetailNameContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -122,57 +102,191 @@ const VariantContainer =styled.div`
     gap:1.5rem;
     justify-content:center;
 `
-const VariantItem =styled.div`
+
+const VariantOptionGroup = styled.div`
     display:flex;
-    flex-direction:row;
-    align-items:center;
-    gap:1.5rem;
+    flex-direction:column;
+    gap:0.5rem
+`
+
+const VariantTitle = styled.h4`
     font-size:1.1rem;
-    font-weight:bold;
-
+    color: #002a48;
+    margin-bottom:0.3rem;
 `
-const VariantBtn = styled.button`
+
+const VariantButton = styled.button`
+    margin:4px;
+    padding:6px 12px;
+    background-color: ${  (props)=>(props.selected?  "#007bff" : "#ccc") };
+    color: ${(props) =>(props.selected? "white" : "black")}
+    border-radius:5px;
     cursor:pointer;
-    border:  2px solid ${(props) => (props.selected? "var(--blue-400)":"var(--grey-300)")};
-    border-radius:2px;
-    text-align:center;
-    width:10%;
-    padding-block:0.5rem;
+    
+    transition: background-color 0.2 ease;
 
 `
 
-const WeightInfo =["200g","400g","600g"]
-const SizeInfo = ["S","M","L","XL"]
-const ColorInfo = ["Đỏ","Vàng","Xanh"]
-export function DetailProduct({label,value}){
+export function DetailProduct({product}){
+    const [selected,setSelected] = useState({
+        color:null,
+        size:null,
+        weight:null
+    })
+
     
-    const [Weight,SetWeight] = useState("")
-    const [Size,SetSize] = useState("")
-    const [Color,SetColor] = useState("")
 
-    const HandleWeight = (item)=>{
-        if(Weight==item){
-            SetWeight("")
-            return;
-        }
-        SetWeight(item)
+    const InfoVariant = {
+        size :  [   ...new Set(product?.variants?.map( v=>v.size).filter(Boolean)) ], //filter(Boolean) sẽ loại bỏ các giá trị như undefined, null, "", false, 0.
+        weight :[   ...new Set(product?.variants?.map(v=>v.weight).filter(Boolean))    ], 
+        color : [   ...new Set(product?.variants?.map(v=>v.color).filter(Boolean))  ] 
     }
 
-    const HandleSize = (item)=>{
-        if(Size==item){
-            SetSize("")
-            return;
+    const filteredVariants = product?.variants?.filter(variant => {
+            return (!selected.color || variant.color === selected.color) &&
+                    (!selected.size || variant.size === selected.size) &&
+                    (!selected.weight || variant.weight === selected.weight);
+            }) ?? [];
+
+    const filteredVariantsChosen = {
+
+        size: [ ...new Set (filteredVariants?.map(    s=>s.size).filter(Boolean))  ],
+        weight: [   ...new Set(filteredVariants?.map(    w=>w.weight).filter(Boolean))],
+        color: [ ...new Set(filteredVariants?.map(  c=>c.color).filter(Boolean))  ]
+
+    }
+    
+    useEffect(()=>{
+        console.log('Filter variants: ',filteredVariants.length)
+        console.log('FilteredVariantsChosen: ',filteredVariantsChosen)
+    },[filteredVariants])
+
+    const CheckSelectVariant = (key,value)=>{
+        console.log(`Key: ${key} Value: ${value}`)
+        if(key=="color") {
+            if(selected.size){
+                const variant = product?.variants?.filter( v=> v.color == value && v.size == selected.size)
+                if (variant && variant[0]?.stock == 0){
+                    return false;
+                }
+            }
+            else if(selected.weight){
+                const variant = product?.variants?.filter( v=> v.color == value && v.weight == selected.weight)
+
+                if (variant && variant[0]?.stock == 0){
+                    return false;
+                }
+            }
+            
+            if (selected.color) return true;
+            return filteredVariantsChosen.color.includes(value)
+        };
+
+        if(key=="size") {
+            if(selected.color){
+                const variant = product?.variants?.filter( v=> v.size == value && v.color == selected.color)
+                if(variant && variant[0]?.stock == 0){
+                    return false;
+                }
+            }
+            else if(selected.weight){
+                const variant = product?.variants?.filter( v=> v.size == value && v.weight == selected.weight)
+
+                if (variant && variant[0]?.stock == 0){
+                    return false;
+                }
+            }
+
+            if(selected.size) return true
+            return filteredVariantsChosen.size.includes(value);
         }
-        SetSize(item)
+
+        if (key === "weight") {
+            
+            if(selected.color){
+                const variant = product?.variants?.filter( v=> v.weight == value && v.color == selected.color)
+                if (variant && variant[0]?.stock == 0){
+                    return false;
+                }
+            }
+            else if(selected.size){
+                const variant = product?.variants?.filter( v=> v.weight == value && v.size == selected.size)
+
+                if (variant && variant[0]?.stock == 0){
+                    return false;
+                }
+            }
+
+
+            if(selected.weight) return true
+            return filteredVariantsChosen.weight.includes(value);
+        }
+
+        return false;
+    }
+    
+    const handleSelect = (key, value) => {
+
+        setSelected(prev => ({
+        ...prev,
+        [key]: prev[key] === value ? null : value 
+        }));
+        
+    };
+
+    const HandleSetPrice = ()=>{
+
+        const formattedMinPrice = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+            }).format(product?.minPrice);
+
+        const formattedMaxPrice = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+            }).format(product?.maxPrice);
+        if(product?.minPrice == product?.maxPrice){
+            return formattedMinPrice;
+        }
+        else if ( product?.maxPrice > product?.minPrice){
+            return `${formattedMinPrice} - ${formattedMaxPrice}`
+        }
+        return "Chưa cập nhập"
+        
     }
 
-    const HandleColor = (item)=>{
-        if(Color==item){
-            SetColor("")
-            return;
-        }
-        SetColor(item)
-    }
+    
+    const renderButtons = (key, values) => (
+        <VariantOptionGroup>
+            <VariantTitle>{key.charAt(0).toUpperCase() + key.slice(1)}</VariantTitle>
+            {
+                // filteredVariants.length == 0 || filteredVariants
+                values.map(value => (
+                     filteredVariants.length == product.variants.length ||CheckSelectVariant(key,value)?
+                        (
+                            <VariantButton
+                                key={value}
+                                onClick={() => handleSelect(key, value)}
+                                selected={selected[key] === value}
+                            >
+                                {value}
+                            </VariantButton>
+                        )
+                        :
+                        (
+                            <VariantButton
+                                key={value}
+                                onClick={() => handleSelect(key, value)}
+                                selected={selected[key] === value}
+                                disabled
+                            >
+                                {value}
+                            </VariantButton>
+                        )
+                ))}
+        </VariantOptionGroup>
+  );
+
 
 
     return(
@@ -181,56 +295,30 @@ export function DetailProduct({label,value}){
             <DetailNameContainer>
 
                     <DetailNameId>
-                        CL009
+                        {product?.sku?? "Chưa cập nhập"}
                     </DetailNameId>
 
                     <DetailName>
-                       Áo Noel Giáng Sinh
+                       {product?.name?? "Chưa cập nhập"}
                     </DetailName>
 
                     <DetailPrice>
-                        34.000.000 VND
+                        {HandleSetPrice()}
                     </DetailPrice>
 
                 </DetailNameContainer>
             <DescriptionInfo>
-                <span>Áo Noel Giáng Sinh</span> Chiếc áo đỏ rực rỡ với họa tiết giáng sinh cho mùa lễ hội thêm rộn ràng cùng boss yêu.
+                {product?.description?? "Chưa cập nhập"}
             </DescriptionInfo>
 
             <VariantContainer>
-                    <VariantItem>
-                        <div>Cân nặng:</div>
-                        {WeightInfo.map((item)=>{
-                            return <VariantBtn 
-                            onClick={()=>HandleWeight(item)}
-                            selected={Weight===item}
-                            >
-                                {item}
-                            </VariantBtn>
-                        })}
-                    </VariantItem>
 
-                    <VariantItem>
-                        <div>Kích cỡ:</div>
-                        {SizeInfo.map((item)=>{
-                            return <VariantBtn
-                            onClick={()=>HandleSize(item)}
-                            selected={Size===item}
-                            >{item}</VariantBtn>
-                        })}
-                    </VariantItem>
+                {renderButtons('color', InfoVariant.color)}
+                {renderButtons('size', InfoVariant.size)}
+                {renderButtons('weight', InfoVariant.weight)}
 
-                    <VariantItem>
-                        <div>Màu sắc:</div>
-                        {ColorInfo.map((item)=>{
-                            return <VariantBtn 
-                            onClick={()=>HandleColor(item)}
-                            selected={Color===item}
-                            >{item}</VariantBtn>
-                        })}
-                    </VariantItem>
-
-
+                <h4>Kết quả:</h4>
+                <pre>{JSON.stringify(filteredVariants, null, 2)}</pre>
             </VariantContainer>
 
             <QuantityContainer>

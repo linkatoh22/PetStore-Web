@@ -70,7 +70,7 @@ const PetValue = [
 
 ]
 
-export function PetDetailConainter({id}){
+export function PetDetailContainter({id}){
     const {data:pet} = useGetDetailPet(id);
     return(
         <>

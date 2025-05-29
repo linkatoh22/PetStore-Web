@@ -9,7 +9,7 @@ import detail6 from "../../../assets/pic/detail-product/detail6.png";
 import ImageSlider from "../ImageSlider";
 import { DetailProduct } from "./DetailProduct";
 import { DescriptionProduct } from "./DescriptionProduct";
-
+import { useGetDetailProduct } from "../../../services/hook/DetailHook";
 import Recommmend from "../Recommend";
 
 const DetailContainer = styled.div`
@@ -77,15 +77,16 @@ const myPic=[
         {pic:detail6},
         {pic:detail6},
     ]
-export function ProductDetailConainter({id}){
+export function ProductDetailContainter({id}){
+    const {data:product} = useGetDetailProduct(id);
     return(
         <>
             <DetailContainer>
 
                 <DetailItem>
 
-                    <ImageSlider PicImg={myPic}></ImageSlider>
-                    <DetailProduct label={PetLabel} value={PetValue}></DetailProduct>
+                    <ImageSlider PicImg={product?.ProductDetail?.image}></ImageSlider>
+                    <DetailProduct product={product?.ProductDetail} ></DetailProduct>
                 </DetailItem>
 
                 <DescriptionProduct></DescriptionProduct>
