@@ -89,7 +89,7 @@ export function ProductDetailContainter({id}){
                     <DetailProduct product={product?.ProductDetail} ></DetailProduct>
                 </DetailItem>
 
-                <DescriptionProduct></DescriptionProduct>
+                <DescriptionProduct product={product?.ProductDetail}></DescriptionProduct>
                 {/* <Recommmend></Recommmend> */}
                 
 

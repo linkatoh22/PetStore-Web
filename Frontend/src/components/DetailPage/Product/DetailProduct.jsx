@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useMemo, useContext } from "react";
 import styled from "styled-components";
+import { FormattedPrice } from "../../../utils/FormatPrice";
+import { AuthContext } from "../../../context/AuthProvider";
+import { useAddToCart } from "../../../services/hook/DetailHook";
+import { useNavigate } from "react-router-dom";
 const DetailPetContainer = styled.div`
     display:flex;
     flex-direction:column;
-    gap:1rem;
+    gap:1.5rem;
     width: 50%;
     padding:1.5rem;
     
@@ -33,6 +37,7 @@ const DetailPrice = styled.div`
 const DetailBtnGroup = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top:1rem;
   gap: 10px;
 `;
 
@@ -62,7 +67,7 @@ const QuantityContainer = styled.div`
     
     align-items:center;
     gap:1rem;
-    font-size:1.3rem
+    font-size:1.1rem
     
 `
 
@@ -81,6 +86,8 @@ const QuantityBtn = styled.button`
 const QuantityInput = styled.input`
     width:20%;
     padding:0.15rem;
+    padding-block:0.14rem;
+    text-align:center;
     font-size:1.4rem;
     border:1px solid var(--grey-600)
     &:focus{
@@ -105,35 +112,57 @@ const VariantContainer =styled.div`
 
 const VariantOptionGroup = styled.div`
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
+    align-items:center;
     gap:0.5rem
 `
 
 const VariantTitle = styled.h4`
-    font-size:1.1rem;
-    color: #002a48;
-    margin-bottom:0.3rem;
+    font-size:1.3rem;
+    width:120px;
+    margin-bottom:0.5rem;
 `
 
 const VariantButton = styled.button`
     margin:4px;
     padding:6px 12px;
-    background-color: ${  (props)=>(props.selected?  "#007bff" : "#ccc") };
-    color: ${(props) =>(props.selected? "white" : "black")}
-    border-radius:5px;
-    cursor:pointer;
+    background-color: ${  (props)=>(props.selected?  "#007bff" : "white") };
+    width:4.5rem;
     
+    font-size:1.1rem;
+    color: ${(props) =>(props.selected? "white" : "black")};
+
+    cursor:pointer;
+    border-radius:5px;
     transition: background-color 0.2 ease;
 
 `
 
 export function DetailProduct({product}){
+    const navigate = useNavigate();
+    const {accessToken} = useContext(AuthContext)
+    const {mutate:addToCart} = useAddToCart(accessToken);
+    const [PriceQuantity,SetPriceQuantity] = useState(
+        {
+            price:null,
+            quantity:null
+        }
+    );
+    const [QuantitySelection,SetQuantitySelection] = useState(1);
     const [selected,setSelected] = useState({
         color:null,
         size:null,
         weight:null
     })
 
+    const HandleQuantity = (quantity)=>{
+        if(quantity>PriceQuantity.quantity)
+          SetQuantitySelection(PriceQuantity.quantity)
+        else if(quantity<0)
+          SetQuantitySelection(0)
+        else
+          SetQuantitySelection(quantity)
+     }
     
 
     const InfoVariant = {
@@ -157,12 +186,19 @@ export function DetailProduct({product}){
     }
     
     useEffect(()=>{
-        console.log('Filter variants: ',filteredVariants.length)
-        console.log('FilteredVariantsChosen: ',filteredVariantsChosen)
+         if (
+            filteredVariants.length === 1 &&
+            (PriceQuantity.price !== filteredVariants[0].price ||
+            PriceQuantity.quantity !== filteredVariants[0].stock)
+        ) {
+            SetPriceQuantity({
+            price: filteredVariants[0].price,
+            quantity: filteredVariants[0].stock
+            });
+        }
     },[filteredVariants])
 
     const CheckSelectVariant = (key,value)=>{
-        console.log(`Key: ${key} Value: ${value}`)
         if(key=="color") {
             if(selected.size){
                 const variant = product?.variants?.filter( v=> v.color == value && v.size == selected.size)
@@ -178,7 +214,7 @@ export function DetailProduct({product}){
                 }
             }
             
-            if (selected.color) return true;
+            // if (selected.color) return true;
             return filteredVariantsChosen.color.includes(value)
         };
 
@@ -197,7 +233,7 @@ export function DetailProduct({product}){
                 }
             }
 
-            if(selected.size) return true
+            // if(selected.size) return true
             return filteredVariantsChosen.size.includes(value);
         }
 
@@ -218,7 +254,7 @@ export function DetailProduct({product}){
             }
 
 
-            if(selected.weight) return true
+            // if(selected.weight) return true
             return filteredVariantsChosen.weight.includes(value);
         }
 
@@ -234,31 +270,38 @@ export function DetailProduct({product}){
         
     };
 
-    const HandleSetPrice = ()=>{
+    const HandleSetPrice = useMemo(()=>{
 
-        const formattedMinPrice = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-            }).format(product?.minPrice);
-
-        const formattedMaxPrice = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-            }).format(product?.maxPrice);
-        if(product?.minPrice == product?.maxPrice){
-            return formattedMinPrice;
-        }
+       
+        if(filteredVariants.length === 1)
+            return FormattedPrice(filteredVariants[0].price);
+        else if(product?.minPrice == product?.maxPrice)
+            return FormattedPrice(product?.minPrice);
         else if ( product?.maxPrice > product?.minPrice){
+
+             const formattedMinPrice = FormattedPrice(product?.minPrice);
+
+             const formattedMaxPrice = FormattedPrice(product?.maxPrice);
+
             return `${formattedMinPrice} - ${formattedMaxPrice}`
+        
         }
         return "Chưa cập nhập"
         
-    }
+    },[filteredVariants])
 
-    
+    const TranslateKey = (key)=>{
+        if(key== "color")
+            return "Màu"
+        else if(key == "size")
+            return "Kích cỡ"
+        else if (key == "weight")
+            return "Cân nặng"
+
+    }
     const renderButtons = (key, values) => (
         <VariantOptionGroup>
-            <VariantTitle>{key.charAt(0).toUpperCase() + key.slice(1)}</VariantTitle>
+            <VariantTitle>{TranslateKey(key)}:</VariantTitle>
             {
                 // filteredVariants.length == 0 || filteredVariants
                 values.map(value => (
@@ -287,7 +330,38 @@ export function DetailProduct({product}){
         </VariantOptionGroup>
   );
 
-
+    const HandleAddToCart = ()=>{
+        if(accessToken){
+            if(PriceQuantity.price &&PriceQuantity.quantity&&filteredVariants.length===1 ){
+                console.log("DAT HANG NE BA")
+                addToCart({
+                    itemType:"Product",
+                    item:product._id,
+                    variant:filteredVariants[0]._id,
+                    quantity:QuantitySelection
+                },
+                {
+                    onSuccess:(data)=>{
+                        console.log("HERE")
+                         alert("Thêm vào giỏ hàng thành công!");
+                    },
+                    onError:(error)=>{
+                        const message =  error.response?.data?.message || error.message;
+                        console.log(message);
+                    }
+                }
+            
+            )
+                
+            }
+            else{
+               alert("Vui lòng chọn phân loại") 
+            }
+        }
+        else{
+            navigate("/dang-nhap");
+        }
+    }
 
     return(
         <DetailPetContainer>  
@@ -303,7 +377,7 @@ export function DetailProduct({product}){
                     </DetailName>
 
                     <DetailPrice>
-                        {HandleSetPrice()}
+                        {HandleSetPrice}
                     </DetailPrice>
 
                 </DetailNameContainer>
@@ -313,20 +387,25 @@ export function DetailProduct({product}){
 
             <VariantContainer>
 
-                {renderButtons('color', InfoVariant.color)}
-                {renderButtons('size', InfoVariant.size)}
-                {renderButtons('weight', InfoVariant.weight)}
+                { InfoVariant.color.length>0 ? renderButtons('color', InfoVariant.color) :null}
+                { InfoVariant.size.length>0 ? renderButtons('size', InfoVariant.size):null}
+                {InfoVariant.weight.length>0 ? renderButtons('weight', InfoVariant.weight):null}
 
-                <h4>Kết quả:</h4>
-                <pre>{JSON.stringify(filteredVariants, null, 2)}</pre>
+                {/* <h4>Kết quả:</h4>
+                <pre>{JSON.stringify(filteredVariants, null, 2)}</pre> */}
             </VariantContainer>
 
             <QuantityContainer>
-                <div>Số lượng: </div>
-                <div>
-                    <QuantityBtn>-</QuantityBtn>
-                    <QuantityInput type="number"></QuantityInput>
-                    <QuantityBtn>+</QuantityBtn>
+                <VariantTitle>Số lượng: </VariantTitle>
+                <div >
+                    <QuantityBtn disabled={PriceQuantity.quantity === null } onClick={()=>HandleQuantity(QuantitySelection-1)}>-</QuantityBtn>
+                    <QuantityInput 
+                        type="number" 
+                        disabled={PriceQuantity.quantity === null } 
+                        value={QuantitySelection}
+                        onChange={ (e)=>HandleQuantity(e.target.value) }
+                    ></QuantityInput>
+                    <QuantityBtn disabled={PriceQuantity.quantity === null } onClick={()=>HandleQuantity(QuantitySelection+1)} >+</QuantityBtn>
                 </div>
                 
             </QuantityContainer>
@@ -338,7 +417,7 @@ export function DetailProduct({product}){
                     
 
                     <BuyBtn>Mua ngay</BuyBtn>
-                    <CartBtn>Bỏ vào giỏ hàng</CartBtn>
+                    <CartBtn onClick={()=>HandleAddToCart()}>Bỏ vào giỏ hàng</CartBtn>
             </DetailBtnGroup>
 
             

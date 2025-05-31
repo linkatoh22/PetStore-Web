@@ -19,7 +19,7 @@ export const GetDetailProduct =  async (id)=>{
     try{
         var queryParams = {id:id};
         const response = await axios.get(`${BASE_URL}/product/detail-product`,{params:queryParams})
-        console.log('Product: ',response.data);
+        // console.log('Product: ',response.data);
         return response.data;
     }
     catch(error){
@@ -36,14 +36,15 @@ export const AddToCart = async({ itemType, item, variant, quantity }, accessToke
         if(item) reqBody.item = item;
         if (quantity) reqBody.quantity =quantity;
         if (variant) reqBody.variant = variant;
-
+        
         const response = await axiosClient.post(`/cart/add-to-cart`,
             reqBody,
             {
                 useAuth: true
             }
         );
-        console.log("DAT HANG THANH CONG", response.data);
+        
+        //console.log(response.data)
         return response.data;
     }
     catch(error){

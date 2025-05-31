@@ -11,7 +11,7 @@ const AddToCart = async (req,res,next) =>{
         var price=0;
         const {itemType,item,variant,quantity} = req.body;
         const userId = req.user._id;
-        
+        console.log(req.body)
         
         if(!itemType||!item||!quantity) {
             res.status(400);
@@ -45,15 +45,23 @@ const AddToCart = async (req,res,next) =>{
             const foundVariants = foundProduct.variants.id(variant)
 
             
-            const itemIndex= cart.items.findIndex(CartItem=>(CartItem.variant.toString() === variant && CartItem.item.toString() === item))
+            const itemIndex= cart.items.findIndex(
+                CartItem=>
+                    (
+                        CartItem?.variant?.toString() === variant && 
+                        CartItem?.item?.toString() === item
+                    )
+            )
             
             if(itemIndex!=-1){
 
                 const updateQuantity = cart.items[itemIndex].quantity + quantity;
+
                 if(updateQuantity>foundVariants.stock){
                     res.status(400);
                     throw Error("Quantity exceed stock")
                 }
+
                 cart.items[itemIndex].quantity = updateQuantity;
                 await cart.save();
                 return res.status(200).json({
