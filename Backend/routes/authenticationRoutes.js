@@ -10,6 +10,7 @@ const passport = require("passport");
 const {handleAccessToken} = require("../controllers/Authentication/tokenControllers.js")
 require('../config/google.js')
 
+const {authMiddleware} = require("../middlewares/authMiddleware.js")
 //LOG IN AND SIGN UP GOOGLE
 router.get('/google',
     passport.authenticate('google',{

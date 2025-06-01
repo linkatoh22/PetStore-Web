@@ -5,7 +5,8 @@ const axiosClient = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL,
     headers:{
         "Content-Type":"application/json"
-    }
+    },
+    withCredentials: true
 })
 axiosClient.interceptors.request.use((config)=>{
     if(config.useAuth){

@@ -8,7 +8,7 @@ import { Dropdown } from './Dropdown';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
-
+import { useLogOut } from '../services/hook/LogOutHook';
 const MainMenuContainer = styled.div`
     width: 100%;
     background-color: #003459;
@@ -30,6 +30,7 @@ const ButtonMenu = styled.div`
 const ButtonMenu2 = styled.div`
     display: flex;
     flex-direction: row;
+    align-items:center;
     justify-content: space-between;
     gap:1.2rem;
     flex-shrink: 0;
@@ -109,36 +110,9 @@ const btnMenu = styled.button`
         opacity: 0.8;
     }
 `
-
-
-const StyledCartIcon = styled(FaCartPlus)`
-  cursor: pointer;
-  width: 50px;
-  height: 30px;
-  color: var(--main-blue); /* thường hoạt động */
-  fill: currentColor; /* đảm bảo màu sắc áp dụng từ color */
-  transition: color 0.15s;
-
-  &:hover {
-    color: var(--main-blue);
-  }
-`
-
-const StyledUserIcon = styled(FaRegUser)`
-  cursor: pointer;
-  width: 50px;
-  height: 30px;
-  color: #003459; /* thường hoạt động */
-  fill: currentColor; /* đảm bảo màu sắc áp dụng từ color */
-  transition: color 0.15s;
-
-  &:hover {
-    color: #01528b;
-  }
-`
 function MainMenu() {
-
-    const {accessToken} = useContext(AuthContext);
+    const {mutate:logoutHook} =useLogOut();
+    const {accessToken,logout} = useContext(AuthContext);
     
     const [isHoverDog,setIsHoverDog] = useState(false);
     const [isHoverCat,setIsHoverCat] = useState(false);
@@ -208,6 +182,21 @@ function MainMenu() {
             
         }
 
+    }
+
+    const HandleLogout =  ()=>{
+        logoutHook(
+            {},
+            {
+                onSuccess:(data)=>{
+                    alert("Đăng xuất thành công");
+                    logout();
+                },
+                onError:(error)=>{
+                    alert("Đăng xuất thất bại")
+                }
+            }
+        )
     }
     return (
       <>
@@ -301,12 +290,12 @@ function MainMenu() {
 
             {accessToken?
                     <>
-                        <FaCartPlus 
-                        id="menu-icon-info" 
-                         />
-                        <FaRegUser 
-                        id="menu-icon-info" 
-                        />
+                        <div>Cart</div>
+                        <div>Info</div>
+                        
+                        <TitleBtnMenu onClick={()=>HandleLogout()}>
+                            Đăng xuất
+                        </TitleBtnMenu>
                     </>
                 :
                 <>

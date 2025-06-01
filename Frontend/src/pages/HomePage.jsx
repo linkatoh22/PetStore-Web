@@ -189,7 +189,7 @@ function Homepage(){
         }
     },[product]);
 
-    const handleNavItem = (type)=>{
+    const handleNavMenuItem = (type)=>{
         switch(type){
             case "Dog":
                 navigate("/category/cho-canh")
@@ -202,6 +202,7 @@ function Homepage(){
                 break;
         }
     }
+    
     
 
     return(
@@ -245,6 +246,7 @@ function Homepage(){
                             item =>
                                     <PetsCard 
                                         key={item._id}
+                                        
                                         Item = {item}
                                         type="Pet"
                                     /> 
@@ -271,9 +273,9 @@ function Homepage(){
 
                             <div  style={{display: "flex",gap: "20px"}}>
 
-                                <SubTransparentBlueButton onClick={()=>handleNavItem("Cat")} > Mèo cảnh</SubTransparentBlueButton>
+                                <SubTransparentBlueButton onClick={()=>handleNavMenuItem("Cat")} > Mèo cảnh</SubTransparentBlueButton>
 
-                                <SubBlueButton onClick={()=>handleNavItem("Dog")} >Chó cảnh</SubBlueButton>
+                                <SubBlueButton onClick={()=>handleNavMenuItem("Dog")} >Chó cảnh</SubBlueButton>
 
                             </div>
 
@@ -309,7 +311,7 @@ function Homepage(){
                     
                     </div>
 
-                    <HomepageTitleBtn onClick={()=>handleNavItem("Product")}> Xem thêm</HomepageTitleBtn>
+                    <HomepageTitleBtn onClick={()=>handleNavMenuItem("Product")}> Xem thêm</HomepageTitleBtn>
                 </HomepageTitleContainer>
 
 
@@ -323,6 +325,7 @@ function Homepage(){
                                         <PetsCard 
                                             key={item._id}
                                             Item = {item}
+                                            onClick = {()=>handleNavItem("Product",item._id)}
                                             type="Product"
                                         /> 
                             )
@@ -342,10 +345,10 @@ function Homepage(){
                         fontSize: "18px"
 
                     }}>
-                        Proud to be part of <BigFont>Pet Sellers</BigFont> 
+                        Tự hào là một phần của phân phối <BigFont>Các Brand uy tín</BigFont> 
                     </div>
 
-                    <HomepageTitleBtn>View all our sellers</HomepageTitleBtn>
+                    
                 </HomepageTitleContainer>
 
 

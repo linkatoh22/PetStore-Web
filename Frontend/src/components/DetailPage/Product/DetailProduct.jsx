@@ -127,7 +127,9 @@ const VariantButton = styled.button`
     margin:4px;
     padding:6px 12px;
     background-color: ${  (props)=>(props.selected?  "#007bff" : "white") };
-    width:4.5rem;
+    padding-inline:1.5rem;
+    padding-block:0.5rem;
+    
     
     font-size:1.1rem;
     color: ${(props) =>(props.selected? "white" : "black")};
@@ -398,14 +400,14 @@ export function DetailProduct({product}){
             <QuantityContainer>
                 <VariantTitle>Số lượng: </VariantTitle>
                 <div >
-                    <QuantityBtn disabled={PriceQuantity.quantity === null } onClick={()=>HandleQuantity(QuantitySelection-1)}>-</QuantityBtn>
+                    <QuantityBtn disabled={filteredVariants.length >1 } onClick={()=>HandleQuantity(QuantitySelection-1)}>-</QuantityBtn>
                     <QuantityInput 
                         type="number" 
-                        disabled={PriceQuantity.quantity === null } 
+                        disabled={filteredVariants.length >1 } 
                         value={QuantitySelection}
                         onChange={ (e)=>HandleQuantity(e.target.value) }
                     ></QuantityInput>
-                    <QuantityBtn disabled={PriceQuantity.quantity === null } onClick={()=>HandleQuantity(QuantitySelection+1)} >+</QuantityBtn>
+                    <QuantityBtn disabled={filteredVariants.length >1 } onClick={()=>HandleQuantity(QuantitySelection+1)} >+</QuantityBtn>
                 </div>
                 
             </QuantityContainer>

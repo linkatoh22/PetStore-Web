@@ -9,11 +9,16 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const PORT=process.env.PORT ||3001;
 connectDb();
-app.use(cors());
+
+app.use(cors({
+  origin: process.env.ORIGIN,
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(cookieParser());
 
+//ROUTES
 app.use("/api/auth",require("./routes/authenticationRoutes"));
 app.use("/api/pet",require("./routes/PetRoutes"));
 app.use("/api/product",require("./routes/ProductRoutes"));
@@ -24,6 +29,8 @@ app.use("/api/order",require("./routes/OrderRoutes"))
 // app.use("/api/order",require("./routes/OrderRoutes"))
 
 app.use(errorHandler);
+
+
 app.listen(PORT,()=>{
     console.log("Currently listening on port 3000.....");
 })

@@ -9,7 +9,7 @@ const handleAccessToken = async (req,res,next) =>{
         console.log("handleAccessToken: ", fullUrl);
         
         const refreshToken = req.cookies.refreshToken;
-        
+       
         if(!refreshToken){
             res.status(404)
             throw Error("No refresh token found!")
@@ -18,6 +18,8 @@ const handleAccessToken = async (req,res,next) =>{
         // const decoded = jwt.verify(refreshToken,process.env.REFRESH_TOKEN_KEY);
         // console.log("decoded:",decoded)
         const user = await User.findOne({refreshToken:refreshToken});
+        
+        
         if(!user){
             res.status(403)
             throw Error("Refresh token is not valid!")

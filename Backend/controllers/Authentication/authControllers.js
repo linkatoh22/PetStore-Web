@@ -87,10 +87,14 @@ const logIn = async (req, res,next)=>{
         
 
         await User.updateOne({_id:user._id},  {refreshToken:refreshToken });
+        const Secure = process.env.SECURE == "true"? true:false
+       
         res.cookie("refreshToken",refreshToken,{
             httpOnly:true,
-            secure:true,
-            sameSite:"Strict",
+            secure: Secure, 
+            //DEPLOY THÌ CHUYỂN SANG true
+            sameSite: process.env.SAME_SITE, 
+            //DEPLOY THÌ CHUYỂN SANG None
             maxAge:7*24*60*60*1000
         })
 

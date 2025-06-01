@@ -41,7 +41,8 @@ export const AddToCart = async({ itemType, item, variant, quantity }, accessToke
             reqBody,
             {
                 useAuth: true
-            }
+            },
+            
         );
         
         //console.log(response.data)

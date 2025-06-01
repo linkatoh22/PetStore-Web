@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import petImage from '../../assets/pets-card.png'
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom';
 const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -48,7 +48,21 @@ const PetPrice = styled.div`
 
 
 function PetsCard({Item,type} ){
+    const navigate = useNavigate();
+    const handleNavItem =  (type,item)=>{
+        console.log("Hereeee")
+        switch(type){
+            case "Pet":
+                navigate (`/detail/thu-cung/${item}`);
+                break;
+            case "Product":
+                navigate(`/detail/phu-kien/${item}`);
+                break;
+        }
+    }
     
+
+
     const imageSrc = Item?.image?.[0] || petImage;
     const name = Item?.name || "Chưa cập nhật";
     const gender = Item?.gender || "Không xác định";
@@ -65,7 +79,7 @@ function PetsCard({Item,type} ){
 
     return(
         <>
-            <CardContainer>
+            <CardContainer onClick={()=>handleNavItem(type,Item?._id)}>
             <PetImage src= {imageSrc}  ></PetImage>
                 {type=="Pet"?
                         <InfoContainer>
