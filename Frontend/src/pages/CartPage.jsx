@@ -13,7 +13,9 @@ const CartContainer = styled.div`
 const CartProductContainer = styled.div`
     display: flex;
     flex-direction: row;
-    gap:1rem;
+    
+    padding-block:2rem;
+    justify-content:space-between;
 `
 function CartPage(){
 

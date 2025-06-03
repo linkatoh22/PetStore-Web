@@ -1,11 +1,11 @@
 // import "../styles/components/CartBill.css"
 import styled from "styled-components";
 const CartBillContainer = styled.div`
-  width: 40%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5rem;
+  
 `;
 
 const CartBillItem = styled.div`
@@ -16,11 +16,11 @@ const CartBillItem = styled.div`
   padding-block: 4rem;
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  
 `;
 
 const CartBillTitle = styled.h2`
-  font-size: var(--fs-l);
+  text-align:center;
   font-weight: bold;
 `;
 
@@ -36,10 +36,10 @@ const SubTotal = styled.div`
 `;
 
 const BillInfo = styled.div`
-  font-size: var(--fs-m);
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 `;
 
 const CartBillTitleContainer = styled.div`
@@ -47,10 +47,6 @@ const CartBillTitleContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 0.5rem;
-`;
-
-const CartBillSubTitle = styled.span`
-  font-weight: bold;
 `;
 
 const CheckoutBtn = styled.button`
@@ -74,39 +70,41 @@ function CartBill(){
             <CartBillContainer className="CartBillContainer">
                 <CartBillItem className="cartBill">
 
-                    <CartBillTitle className="CartBill-Title">Order Summary</CartBillTitle>
+                    <CartBillTitle className="CartBill-Title">Tóm tắt đơn hàng</CartBillTitle>
 
                     <Sperator className="sperator"></Sperator>
 
                     <BillInfo className="Bill-Info">
                         <CartBillTitleContainer className="cartBill-title-contaniner">
 
-                            <div style={{fontWeight:"bold"}}className="cartBill-Title">
-                                SubTotals{"(3 items)"}:
+                            <div className="cartBill-Title">
+                                Tổng đơn hàng {"(3 sản phẩm)"}:
                                 </div>
 
                             <div className="subTotal-Value">$ 2.246</div>
                         </CartBillTitleContainer>
 
 
+                        
+
                         <CartBillTitleContainer className="cartBill-title-contaniner">
 
-                            <div className="cartBill-Title">Saving:</div>
+                            <div className="cartBill-Title">Phí vận chuyển:</div>
 
-                            <div className="subTotal-Value">$ 2.246</div>
+                            <div className="cartBill-Value">$ 2.246</div>
                         </CartBillTitleContainer>
-
+                        <Sperator className="sperator"></Sperator>
                         <CartBillTitleContainer className="cartBill-title-contaniner">
 
-                            <div className="cartBill-Title">Shipping:</div>
+                            <div className="cartBill-Title" style={{fontWeight:"bold"}}>Tổng tiền:</div>
 
                             <div className="cartBill-Value">$ 2.246</div>
                         </CartBillTitleContainer>
 
-                        
+                        <CheckoutBtn className="checkout-btn">Thanh toán</CheckoutBtn>
                     </BillInfo>
 
-                    <CheckoutBtn className="checkout-btn">Proceed to checkout</CheckoutBtn>
+                    
                 </CartBillItem>
             </CartBillContainer>
             

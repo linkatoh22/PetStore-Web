@@ -16,7 +16,7 @@ export const resetAccessToken = async()=>{
         localStorage.removeItem("accessToken");
         console.error("Reset token failed, redirecting to login...", error);
         alert("Phiên đăng nhập hết hạn... Vui lòng đăng nhập lại")
-        // window.location.href = '/dang-nhap';
+        window.location.href = '/dang-nhap';
         throw error;
         
     }

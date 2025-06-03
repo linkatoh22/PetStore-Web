@@ -154,11 +154,6 @@ const GetCart = async(req,res,next)=>{
             const VariantFound = product.variants.id(variant);
             return VariantFound;
         }
-
-        const FindPet = async (item,pets)=>{
-
-        }
-
         const userId = req.user._id;
         if(!userId){
             res.status(404);

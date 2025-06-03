@@ -1,88 +1,78 @@
 // import "../../styles/components/CartProduct.css"
+import { useState } from 'react';
 import detail4 from '../../assets/pic/detail-product/detail4.png';
 import detail5 from '../../assets/pic/detail-product/detail5.png';
 import detail6 from '../../assets/pic/detail-product/detail6.png';
 import { MdOutlineClose } from "react-icons/md";
 import styled from "styled-components";
-
+import { FormattedPrice } from '../../utils/FormatPrice';
 const CartTableContainer = styled.div`
   width: 80%;
-  display: flex;
-  align-items: flex-start;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  
+ 
 `;
-
+const CartTitleContainer = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    
+`
+const LineDivider = styled.div`
+    width:100%;
+    border:1px solid var(--grey-200);
+`
 const CartTable = styled.table`
-  border: none;
   width: 100%;
-`;
-
-const HeaderCartTable = styled.tr``;
-
-const HeaderItemCartTable = styled.th`
-  text-align: center;
-  width: 80%;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-color: rgb(175, 175, 175);
-  border-collapse: collapse;
-  font-size: 1.2rem;
-  padding: 1rem;
-`;
-
-const IdProduct = styled.td`
-  font-size: 1rem;
-  color: var(--clr-dark-blue);
-`;
-
-const ProductNameInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-  gap: 0.5rem;
-`;
-
-const QuantityInfo = styled.input`
-  width: 50%;
-  font-size: 1rem;
-  text-align: center;
-`;
-
-const ClearBtn = styled.button`
-  padding-top: 7px;
-  padding-inline: 7px;
-  border: none;
-  font-size: 1.5rem;
-  border-radius: 59px;
-  color: #4e5562;
-  cursor: pointer;
-
-  &:hover {
-    background-color: red;
-    color: white;
+  border-collapse: separate;
+  border-spacing: 0 1.2rem; 
+  th {
+    text-align: center;
+    vertical-align: middle;
   }
 
-  &:active {
-    background-color: rgb(209, 7, 7);
+  td:first-child,
+  th:first-child {
+    padding-right: 0.5rem;
   }
+  
 `;
 
-const QuantityBtn = styled.button`
-  font-size: 1rem;
-  text-align: center;
-`;
+const ProductDetailContainer = styled.div`
+    display:flex;
+    flex-direction:row;
+    gap:1rem;
+`
+
+const ProductDetailImage = styled.img`
+    height:150px;
+    width:150px;
+    object-fit:cover;
+    object-position:center;
+`
+
+const ProductDetailParagraph = styled.div`
+    justify-content:center;
+    display:flex;
+    flex-direction:column;
+    gap:0.2rem;
+
+`
 
 
 function CartProduct(){
+    const [Selection,SetSelection] = useState([])
+    
     const ProductCart = [
         {   
 
             pic:detail4,
             id:"#SKU1236",
             name:"Shiba Inu Sepia 1",
-            price: 34,
+            price: 1240000,
             quantity:2
         }
         ,
@@ -91,102 +81,89 @@ function CartProduct(){
             pic:detail5,
             id:"#SKU1235",
             name:"Shiba Inu Sepia 2",
-            price: 34,
+            price: 1240000,
             quantity:2
         },
         {   
             pic:detail6,
             id:"#SKU1234",
             name:"Shiba Inu Sepia 3",
-            price: 34,
+            price: 4000000,
             quantity:2
         }
     ]
+
+    const HandleSelection = (index) =>{
+        if(index=="All"){
+            if(Selection.length === ProductCart.length)
+                SetSelection([])
+            else
+                SetSelection(
+                    ProductCart.map((_,i)=>i)
+                )
+        }
+        else{
+            if( Selection.includes(index) )
+                SetSelection(   Selection.filter(   item=>item !== index  )   )
+            else
+                SetSelection([...Selection,index])
+
+        }
+
+    }
     return(
         <>
             <CartTableContainer className="cartTable-container">
+                <CartTitleContainer>
+                    <h2 style={{fontWeight:"bold"}}>Giỏ hàng</h2>
+                    <h3 style={{fontWeight:"bold"}}> 3 Sản Phẩm </h3>
+                </CartTitleContainer>
+                
+                <LineDivider></LineDivider>
                 <CartTable className="cartTable">
+                    <thead >
+                        <tr style={{color:"var(--grey-600)"}}>
+                            <th>
+                                <input type="checkbox" checked={Selection.length === ProductCart.length} onClick={()=>HandleSelection("All")}></input>
+                            </th>
 
-                    <HeaderCartTable className="header-cartTable">
+                            <th>Chi tiết sản phẩm</th>
+                            <th> Số Lượng</th>
+                            <th>Giá sản phẩm</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
 
-                        <HeaderItemCartTable className="header-item-cartTable">Product</HeaderItemCartTable>
-                        <HeaderItemCartTable className="header-item-cartTable">Price</HeaderItemCartTable>
-                        <HeaderItemCartTable className="header-item-cartTable">Quantity</HeaderItemCartTable>
-                        <HeaderItemCartTable className="header-item-cartTable">Total</HeaderItemCartTable>
-                        <HeaderItemCartTable className="header-item-cartTable">Clear Cart</HeaderItemCartTable>
-                    
-                    </HeaderCartTable>
+                    <tbody>
 
-
-                    {
-                        ProductCart.map((product,index)=>{
-                            return <HeaderCartTable className="header-cartTable">
-
-                            <HeaderItemCartTable className="header-item-cartTable">
-
-                                <ProductNameInfo className="product-name-info">
-
-                                    <img src={product.pic} alt="" className="imgProduct" />
-                                    
-                                    <div className="info-Product">
-                                        <IdProduct className="idProduct">{product.id}</IdProduct>
-                                        <IdProduct className="nameProduct">{product.name}</IdProduct>
-                                    </div>
-
-                                </ProductNameInfo>
-
-                            </HeaderItemCartTable>
-
-
-                            <HeaderItemCartTable className="header-item-cartTable">
-
-
-                                <div className="productPriceInfo">
-
-                                    {product.price + " $"} 
-                                </div>
-                            </HeaderItemCartTable>
-
-
-                            <HeaderItemCartTable className="header-item-cartTable">
-
-                                <QuantityBtn className="quantity-btn">+</QuantityBtn>
-
-                                <QuantityInfo type="number" className="QuantityInfo" value={product.quantity} />
-
-                                <QuantityBtn className="quantity-btn">-</QuantityBtn>
-
-                            </HeaderItemCartTable>
-
-                            <HeaderItemCartTable className="header-item-cartTable">
-
-                                <div className="totalInfo">
-                                    {product.price*product.quantity +" $"}
-                                </div>
-
-                            </HeaderItemCartTable>
-
-                            <HeaderItemCartTable className="header-item-cartTable">
+                        {ProductCart.map((item, index)=>{
+                            return <tr>
                                 
-                                <ClearBtn className="clearBtn">
+                                <td >
+                                    <input type="checkbox" key={index} checked={Selection.includes(index)} onClick={()=>HandleSelection(index)} ></input>
+                                </td>
 
-                                <MdOutlineClose />
+                                <td>
+                                    <ProductDetailContainer>
+                                        <ProductDetailImage src={item.pic}></ProductDetailImage>
 
-                                </ClearBtn>
+                                        <ProductDetailParagraph>
+                                            <div>{item.id}</div>
+                                            <div>{item.name}</div>
+                                        </ProductDetailParagraph>
+                                    </ProductDetailContainer>
+                                </td>
 
-                            </HeaderItemCartTable>
+                                <td style={{ textAlign: "center",verticalAlign: "middle"}} >{item.quantity}</td>
+                                <td style={{ textAlign: "center",verticalAlign: "middle"}} >{FormattedPrice(item.price)}</td>
+                                <td style={{ textAlign: "center",verticalAlign: "middle"}} >{FormattedPrice(item.quantity * item.price)}</td>
+                            
+                            </tr>
 
-                        </HeaderCartTable>
-
-                        })
-
-
-                    }
-
-                    
+                        })}
 
 
-
+                    </tbody>
                 </CartTable>
             </CartTableContainer>
 
