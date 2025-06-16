@@ -168,24 +168,61 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
         )
     }
     const HandleQuantity = (amount,ItemId,product)=>{
+        console.log("amount: ",amount);
 
-        if(amount>product.variants[0].stock)
+        if(amount > product.variants[0].stock){
+            amount = product.variants[0].stock;
+            setTempQuantities((prev) => ({
+                            ...prev,
+                            [ItemId]: amount,
+                        }));
+            
+        }
+        
+        if(amount){
+            updateItem(
+                {
+                    amount: amount,
+                    ItemId: ItemId
+                },
+                {
+                    onSuccess:(data)=>{
+                        
+                        alert("Chỉnh sửa Item thành công")
+                        
+                        
+                    },
+                    onError:(error)=>{
+                        const message =  error.response?.data?.message || error.message;
+                        console.log(message);
+                    }
+                }
+            )
+
+        }
+        
+
+    }
+    const HandleQuantityCalc = (amount,ItemId,product)=>{
+        
+        if(amount > product.variants[0].stock){
             amount = product.stock
-    
+        }
+
         updateItem(
             {
                 amount: amount,
                 ItemId: ItemId
             },
             {
-                onSuccess:(data)=>{
-                    alert("Chỉnh sửa Item thành công")
+                onSuccess:()=>{
 
                     setTempQuantities((prev) => ({
-                                                    ...prev,
-                                                    [ItemId]: amount,
-                                                }));
-                    
+                            ...prev,
+                            [ItemId]: amount,
+                        }));
+
+                    alert("Chỉnh sửa Item thành công")            
                 },
                 onError:(error)=>{
                     const message =  error.response?.data?.message || error.message;
@@ -193,7 +230,6 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                 }
             }
         )
-
     }
     const VariantTitle = (variants) =>{
         if (!Array.isArray(variants) || variants.length === 0) return null;
@@ -311,7 +347,7 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                                         
                                         <div >
                                             <QuantityBtn 
-                                            onClick={()=>HandleQuantity(item.quantity-1, item._id,item.productItem)}
+                                            onClick={()=>HandleQuantityCalc(tempQuantities[item._id]-1, item._id,item.productItem)}
                                             >-</QuantityBtn>
 
                                             <QuantityInput 
@@ -332,7 +368,7 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                                             ></QuantityInput>
 
                                             <QuantityBtn 
-                                            onClick={()=>HandleQuantity(item.quantity+1, item._id,item.productItem)} 
+                                            onClick={()=>HandleQuantityCalc(tempQuantities[item._id]+1, item._id,item.productItem)} 
                                              >+</QuantityBtn>
                                         </div>
 

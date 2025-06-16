@@ -1,13 +1,15 @@
 import MainMenu from "../components/MainMenu";
 import Footer from "../components/Footer";
 import CheckoutInput from "../components/CheckoutPage/CheckoutInput";
-import CartProduct from "../components/CartPage/CartProduct";
-import styled from "styled-components";
 
+import styled from "styled-components";
+import CheckoutProductTable from "../components/CheckoutPage/CheckoutProduct";
+import { useEffect } from "react";
 
 const CheckoutPageContainer = styled.div`
   width: 80%;
   margin: auto;
+  padding-block:1.5rem;
 `;
 
 const CheckoutInfo = styled.div`
@@ -16,35 +18,19 @@ const CheckoutInfo = styled.div`
   gap: 5rem;
 `;
 
-const ImgProduct = styled.img`
-  width: 40%;
-`;
-
-const ButtonContainer = styled.div`
-  width: 30%;
-  margin: auto;
-`;
-
-const CheckoutBtn = styled.button`
-  font-size: 1rem;
-  padding: 0.5rem;
-`;
-
-
-
 
 
 function CheckoutPage(){
-
-
+    const CheckoutProduct =JSON.parse(localStorage.getItem("cartItems")) 
+    
     return(
         <>
+            <MainMenu></MainMenu>
             <CheckoutPageContainer className="CheckoutPage-Container">
-                {/* <MainMenu></MainMenu> */}
                 <CheckoutInfo className="Checkout-Info">
 
                     <CheckoutInput></CheckoutInput>
-                    <CartProduct></CartProduct>
+                    <CheckoutProductTable cartInfo={CheckoutProduct}></CheckoutProductTable>
 
                 </CheckoutInfo>
 

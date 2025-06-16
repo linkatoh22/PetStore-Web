@@ -246,7 +246,7 @@ const GetItemUnactive = async (req,res,next)=>{
         
             }
         ));
-       console.log(infoCart)
+       
         return res.status(200).json({
             message:"Get Cart Unactive Successfully",
             status:"Success",
@@ -267,7 +267,7 @@ const EditCart = async(req,res,next)=>{
 
 
         const {add,minus,amount,cartItem} = req.query;
-        console.log(`amount: ${amount} cartItem: ${cartItem}`)
+        
         const userId = req.user._id;
         if(!userId){
             res.status(400);
@@ -381,9 +381,9 @@ const DeleteItem= async (req,res,next)=>{
         
         
         const {cartItemId} = req.body;
-        console.log(cartItemId);
+        
         const idsToDelete = Array.isArray(cartItemId) ? cartItemId.map((item)=>item.toString()) : [cartItemId.toString()];
-        console.log(idsToDelete);
+        
 
         const userId = req.user._id;
         if(!userId){
@@ -408,7 +408,7 @@ const DeleteItem= async (req,res,next)=>{
         idsToDelete.map( (id)=>{
                 
                 const itemIndex = cart.items.findIndex(item => item._id.toString() === id);
-                console.log("itemIndex: ",itemIndex)
+                
                 if(itemIndex === -1){
                     res.status(404);
                     throw Error("Cart item not found")
