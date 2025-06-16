@@ -144,21 +144,18 @@ const AddToCart = async (req,res,next) =>{
     }
 }
 
-const GetCart = async(req,res,next)=>{
+const GetCartActive = async(req,res,next)=>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("GetCart: ", fullUrl);
 
-        const FindProductVariants = async (item,variant,products)=>{
-            const product = products.find(product=>product.id.toString() === item.toString())
-            const VariantFound = product.variants.id(variant);
-            return VariantFound;
-        }
         const userId = req.user._id;
+
         if(!userId){
             res.status(404);
             throw Error("No user found");
         }
+
         let cart = await Cart.findOne({user:userId});
 
         if(!cart){
@@ -166,76 +163,36 @@ const GetCart = async(req,res,next)=>{
             await cart.save();
             
         }
-        else{
-            const variantIds = cart.items.map((item)=>item.variant);
-            const itemIds = cart.items.map((item)=>item.item);
-
-            const products = await Product.find(
-                {_id:{$in:itemIds},"variants._id":{$in:variantIds}},
-                {variants:1}
-            )
-
-            const pets = await Pet.find({_id:{$in:itemIds}})
-           
-            for(const cartItem of cart.items){
-                    var variantFound; //Variant is ITEM (PET or Product)  
-
-                    if(cartItem.itemType ==="Product"){
-                        variantFound = await FindProductVariants(cartItem.item,cartItem.variant,products);
-                    }
-                    else if(cartItem.itemType ==="Pet"){
-                        variantFound = await pets.find(pet=>pet.id.toString() === cartItem.item.toString())
-                    }
-                    
-                    if(variantFound.stock==0 && cartItem.status!=="Hết hàng"){
-                        
-                        await Cart.updateOne(
-                            {
-                                _id:cart._id, "items.variant":cartItem.variant
-                            },
-                            {
-                                $set:{"items.$[elem].status":"Hết hàng"}
-                            },
-                            {
-                                arrayFilters:[{"elem.variant":cartItem.variant}]
-                            }
-                        )
-                    }
-                    else if(variantFound.stock<cartItem.quantity && cartItem.status!=="Không đủ hàng"){
-                        
-                        await Cart.updateOne(
-                            {
-                                _id:cart._id, "items.variant":cartItem.variant
-                            },
-                            {
-                                $set:{"items.$[elem].status":"Không đủ hàng"}
-                            },
-                            {
-                                arrayFilters:[{"elem.variant":cartItem.variant}]
-                            }
-                        )
-                    }
-                    else if(variantFound.stock>cartItem.quantity && (cartItem.status==="Hết hàng"||cartItem.status==="Không đủ hàng")){
-                        await Cart.updateOne(
-                            {
-                                _id:cart._id, "items.variant":cartItem.variant
-                            },
-                            {
-                                $set:{"items.$[elem].status":"Đủ hàng"}
-                            },
-                            {
-                                arrayFilters:[{"elem.variant":cartItem.variant}]
-                            }
-                        )
-                    }
-                }
-        }
         cart = await Cart.findOne({user:userId})
+        
+        const infoCart = JSON.parse(JSON.stringify(cart));
+        infoCart.items = infoCart.items.filter((item)=> item.status =="Đủ hàng"|| item.status =="Không đủ hàng")
+
+        await Promise.all(infoCart.items.map(async (item,index)=>{
+                
+                if(item.itemType === "Product" ){
+                    const product = await Product.findById(item.item)
+                    const infoProduct = JSON.parse(JSON.stringify(product));
+                   
+                    infoProduct.variants = infoProduct.variants.filter( vr => vr._id == item.variant )
+                    infoCart.items[index].productItem = infoProduct;
+
+                    
+                }
+                else if(item.itemType === "Pet"){
+                    
+                    const pet = await Pet.findById(item.item)
+                    infoCart.items[index].productItem = pet;
+                }
+        
+            }
+        ));
+       
         return res.status(200).json({
             message:"Get Cart Successfully",
             status:"Success",
             code:200,
-            cart
+            infoCart
         })
 
     }
@@ -245,6 +202,64 @@ const GetCart = async(req,res,next)=>{
     }
 }
 
+const GetItemUnactive = async (req,res,next)=>{
+    try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("GetCart: ", fullUrl);
+
+        const userId = req.user._id;
+
+        if(!userId){
+            res.status(404);
+            throw Error("No user found");
+        }
+
+        let cart = await Cart.findOne({user:userId});
+
+        if(!cart){
+            cart = new Cart({user:userId,items:[],totalPrice:0})
+            await cart.save();
+            
+        }
+        cart = await Cart.findOne({user:userId})
+        
+        const infoCart = JSON.parse(JSON.stringify(cart));
+        
+        infoCart.items = infoCart.items.filter(  (item)=> item.status =="Hết hàng" || item.status =="Ngừng kinh doanh"    )
+
+        await Promise.all(infoCart.items.map(async (item,index)=>{
+                
+               if(item.itemType === "Product" ){
+                    const product = await Product.findById(item.item)
+                    const infoProduct = JSON.parse(JSON.stringify(product));
+                   
+                    infoProduct.variants = infoProduct.variants.filter( vr => vr._id == item.variant )
+                    infoCart.items[index].productItem = infoProduct;
+
+                    
+                }
+                else if(item.itemType === "Pet"){
+                    
+                    const pet = await Pet.findById(item.item)
+                    infoCart.items[index].productItem = pet;
+                }
+        
+            }
+        ));
+       console.log(infoCart)
+        return res.status(200).json({
+            message:"Get Cart Unactive Successfully",
+            status:"Success",
+            code:200,
+            infoCart
+        })
+    }
+    catch(error){
+         next(error)
+    }
+
+}
+
 const EditCart = async(req,res,next)=>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
@@ -252,6 +267,7 @@ const EditCart = async(req,res,next)=>{
 
 
         const {add,minus,amount,cartItem} = req.query;
+        console.log(`amount: ${amount} cartItem: ${cartItem}`)
         const userId = req.user._id;
         if(!userId){
             res.status(400);
@@ -347,7 +363,7 @@ const EditCart = async(req,res,next)=>{
         await cart.save();
         
         return res.status(200).json({
-            message:"Get Detail Cart Successfully",
+            message:"Edit Cart Successfully",
             status:"Success",
             code:200,
             cart
@@ -364,7 +380,11 @@ const DeleteItem= async (req,res,next)=>{
         console.log("DeleteItem: ", fullUrl);
         
         
-        const {cartItemId} = req.query;
+        const {cartItemId} = req.body;
+        console.log(cartItemId);
+        const idsToDelete = Array.isArray(cartItemId) ? cartItemId.map((item)=>item.toString()) : [cartItemId.toString()];
+        console.log(idsToDelete);
+
         const userId = req.user._id;
         if(!userId){
             res.status(404);
@@ -375,20 +395,27 @@ const DeleteItem= async (req,res,next)=>{
             throw Error("Cart Item Id is required");
         }
         const cart = await Cart.findOne({user:userId});
+
+        
         
         if(!cart){
             res.status(404);
             throw Error("Cart not found")
         }
 
-        const itemIndex = cart.items.findIndex(item=> item._id.toString() === cartItemId);
+        
 
-        if(itemIndex === -1){
-            res.status(404);
-            throw Error("Cart item not found")
-        }
-
-        cart.items.splice(itemIndex,1);
+        idsToDelete.map( (id)=>{
+                
+                const itemIndex = cart.items.findIndex(item => item._id.toString() === id);
+                console.log("itemIndex: ",itemIndex)
+                if(itemIndex === -1){
+                    res.status(404);
+                    throw Error("Cart item not found")
+                }   
+                cart.items.splice(itemIndex,1);
+            }  
+        )
         
         cart.totalPrice = cart.items.reduce((total,item)=>total + (item.price * item.quantity),0);
         
@@ -405,4 +432,4 @@ const DeleteItem= async (req,res,next)=>{
         next(error)
     }
 }
-module.exports = {AddToCart,GetCart,EditCart,DeleteItem}
+module.exports = {AddToCart,GetCartActive,EditCart,DeleteItem,GetItemUnactive}

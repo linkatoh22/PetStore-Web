@@ -28,7 +28,7 @@ const PetSchema = mongoose.Schema({
 
     status:{
         type:String,
-        enum:["Có sẵn","Hết Hàng"],
+        enum:["Có sẵn","Hết hàng","Ngừng kinh doanh"],
         required: [true,"Please add the Pet's status"]
     },
     dewormed:{

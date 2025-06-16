@@ -4,6 +4,11 @@ import Footer from "../components/Footer";
 import CartProduct from "../components/CartPage/CartProduct";
 import CartBill from "../components/CartPage/CartBill";
 import styled from "styled-components";
+import { useGetCart,useGetCartUnactive } from "../services/hook/CartHook";
+import { AuthContext } from "../context/AuthProvider";
+import { useContext, useEffect, useState } from "react";
+import UnactiveCartProduct from "../components/CartPage/UnactiveCart";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CartContainer = styled.div`
      width: 80%;
@@ -12,13 +17,26 @@ const CartContainer = styled.div`
 
 const CartProductContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    
+    flex-direction: column;
+    gap:1.5rem;
     padding-block:2rem;
     justify-content:space-between;
 `
 function CartPage(){
+    const {accessToken} = useContext(AuthContext)
+    const {data:cartItem} = useGetCart(accessToken);
+    const {data:cartItemUnactive} = useGetCartUnactive();
+    const [selectItem, SetSelectItem] = useState([]);
+    const queryClient = useQueryClient();
 
+    const refetchCart = ()=>{
+        queryClient.invalidateQueries(['Cart/GetCart']);
+    }
+
+    const refetchUnactiveCart = ()=>{
+        queryClient.invalidateQueries(['Cart/GetCartUnactive']);
+    }
+    
     return(
         <>
             <MainMenu></MainMenu>
@@ -27,9 +45,16 @@ function CartPage(){
                 
 
                 <CartProductContainer className="CartProductContainer">
-                    <CartProduct></CartProduct>
-
-                    <CartBill></CartBill>
+                    <CartProduct cartInfo={cartItem?.infoCart} setProductChosen={SetSelectItem} productChosen={selectItem} updatedCart = {refetchCart}></CartProduct>
+                    
+                    {cartItemUnactive? <UnactiveCartProduct cartInfo={cartItemUnactive?.infoCart} updatedUnactiveCart = {refetchUnactiveCart}></UnactiveCartProduct> : <></>}
+                    
+                    <CartBill 
+                        cartItemChosen={selectItem} 
+                        cartItemUnactive={cartItemUnactive?.infoCart.items}
+                        updatedCart = {refetchCart}
+                        updatedUnactiveCart = {refetchUnactiveCart}
+                    ></CartBill>
                 </CartProductContainer>
 
 

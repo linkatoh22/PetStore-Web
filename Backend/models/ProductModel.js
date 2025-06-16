@@ -28,7 +28,8 @@ const ProductSchema = mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["Có sẵn","Hết Hàng"],
+        default:"Có sẵn",
+        enum:["Có sẵn","Hết hàng","Ngừng kinh doanh"],
         required: [true,"Please add the Product's status"]
     },
     variants:[variantsSchema],

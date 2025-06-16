@@ -7,8 +7,14 @@ const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middlewares/errorHandler")
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+//Change stream
+const watchProductVariants = require("./changeStream/ProductCartChangeStream")
+const watchPet = require("./changeStream/PetCartChangeStream")
 const PORT=process.env.PORT ||3001;
-connectDb();
+connectDb().then(()=>{
+    watchProductVariants();
+    watchPet();
+});
 
 app.use(cors({
   origin: process.env.ORIGIN,

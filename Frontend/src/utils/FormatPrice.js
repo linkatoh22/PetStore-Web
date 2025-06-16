@@ -8,5 +8,10 @@ export const FormattedPrice = (price)=>{
 
         return formattedMaxPrice
     }
-    return "Chưa cập nhập"
+    const formattedMaxPrice = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+            }).format(0);
+
+        return formattedMaxPrice
 }

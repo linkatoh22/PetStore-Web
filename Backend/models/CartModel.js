@@ -28,7 +28,7 @@ const CartItemSchema = new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["Đủ hàng","Không đủ hàng","Hết hàng"],
+        enum:["Đủ hàng","Không đủ hàng","Hết hàng","Ngừng kinh doanh"],
         required:true
     }
 }, { timestamps: true })

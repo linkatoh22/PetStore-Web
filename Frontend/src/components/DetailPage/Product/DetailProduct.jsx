@@ -335,7 +335,7 @@ export function DetailProduct({product}){
     const HandleAddToCart = ()=>{
         if(accessToken){
             if(PriceQuantity.price &&PriceQuantity.quantity&&filteredVariants.length===1 ){
-                console.log("DAT HANG NE BA")
+               
                 addToCart({
                     itemType:"Product",
                     item:product._id,

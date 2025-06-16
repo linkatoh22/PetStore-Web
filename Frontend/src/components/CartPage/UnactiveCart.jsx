@@ -112,40 +112,38 @@ const QuantityBtn = styled.button`
     &:focus{
         outline:none;
     }
-    border:1px solid var(--grey-600)
+    border:1px solid var(--grey-300)
 
 `
 const QuantityInput = styled.input`
+
     width:15%;
     padding-inline:0.12rem;
     padding-block:0.1rem;
     text-align:center;
     font-size:1.4rem;
-    border:1px solid var(--grey-600)
+    border:1px solid var(--grey-300)
     &:focus{
         outline:none;
     }
     
 `
+const StatusDiv = styled.div`
+    background-color:var(--grey-500);
+    color:white;
+    text-align:center;
+    padding-block:0.3rem;
+    border-radius:10px;
+`
 
-
-function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
+function UnactiveCartProduct({cartInfo,updatedUnactiveCart}){
     const [Selection,SetSelection] = useState([])
     const {accessToken}  = useContext(AuthContext)
     const {mutate: deleteItem}  = useDeleteCartItem(accessToken);
     const {mutate:updateItem} = useEditCartItem(accessToken)
     const [tempQuantities, setTempQuantities] = useState({});
 
-    useEffect(()=>{
-        if(cartInfo?.items){
-            const QuantityIn ={};
-            cartInfo.items.map((item)=>{
-                QuantityIn[item._id] = item.quantity;
-
-            })
-            setTempQuantities(QuantityIn)   
-        }
-    },[cartInfo])
+    
     const HandleDelete = (id)=>{
         
         var ItemId = [];
@@ -158,7 +156,7 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                 onSuccess:(data)=>{
                         
                          alert("Xóa item trong giỏ hàng thành công!");
-                         updatedCart();
+                         updatedUnactiveCart();
                     },
                 onError:(error)=>{
                         const message =  error.response?.data?.message || error.message;
@@ -167,34 +165,7 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
             }
         )
     }
-    const HandleQuantity = (amount,ItemId,product)=>{
-
-        if(amount>product.variants[0].stock)
-            amount = product.stock
-    
-        updateItem(
-            {
-                amount: amount,
-                ItemId: ItemId
-            },
-            {
-                onSuccess:(data)=>{
-                    alert("Chỉnh sửa Item thành công")
-
-                    setTempQuantities((prev) => ({
-                                                    ...prev,
-                                                    [ItemId]: amount,
-                                                }));
-                    
-                },
-                onError:(error)=>{
-                    const message =  error.response?.data?.message || error.message;
-                    console.log(message);
-                }
-            }
-        )
-
-    }
+   
     const VariantTitle = (variants) =>{
         if (!Array.isArray(variants) || variants.length === 0) return null;
 
@@ -218,37 +189,14 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
         
 
     }
-    const HandleSelection = (index) =>{
-        if(index=="All"){
-                if(Selection.length === cartInfo?.items?.length){
-                    SetSelection([])
-                    setProductChosen([])
-                }
-                else
-                {
-                        SetSelection( cartInfo?.items?.map((_,i)=>i))
-                        setProductChosen(cartInfo?.items)
-                }
-        }
-        else{
-                if( Selection.includes(index) ){
-                        SetSelection(   Selection.filter(   item=>item !== index  )   )
-                        setProductChosen(  productChosen.filter( item=>item != cartInfo?.items[index]) )
-                }
-                else{
-                        SetSelection([...Selection,index])
-                        setProductChosen([...productChosen,cartInfo?.items[index]])
-                }
-        }
-
-    }
+    
    
     return(
         <>
             <CartTableContainer className="cartTable-container">
                 <CartTitleContainer>
-                    <h2 style={{fontWeight:"bold"}}>Giỏ hàng</h2>
-                    <h3 style={{fontWeight:"bold"}}> {Selection.length} Sản Phẩm </h3>
+                    <h2 style={{fontWeight:"bold"}}>Danh sách sản phẩm không hoạt động</h2>
+                   
                 </CartTitleContainer>
                 
                 <LineDivider></LineDivider>
@@ -258,10 +206,8 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
 
                     <thead >
                         <tr style={{color:"var(--grey-600)"}}>
-                            <th>
-                                <input type="checkbox" checked={Selection.length === cartInfo?.items?.length} onChange={()=>HandleSelection("All")}></input>
-                            </th>
-
+                           
+                            <th>Trạng thái</th>
                             <th>Chi tiết sản phẩm</th>
                             <th> Số Lượng</th>
                             <th>Giá sản phẩm</th>
@@ -277,18 +223,11 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                                 return (<tr key={index}>
                                     
                                     <td >
-                                        <input 
-                                        
-                                        type="checkbox" 
-                                        key={index} 
-                                        checked={Selection.includes(index)} 
-                                        onChange={()=>HandleSelection(index)} >
-
-                                        </input>
+                                       <StatusDiv>  {item.status} </StatusDiv> 
                                     </td>
 
                                     <td>
-                                        <ProductDetailContainer>
+                                        <ProductDetailContainer style={{filter:"grayscale(100%)",color: "#aaa"}} >
                                             <ProductDetailImage src={item?.productItem?.image[0]??detail4} ></ProductDetailImage>
 
                                             <ProductDetailParagraph>
@@ -310,29 +249,17 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                                     <td style={{ textAlign: "center",verticalAlign: "middle"}} >
                                         
                                         <div >
-                                            <QuantityBtn 
-                                            onClick={()=>HandleQuantity(item.quantity-1, item._id,item.productItem)}
+                                            <QuantityBtn disabled={true}
+                                            
                                             >-</QuantityBtn>
 
-                                            <QuantityInput 
-                                            
-                                                type="number" 
-                                                onChange={  
-                                                    (e) => {
-                                                            const newVal = Number(e.target.value);
-                                                            setTempQuantities((prev) => ({
-                                                                ...prev,
-                                                                [item._id]: newVal,
-                                                            }));
-                                                        }
-                                                }
-                                                onBlur={(e)=>HandleQuantity(e.target.value, item._id,item.productItem)}
-                                                value = {tempQuantities[item._id]}
+                                            <QuantityInput disabled={true}
+                                                value = {item.quantity}
                                                
                                             ></QuantityInput>
 
                                             <QuantityBtn 
-                                            onClick={()=>HandleQuantity(item.quantity+1, item._id,item.productItem)} 
+                                                disabled={true}
                                              >+</QuantityBtn>
                                         </div>
 
@@ -340,8 +267,8 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                                         
                                     </td>
 
-                                    <td style={{ textAlign: "center",verticalAlign: "middle"}} >{FormattedPrice(item.price)}</td>
-                                    <td style={{ textAlign: "center",verticalAlign: "middle"}}  >
+                                    <td style={{ textAlign: "center",verticalAlign: "middle",color: "#aaa"}}  >{FormattedPrice(item.price)}</td>
+                                    <td style={{ textAlign: "center",verticalAlign: "middle",color: "#aaa"}}  >
                                             
                                         {FormattedPrice(item.quantity * item.price)}
                                         
@@ -365,4 +292,4 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
     )
 }
 
-export default CartProduct
+export default UnactiveCartProduct
