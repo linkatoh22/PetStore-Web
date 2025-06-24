@@ -10,10 +10,12 @@ const cookieParser = require("cookie-parser");
 //Change stream
 const watchProductVariants = require("./changeStream/ProductCartChangeStream")
 const watchPet = require("./changeStream/PetCartChangeStream")
+const watchOrder = require("./changeStream/OrderChangeStream")
 const PORT=process.env.PORT ||3001;
 connectDb().then(()=>{
     watchProductVariants();
     watchPet();
+    watchOrder();
 });
 
 app.use(cors({

@@ -144,6 +144,9 @@ function MainMenu() {
     const handleNavHome = ()=>{
             navigate("/")
     }
+    const handleNavCart = ()=>{
+            navigate("/cart")
+    }
     const handleNavItem = (type)=>{
         switch(type){
             case "Dog":
@@ -290,7 +293,7 @@ function MainMenu() {
 
             {accessToken?
                     <>
-                        <div>Cart</div>
+                        <TitleBtnMenu onClick={()=>handleNavCart()}>Cart</TitleBtnMenu>
                         <div>Info</div>
                         
                         <TitleBtnMenu onClick={()=>HandleLogout()}>

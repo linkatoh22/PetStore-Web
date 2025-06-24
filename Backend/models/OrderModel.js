@@ -54,10 +54,11 @@ const OrderSchema = new mongoose.Schema({
         enum:[
             "Đang đợi xác nhận",
             "Xác nhận",
-            "Đã giao cho đơn vị vận chuyển",
+            "Đã hủy",
             "Đang vận chuyển",
             "Giao hàng thất bại",
-            "Giao hàng thành công"
+            "Giao hàng thành công",
+
         ],
         default:"Đang đợi xác nhận",
         required:true,
@@ -65,7 +66,25 @@ const OrderSchema = new mongoose.Schema({
     orderedAt:{
         type:Date,
         default:Date.now,
-    }
+    },
+    statusHistory:[{
+        status:{
+            type:String,
+            enum:[
+                "Đang đợi xác nhận",
+                "Xác nhận",
+                "Đã hủy",
+                "Đang vận chuyển",
+                "Giao hàng thất bại",
+                "Giao hàng thành công",
+            ],
+            required:true
+        },
+        updatedAt:{
+            type:Date,
+            required:true
+        }
+    }]
 })
 
 module.exports = mongoose.model("Order",OrderSchema)

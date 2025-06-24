@@ -14,10 +14,10 @@ import OtpVerificationPage from './pages/OTPVerificationPage.jsx'
 import CustomQueryClientProvider from './QueryClientProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import PrivateRoute from './PrivateRoute.jsx'
-
+import InfoPage from './pages/InfoPage.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/AuthProvider.jsx'
-
+import DetailOrderInfoPage from './pages/DetailOrderInfoPage.jsx'
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
@@ -72,7 +72,8 @@ function App() {
 
             
             <Route element={<PrivateRoute/>}>
-                
+                <Route path="/info" element={<InfoPage></InfoPage>}> </Route>
+                <Route path="/info/order/:id" element={<DetailOrderInfoPage></DetailOrderInfoPage>}></Route>
                 <Route path="/cart" element={<CartPage></CartPage>}></Route>
                 <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
             </Route>

@@ -50,7 +50,7 @@ export const CheckOut = async ({items,shippingInfo})=>{
         return response.data;
     }
     catch(error){
-        console.error("Lỗi khi fetch Data: ",error);
-        return [];
+        const message = error.response?.data?.message || error.message;
+        throw new Error(message);
     }
 }

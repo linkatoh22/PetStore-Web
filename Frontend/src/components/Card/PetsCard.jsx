@@ -50,7 +50,7 @@ const PetPrice = styled.div`
 function PetsCard({Item,type} ){
     const navigate = useNavigate();
     const handleNavItem =  (type,item)=>{
-        console.log("Hereeee")
+        
         switch(type){
             case "Pet":
                 navigate (`/detail/thu-cung/${item}`);

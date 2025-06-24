@@ -51,8 +51,8 @@ export const DeleteItem = async (ItemId,accessToken)=>{
     return response.data;
     }
     catch(error){
-        console.error("Lỗi khi fetch Data: ",error);
-        return [];
+         const message = error.response?.data?.message || error.message;
+        throw new Error(message);
     }
 
 }
@@ -74,8 +74,8 @@ export const EditQuantity = async({amount,ItemId})=>{
         return response.data;
     }
     catch(error){
-        console.error("Lỗi khi fetch Data: ",error);
-        return [];
+         const message = error.response?.data?.message || error.message;
+        throw new Error(message);
     }
 
 }

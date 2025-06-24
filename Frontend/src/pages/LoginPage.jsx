@@ -5,10 +5,11 @@ import LoginForm from "../components/LoginPage/LoginForm"
 import styled from "styled-components"
 import MainMenu from "../components/MainMenu" 
 const LoginContainer = styled.div`
-  display: flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    
 `;
 const BackgroundAccount = styled.div`
   

@@ -29,7 +29,7 @@ function CheckoutPage(){
             <CheckoutPageContainer className="CheckoutPage-Container">
                 <CheckoutInfo className="Checkout-Info">
 
-                    <CheckoutInput></CheckoutInput>
+                    <CheckoutInput cartInfo={CheckoutProduct}></CheckoutInput>
                     <CheckoutProductTable cartInfo={CheckoutProduct}></CheckoutProductTable>
 
                 </CheckoutInfo>

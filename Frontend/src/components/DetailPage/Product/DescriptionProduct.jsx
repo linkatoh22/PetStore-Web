@@ -47,9 +47,7 @@ const ContentContainer = styled.div`
 ` 
 
 export function DescriptionProduct({product}){
-    useEffect(()=>{
-        console.log(product)
-    },[product])
+    
     return(
 
         <Accordion defaultActiveKey="0"  alwaysOpen>

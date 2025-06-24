@@ -2,8 +2,9 @@
 
 import styled from "styled-components";
 import Form from 'react-bootstrap/Form';
-import { useGetPhuongXa, useGetQuanHuyen, useGetTinhThanh } from "../../services/hook/CheckoutHook";
+import { useCheckOut, useGetPhuongXa, useGetQuanHuyen, useGetTinhThanh } from "../../services/hook/CheckoutHook";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutInputContainer = styled.div`
   display: flex;
@@ -42,34 +43,79 @@ const LineDivider = styled.div`
     width:100%;
     border:1px solid var(--grey-200);
 `
-function CheckoutInput(){
-    const [TinhThanhChosen,SetTinhThanhChosen] =useState();
-    const [QuanHuyenChosen,SetQuanHuyenChosen] =useState();
-    const [PhuongXaChosen,SetPhuongXa] =useState();
+function CheckoutInput({cartInfo}){
+    const [TinhThanhChosen,SetTinhThanhChosen] =useState({});
+    const [QuanHuyenChosen,SetQuanHuyenChosen] =useState({});
+    const [PhuongXaChosen,SetPhuongXa] =useState({});
     const [FullName,SetFullName]= useState();
     const [PhoneNumber,SetPhoneNumber] = useState();
     const [Address,SetAddress] = useState();
-
+    const navigate = useNavigate()
     const {data:tinhThanhData}= useGetTinhThanh();
     const {mutate:GetQuanHuyen} = useGetQuanHuyen();
     const {mutate:GetPhuongXa} = useGetPhuongXa();
-
+    const {mutate:CreateOrder} = useCheckOut();
     const [QuanHuyenData,SetQuanHuyenData] = useState();
     const [PhuongXaData,SetPhuongXaData] = useState();
     const handleCheckout =(e)=>{
          e.preventDefault();
-         console.log(TinhThanhChosen);
-         console.log(QuanHuyenChosen);
-         console.log(PhuongXaChosen);
-         console.log(FullName);
-         console.log(PhoneNumber);
-         console.log(Address);
+         if( !TinhThanhChosen.value || !QuanHuyenChosen.value ||!PhuongXaChosen.value){
+            alert("Vui lòng chọn thông tin nơi giao hàng")
+            return;
+         }
+        
+        
+        if(cartInfo){
+            var CartItem = []
+            cartInfo.map((item)=>{
+                var cartItemTemp = {}
+                cartItemTemp.item=item.item
+                cartItemTemp.quantity=item.quantity
+
+                if(item.itemType =="Product"){
+                    cartItemTemp.itemType ="Product"
+                    cartItemTemp.variant = item.variant
+                }
+                else if(item.itemType =="Pet"){
+                    cartItemTemp.itemType ="Pet"
+                }
+
+                CartItem.push(cartItemTemp)
+            })
+            
+                CreateOrder(
+                {
+                    items:CartItem
+                    ,
+                    shippingInfo:{
+                        fullname:FullName,
+                        phoneNumber:PhoneNumber,
+                        address:Address,
+                        cityProvince:TinhThanhChosen.value,
+                        district:QuanHuyenChosen.value,
+                        ward:PhuongXaChosen.value
+
+                    }
+                },
+                {
+                    onSuccess:(data)=>{
+                        alert("Đơn hàng đặt thành công")
+                        localStorage.removeItem('cartItems')
+                        navigate("/")
+                    },
+                    onError:(error)=>{
+                        alert("Lỗi đặt đơn hàng: " + error.message);
+                    }
+                }
+            )
+        }
+        
     }
 
     useEffect(()=>{
         if(TinhThanhChosen){
             GetQuanHuyen(
-                {   TinhThanhId:TinhThanhChosen },
+                {   TinhThanhId:TinhThanhChosen.key },
                 {
                     onSuccess:(data)=>{
                         SetQuanHuyenData(data.data)
@@ -89,7 +135,7 @@ function CheckoutInput(){
             
             GetPhuongXa(
                 {
-                    QuanHuyenId : QuanHuyenChosen
+                    QuanHuyenId : QuanHuyenChosen.key
                 },
                 {
                     onSuccess:(data)=>{
@@ -142,12 +188,26 @@ function CheckoutInput(){
                         <Form.Label>Tỉnh/Thành Phố:</Form.Label>
                         <Form.Select 
                         aria-label="Default select example" 
-                        onChange={(e)=>SetTinhThanhChosen(e.target.value)}
+                        onChange={(e)=>{
+                            const selectedIndex = e.target.selectedIndex;
+                            const selectedOption = e.target.options[selectedIndex];
+                            SetTinhThanhChosen({
+                                key: selectedOption.getAttribute('data-id'),
+                                value: e.target.value
+                            })
+
+                        }
+                            
+                        }
                         required
                         >
                             <option>Tỉnh thành</option>
                             {tinhThanhData?.data.map((item)=>{
-                                return <option value={item.id}>{item.name}</option>
+                                return <option 
+                                    
+                                    value = {item.name}
+                                    data-id={item.id}
+                                    >{item.name}</option>
                             })}
                             
                         </Form.Select>
@@ -160,14 +220,25 @@ function CheckoutInput(){
                         <Form.Label>Quận/Huyện:</Form.Label>
                         <Form.Select 
                         aria-label="Default select example"
-                        onChange={(e)=>SetQuanHuyenChosen(e.target.value)}
+                        onChange={(e)=>{
+                            const selectedIndex = e.target.selectedIndex;
+                            const selectedOption = e.target.options[selectedIndex];
+                            SetQuanHuyenChosen({
+                                key: selectedOption.getAttribute('data-id'),
+                                value: e.target.value
+                            })
+                        
+                        }}
                         required
                         >
                             <option>Quận huyện</option>
                             {
 
                                 QuanHuyenData?.map((item)=>{
-                                    return <option value={item.id}>{item.name}</option>
+                                    return <option 
+                                    value={item.name}
+                                    data-id={item.id}
+                                    >{item.name}</option>
                                 })
                             }
                             
@@ -181,11 +252,22 @@ function CheckoutInput(){
 
                         <Form.Label>Phường/Xã:</Form.Label>
 
-                        <Form.Select aria-label="Default select example" onChange={(e)=>SetPhuongXa(e.target.value)} required>
+                        <Form.Select aria-label="Default select example" onChange={(e)=>{
+                            const selectedIndex = e.target.selectedIndex;
+                            const selectedOption = e.target.options[selectedIndex];
+                            SetPhuongXa({
+                                key: selectedOption.getAttribute('data-id'),
+                                value: e.target.value
+                            })
+                            
+                            }} required>
                             <option>Phường xã</option>
                             {
                                 PhuongXaData?.map((item)=>{
-                                    return <option key={item.id}>{item.name}</option>
+                                    return <option 
+                                    value={item.name}
+                                    data-id={item.id}
+                                    >{item.name}</option>
                                 })
                             }
                             

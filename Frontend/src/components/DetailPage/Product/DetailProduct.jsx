@@ -344,7 +344,7 @@ export function DetailProduct({product}){
                 },
                 {
                     onSuccess:(data)=>{
-                        console.log("HERE")
+                        
                          alert("Thêm vào giỏ hàng thành công!");
                     },
                     onError:(error)=>{

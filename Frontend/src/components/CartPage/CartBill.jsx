@@ -98,8 +98,7 @@ function CartBill({cartItemChosen,cartItemUnactive,updatedCart,updatedUnactiveCa
                   updatedCart();
                 },
                 onError:(error)=>{
-                  const message =  error.response?.data?.message || error.message;
-                  alert(`Lỗi: ${message}`)
+                  alert("Lỗi đặt đơn hàng: " + error.message);
                 }
               }
             )
@@ -125,8 +124,7 @@ function CartBill({cartItemChosen,cartItemUnactive,updatedCart,updatedUnactiveCa
                   updatedUnactiveCart();
                 },
                 onError:(error)=>{
-                  const message =  error.response?.data?.message || error.message;
-                  alert(`Lỗi: ${message}`)
+                  alert("Lỗi đặt đơn hàng: " + error.message);
                 }
               }
             )
