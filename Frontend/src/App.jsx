@@ -10,7 +10,7 @@ import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage.jsx'
 import CategoryProductPage from './pages/CategoryProductPage.jsx'
 import CategorySearchPage from './pages/CategorySearchPage.jsx'
-import OtpVerificationPage from './pages/OTPVerificationPage.jsx'
+import OtpVerificationForm from './components/OtpVerificationPage/OtpVerification.jsx'
 import CustomQueryClientProvider from './QueryClientProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import PrivateRoute from './PrivateRoute.jsx'
