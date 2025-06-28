@@ -10,6 +10,7 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { useDeleteCartItem,useEditCartItem } from '../../services/hook/CartHook';
 import { AuthContext } from '../../context/AuthProvider';
 import { useMemo } from 'react';
+import TotalPrice from './TotalPrice';
 const CartTableContainer = styled.div`
   width: 50%;
   display:flex;
@@ -70,7 +71,19 @@ const ScrollTable = styled.div`
 `
 
 function CheckoutProductTable({cartInfo}){
-    
+    const [shippingFee, setShippingFee] = useState(30000)
+    const totalPriceValue  = useMemo(()=>{
+        if(cartInfo.length>0){
+            var sum=0;
+            cartInfo.map((item)=>{
+                sum = sum +(item.price *item.quantity)
+            })
+            if (sum>=300000) setShippingFee(0)
+                else setShippingFee(30000)
+            return sum;
+        }
+        return []
+    },[cartInfo])
     
 
     useEffect(()=>{
@@ -183,7 +196,11 @@ function CheckoutProductTable({cartInfo}){
                     </tbody>
                     
                 </CartTable>
+
                 </ScrollTable>
+                
+                <TotalPrice totalPrice={totalPriceValue} shippingFee={shippingFee}></TotalPrice>
+
             </CartTableContainer>
 
         </>

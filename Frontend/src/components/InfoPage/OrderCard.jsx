@@ -47,11 +47,17 @@ const BuyButton = styled.button`
 export default function OrderCard({items,order}){
     const navigate = useNavigate();
     const {accessToken} = useContext(AuthContext);
-    const {mutate:addToCart} = useAddToCart(accessToken);
+    useEffect(()=>{
+        console.log(order?._id);
+    },[order])
     
-
+    const handleNav = (id)=>{
+        if(id){
+            window.open(`/info/order/${id}`)
+        }
+    }
     return(
-        <OrderCardContainer>
+        <OrderCardContainer onClick={()=>handleNav(order?._id)}>
             
                 <Header >
                     <Status style={{color:"var(--main-blue)"}}>{order.status}</Status>

@@ -12,7 +12,7 @@ const TableContainer = styled.div`
   width: 100%;
   
   
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 16px;
 `;
 
@@ -39,7 +39,7 @@ const Value = styled.div`
 `;
 
 
-export default function OrderTotal({order}){
+export default function TotalPrice({totalPrice,shippingFee}){
     return(
         <TableContainer>
           
@@ -55,18 +55,9 @@ export default function OrderTotal({order}){
             <Label>Tổng tiền hàng</Label>
 
             <Value>
-              {FormattedPrice(order.originalPrice)}
+              {FormattedPrice(totalPrice)}
             </Value>
 
-          </Row>
-
-
-          <Row >
-            <Label>Giảm giá phí vận chuyển</Label>
-            <Value
-            >
-            { order.shippingFee ==0? "-":null}  { order.shippingFee ==0?FormattedPrice(30000) :FormattedPrice(0)}
-            </Value>
           </Row>
 
 
@@ -74,17 +65,17 @@ export default function OrderTotal({order}){
             <Label>Phí vận chuyển</Label>
             <Value
             >
-            {FormattedPrice(0)}
+            {FormattedPrice(shippingFee)}
             </Value>
           </Row>
 
         
 
-          <Row style={{fontWeight:"bold"}} >
+          <Row style={{fontWeight:"bold",borderBottom:"none"}} >
             <Label>Thành tiền</Label>
             <Value style={{fontWeight:"bold",color:"red"}}
             >
-            {FormattedPrice(order.totalPrice)}
+            {FormattedPrice(totalPrice+shippingFee)}
             </Value>
           </Row>
 

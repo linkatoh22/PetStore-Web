@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import Detail1 from "../../assets/pic/detail-product/detail1.png"
 import ProductCard from "../InfoPage/ProductCard"
+import { useEffect } from "react"
 const OrderCardContainer = styled.div`
     width:100%;
     
@@ -21,15 +22,13 @@ const Status = styled.div`
 
 `
 
-export default function OrderItemCard({items,order}){
+export default function OrderItemCard({items}){
     return(
          <OrderCardContainer>
                     
-                        <Header >
-                            <Status style={{color:"var(--main-blue)"}}>{order.status}</Status>
-                        </Header>
+                        
                         {
-                            items.map(item=>{
+                            items?.map(item=>{
                                 return <ProductCard productItem={item}></ProductCard>
                             })
                         }

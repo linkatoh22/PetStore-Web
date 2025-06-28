@@ -61,7 +61,7 @@ export default function OrderInfo({orders}){
             case "Hoàn thành":
                 return orders.filter(item => item.status === "Giao hàng thành công");
             case "Đã Hủy":
-                return orders.filter(item => item.status === "Đã Hủy");
+                return orders.filter(item => item.status === "Đã hủy");
             case "Tất cả":
             default:
                 return orders;

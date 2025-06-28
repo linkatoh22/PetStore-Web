@@ -4,6 +4,7 @@ import { FormattedPrice } from "../../../utils/FormatPrice";
 import { AuthContext } from "../../../context/AuthProvider";
 import { useAddToCart } from "../../../services/hook/DetailHook";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const DetailPetContainer = styled.div`
     display:flex;
     flex-direction:column;
@@ -345,11 +346,11 @@ export function DetailProduct({product}){
                 {
                     onSuccess:(data)=>{
                         
-                         alert("Thêm vào giỏ hàng thành công!");
+                         toast.success("Thêm vào giỏ hàng thành công!");
                     },
                     onError:(error)=>{
                         const message =  error.response?.data?.message || error.message;
-                        console.log(message);
+                        toast.error("Lỗi thêm vào giỏ hàng: ",message);
                     }
                 }
             

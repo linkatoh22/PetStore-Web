@@ -3,7 +3,9 @@ import { LuNewspaper } from "react-icons/lu";
 import { FaCheck,FaTruck } from "react-icons/fa";
 import { LuShare } from "react-icons/lu";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useMemo } from "react";
 
+import formatDate from "../../utils/FormatDate";
 const StatusTitle= styled.div`
     font-weight:bold;
     font-size:1.2rem;
@@ -84,60 +86,89 @@ const Time = styled.div`
   color: #6c757d;
 `;
 
-export default function StatusBar(){
+
+
+
+const Header = [
+    {
+        label: "Đang đợi xác nhận",
+        icon:<LuNewspaper className="status-icon" ></LuNewspaper>
+    },
+    {
+        label: "Xác nhận",
+        icon:<FaCheck className="status-icon" ></FaCheck>
+    },
+    {
+        label: "Đang vận chuyển",
+        icon:<FaTruck className="status-icon" ></FaTruck>
+    },
+    {
+        label: "Giao hàng thành công",
+        icon:<FaCheck className="status-icon" ></FaCheck>
+    },
+]
+export default function StatusBar({statusHistory,status}){
+    const StatusInitial = useMemo(()=>{
+        if(statusHistory?.length>0){
+             statusHistory.map((item,index)=>{
+                if(item.status==="Đang đợi xác nhận") statusHistory[index].step=0;
+                if(item.status==="Xác nhận") statusHistory[index].step=1;
+                if(item.status==="Đang vận chuyển") statusHistory[index].step=2;
+                if(item.status==="Giao hàng thành công") statusHistory[index].step=3;
+            })
+
+            
+            const reversed = [...statusHistory].reverse()
+            return reversed
+        }
+       return []
+    },[statusHistory])
+
+    const MainStatus = useMemo(()=>{
+        if(status==="Đang đợi xác nhận") return {status:status, step:0}
+        if(status==="Xác nhận") return {status:status, step:1}
+        if(status==="Đang vận chuyển") return {status:status, step:2}
+        if(status==="Giao hàng thành công") return {status:status, step:3}
+
+        return {status:"", step:0}
+    },[status])
+    
+    const StatusDateFind = (step)=>{
+       const foundStatus = StatusInitial.filter((item)=>item.step === step) 
+        
+       
+       if(foundStatus[0]?.updatedAt){
+            return formatDate(foundStatus[0]?.updatedAt)
+       }
+       return "Chưa cập nhập"
+    }
     return(
         <>
             <StatusTitle>
-                Đơn hàng đã thanh toán
+                {status??"Chưa cập nhập"}
             </StatusTitle>
             <LineDivider></LineDivider>
 
         <StatusBarContainer>
             <StatusBarSubcontainer>
-                <StatusContainer>
-                        <Circle>
-                            <LuNewspaper className="status-icon" />
-                            
-                        </Circle>
-                        <Label>Đơn Hàng Đã Đặt</Label>
-                        <Time>23:14 30-05-2025</Time>
-                        <Line></Line>
-                        
-                </StatusContainer>
-                    
-                <StatusContainer>
-                        <Circle>
-                            <FaCheck className="status-icon" />
-                            
-                        </Circle>
-                        <Label>Đơn Hàng Đã Đặt</Label>
-                        <Time>23:14 30-05-2025</Time>
-                        <Line></Line>
-                        
-                </StatusContainer>
 
+                {Header.map((item,index)=>{
+                    return <StatusContainer>
 
-                <StatusContainer>
-                        <Circle>
-                            <FaTruck className="status-icon" />
+                            <Circle active={index <= MainStatus.step}>
+                                {item.icon}
+                                
+                            </Circle>
+                            <Label>{item.label}</Label>
                             
-                        </Circle>
-                        <Label>Đơn Hàng Đã Đặt</Label>
-                        <Time>23:14 30-05-2025</Time>
-                        <Line></Line>
-                        
-                </StatusContainer>
-                    
-                <StatusContainer>
-                        <Circle>
-                            <FaCheck className="status-icon" />
+                            <Time>{StatusDateFind(index)}</Time>
                             
-                        </Circle>
-                        <Label>Đơn Hàng Đã Đặt</Label>
-                        <Time>23:14 30-05-2025</Time>
-                        
-                        
-                </StatusContainer>
+                            
+                            {index<3&&(<Line active={index+1 <= MainStatus.step} ></Line>)}
+                            
+                    </StatusContainer>
+                })}
+               
                 
 
             </StatusBarSubcontainer>

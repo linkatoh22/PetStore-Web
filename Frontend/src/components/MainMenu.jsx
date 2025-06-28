@@ -9,6 +9,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 import { useLogOut } from '../services/hook/LogOutHook';
+import { toast } from "react-toastify";
+
 const MainMenuContainer = styled.div`
     width: 100%;
     background-color: #003459;
@@ -192,11 +194,12 @@ function MainMenu() {
             {},
             {
                 onSuccess:(data)=>{
-                    alert("Đăng xuất thành công");
+                    toast.success("Đăng xuất thành công")
+                    
                     logout();
                 },
                 onError:(error)=>{
-                    alert("Đăng xuất thất bại")
+                    toast.success("Đăng xuất thất bại")
                 }
             }
         )

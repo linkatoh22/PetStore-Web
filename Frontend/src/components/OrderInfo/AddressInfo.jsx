@@ -31,13 +31,13 @@ const Address =styled.div`
     
 
 `
-export default function AddressInfo(){
+export default function AddressInfo({shippingInfo}){
     return(
         <Container> 
             <Title>Địa chỉ nhận hàng</Title>
-            <Name> TLinh</Name>
-            <Address> 012456788</Address>
-            <Address> 123 Abc str TPHCM P3 Q7</Address>
+            <Name> {shippingInfo?.fullname}</Name>
+            <Address> {shippingInfo?.phoneNumber}</Address>
+            <Address> {shippingInfo?.address} {", "} {shippingInfo?.ward}{", "} {shippingInfo?.district}{", "} {shippingInfo?.cityProvince}</Address>
         </Container>
     )
 

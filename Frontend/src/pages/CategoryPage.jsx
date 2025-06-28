@@ -49,7 +49,6 @@ function CategoryPage({type,typePage}){
 
     const [Page,SetPage] = useState(1);
     const [Limit,SetLimit] = useState(16);
-    const [TotalPage,SetTotalPage] = useState(1);
 
     const isValidPriceMax =  (Price.maxPrice != null)? true:false
     const isValidPriceMin =  (Price.minPrice != null)? true:false
@@ -57,7 +56,7 @@ function CategoryPage({type,typePage}){
     const isValidGender = Gender !== undefined && Gender !== null && Gender !== "";
     const isValidColor = Array.isArray(Color) && Color.length > 0;
 
-    const {data:filterPet = []} = usePetQueryFetchFilter({
+    const {data:filterPet = [], isLoading:isLoadingPet} = usePetQueryFetchFilter({
                   gender: isValidGender ? Gender:"",
                   color: isValidColor ? Color:[],
                   maxPrice:isValidPriceMax ? Price.maxPrice:"",
@@ -71,6 +70,8 @@ function CategoryPage({type,typePage}){
 
     const pets = filterPet?.pets ?? [];
     const totalItems = filterPet?.totalItems ?? 0;
+    const TotalPage = totalItems/Limit;
+    
     useEffect(()=>
       {
             setNavDirect( GenNavPet(type,typePage,breed)  )
@@ -90,11 +91,31 @@ function CategoryPage({type,typePage}){
                     
                     
                     <PicIntro/>
-                    <PageDirect NavDirect={NavDirect}/>
+                    <PageDirect NavDirect={NavDirect} SetPage={SetPage}/>
 
                     <CategoryPageBody className="CategoryPage-Body">
-                        <FilterBoard GenderChosen={Gender} SetGender={SetGender} ColorChosen={Color} SetColor={SetColor} SetPrice={SetPrice} ></FilterBoard>
-                        <PetCardBody Pet={pets} SetPet={setPet} Header={header}SetSort={SetSort} Petlength={totalItems} type="Pet"></PetCardBody>
+                        <FilterBoard 
+                          GenderChosen={Gender} 
+                          SetGender={SetGender} 
+                          ColorChosen={Color} 
+                          SetColor={SetColor} 
+                          SetPrice={SetPrice}
+                          Page={Page}
+                          SetPage={SetPage}
+                        ></FilterBoard>
+
+                        <PetCardBody 
+                          Pet={pets} 
+                          
+                          Header={header}
+                          SetSort={SetSort} 
+                          Petlength={totalItems} 
+                          type="Pet"
+                          Page={Page}
+                          SetPage={SetPage}
+                          TotalPage={Math.ceil(TotalPage)}
+                          isLoading = {isLoadingPet}
+                          ></PetCardBody>
                     </CategoryPageBody>
 
                 </CategoryPageContainer>

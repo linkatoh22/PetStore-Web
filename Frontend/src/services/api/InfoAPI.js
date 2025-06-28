@@ -16,6 +16,24 @@ export const getOrderFetch = async(accessToken)=>{
         console.error("Lỗi khi fetch Data: ",error);
         return [];
     }
+}
 
+export const getDetailOrderFetch = async(orderId)=>{
+    try{
+        var queryParams = {}
+        queryParams.orderId=orderId;
+        const response = await axiosClient.get(`/order/get-detail-order`,{
+            params:queryParams,
+            useAuth:true
+
+        }
+        )
+
+        return response.data;
+    }
+    catch(error){
+         console.error("Lỗi khi fetch Data: ",error);
+        return [];
+    }
 
 }

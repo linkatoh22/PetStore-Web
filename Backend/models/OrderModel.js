@@ -38,7 +38,18 @@ const OrderSchema = new mongoose.Schema({
         default:0,
         min:0
     },
-    
+    originalPrice:{
+        type:Number,
+        required:true,
+        default:0,
+        min:0
+    },
+    shippingFee:{
+        type:Number,
+        required:true,
+        default:0,
+        min:0
+    },
     shippingInfo:
         {
             fullname: {type:String,required:true},

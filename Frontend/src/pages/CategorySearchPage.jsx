@@ -48,7 +48,7 @@ function CategorySearchPage({type}){
     const [Sort,SetSort] = useState(0)
 
     const [Page,SetPage] = useState(1);
-    const [Limit,SetLimit] = useState(16);
+    const [Limit,SetLimit] = useState(12);
     const [TotalPage,SetTotalPage] = useState(1);
 
     const isValidPriceMax =  (Price.maxPrice != null)? true:false
@@ -57,9 +57,11 @@ function CategorySearchPage({type}){
     const isValidGender = Gender !== undefined && Gender !== null && Gender !== "";
     const isValidColor = Array.isArray(Color) && Color.length > 0;
     var filterItem = [];
-
+    var isLoadingPet =false;
+    var isLoadingProduct =false;
+    var isLoadingAll =false;
     if(type == "Chó" || type == "Mèo"){
-      const {data} = usePetSearch({
+      const {data, isLoading:isLoading} = usePetSearch({
         keyword: keyword,
         page: Page,
         limit: Limit,
@@ -67,9 +69,10 @@ function CategorySearchPage({type}){
         species: type,
       });
       filterItem= data;
+      isLoadingPet=isLoading;
     }
     else if(type == "Phụ kiện"){
-      const {data} = useProductSearch({
+      const {data, isLoading:isLoading} = useProductSearch({
         keyword: keyword,
         page: Page,
         limit: Limit,
@@ -77,18 +80,20 @@ function CategorySearchPage({type}){
       });
       
       filterItem=data;
-      console.log('Phụ kiện',filterItem)
+      isLoadingProduct=isLoading;
+      
       
     }
     else if(type == "All"){
-        const {data} = useSearchAll({
+        const {data, isLoading:isLoading} = useSearchAll({
           keyword: keyword,
           page: Page,
           limit: Limit,
           sort: Sort,
         });
-        console.log('All',data)
+
         filterItem=data
+        isLoadingAll=isLoading;
     }
 
     const GetItem = (type)=>{
@@ -113,19 +118,40 @@ function CategorySearchPage({type}){
           }
           ,[type]);
     const totalItems = filterItem?.totalItems ?? 0;
-
+    const totalPage = filterItem?.totalPage ?? 0;
+          
 
     
     const CardBody = (type )=>{
       switch(type){
         case "Chó":
-          return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="Pet"></PetCardBody>
+          return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="Pet"
+            Page={Page}
+            SetPage={SetPage}
+            TotalPage={totalPage}
+            isLoading={isLoadingPet}
+          ></PetCardBody>
         case "Mèo":
-            return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="Pet"></PetCardBody>
+            return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="Pet"
+            Page={Page}
+            SetPage={SetPage}
+            TotalPage={totalPage}
+            isLoading={isLoadingPet}
+            ></PetCardBody>
         case "Phụ kiện":
-          return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="Product"></PetCardBody>
+          return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="Product"
+            Page={Page}
+            SetPage={SetPage}
+            TotalPage={totalPage}
+            isLoading={isLoadingProduct}
+          ></PetCardBody>
         case "All":
-          return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="All"></PetCardBody>
+          return <PetCardBody Pet={Item} SetPet={setPet} Header={header} SetSort={SetSort} Petlength={totalItems} type="All"
+            Page={Page}
+            SetPage={SetPage}
+            TotalPage={totalPage}
+            isLoading={isLoadingAll}
+            ></PetCardBody>
       }
     }
 

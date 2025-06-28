@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
+import formatDate from "../../utils/FormatDate";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -61,17 +62,18 @@ const historyStatus = [
   },
   // ...
 ];
-export default function StatusHistory(){
+export default function StatusHistory({statusHistory}){
     return(
         <Container>
-      {historyStatus.map((item, idx) => (
+      {statusHistory?.map((item, idx) => (
         <Item key={idx}>
-          <IconWrapper status={item.status}>
+
+          <IconWrapper >
             <FaCheckCircle />
           </IconWrapper>
-          <Time>{item.time}</Time>
-          <Title status={item.status}>{item.title}</Title>
-          <Description>{item.description}</Description>
+
+          <Time>{formatDate(item.updatedAt)}</Time>
+          <Title >{item.status}</Title>
         </Item>
       ))}
     </Container>

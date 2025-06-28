@@ -24,8 +24,8 @@ const CartProductContainer = styled.div`
 `
 function CartPage(){
     const {accessToken} = useContext(AuthContext)
-    const {data:cartItem} = useGetCart(accessToken);
-    const {data:cartItemUnactive} = useGetCartUnactive();
+    const {data:cartItem, isLoading: loadingCartItem} = useGetCart(accessToken);
+    const {data:cartItemUnactive,isLoading: loadingCartItemUnactive} = useGetCartUnactive();
     const [selectItem, SetSelectItem] = useState([]);
     const queryClient = useQueryClient();
 
@@ -45,13 +45,23 @@ function CartPage(){
                 
 
                 <CartProductContainer className="CartProductContainer">
-                    <CartProduct cartInfo={cartItem?.infoCart} setProductChosen={SetSelectItem} productChosen={selectItem} updatedCart = {refetchCart}></CartProduct>
+                    <CartProduct 
+                        cartInfo={cartItem?.infoCart} 
+                        setProductChosen={SetSelectItem} 
+                        productChosen={selectItem} 
+                        updatedCart = {refetchCart} 
+                        isLoading ={loadingCartItem}
+                    ></CartProduct>
                     
-                    {cartItemUnactive? <UnactiveCartProduct cartInfo={cartItemUnactive?.infoCart} updatedUnactiveCart = {refetchUnactiveCart}></UnactiveCartProduct> : <></>}
+                    {cartItemUnactive? <UnactiveCartProduct 
+                        cartInfo={cartItemUnactive?.infoCart} 
+                        updatedUnactiveCart = {refetchUnactiveCart}
+                        isLoading ={loadingCartItemUnactive}
+                        ></UnactiveCartProduct> : <></>}
                     
                     <CartBill 
                         cartItemChosen={selectItem} 
-                        cartItemUnactive={cartItemUnactive?.infoCart.items}
+                        cartItemUnactive={cartItemUnactive?.infoCart?.items}
                         updatedCart = {refetchCart}
                         updatedUnactiveCart = {refetchUnactiveCart}
                     ></CartBill>

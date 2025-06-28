@@ -1,5 +1,5 @@
 
-
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import Form from 'react-bootstrap/Form';
 import { useCheckOut, useGetPhuongXa, useGetQuanHuyen, useGetTinhThanh } from "../../services/hook/CheckoutHook";
@@ -17,12 +17,7 @@ const CheckoutInputTitle = styled.h2`
     font-weight:bold;
 `;
 
-const CheckoutInputGroup = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-size: var(--fs-m);
-`;
+
 
 const CheckoutBtn = styled.button`
     width:100%;
@@ -60,7 +55,7 @@ function CheckoutInput({cartInfo}){
     const handleCheckout =(e)=>{
          e.preventDefault();
          if( !TinhThanhChosen.value || !QuanHuyenChosen.value ||!PhuongXaChosen.value){
-            alert("Vui lòng chọn thông tin nơi giao hàng")
+            toast.success("Vui lòng chọn thông tin nơi giao hàng");
             return;
          }
         
@@ -99,12 +94,13 @@ function CheckoutInput({cartInfo}){
                 },
                 {
                     onSuccess:(data)=>{
-                        alert("Đơn hàng đặt thành công")
+                        toast.success("Đơn hàng đặt thành công");
+                        
                         localStorage.removeItem('cartItems')
                         navigate("/")
                     },
                     onError:(error)=>{
-                        alert("Lỗi đặt đơn hàng: " + error.message);
+                        toast.error("Lỗi đặt đơn hàng: " + error.message);
                     }
                 }
             )

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import PetsCard from "../Card/PetsCard";
-// import "../../styles/components/PetCardBody.css"
 import styled from "styled-components";
-
+import { Pagination } from "react-bootstrap"; 
+import Spinner from 'react-bootstrap/Spinner';
 
 const PcContainer = styled.div`
   display: flex;
@@ -51,11 +51,57 @@ const PcCardContainer = styled.div`
   width: 100%;
   gap: 10px;
 `;
+const SpinnerContainer = styled.div`
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    height:200px;
+    font-size:1.3rem;
+
+`
 
 
+function PetCardBody({Pet,Header,SetSort,Petlength,type,Page,SetPage,TotalPage,isLoading}){
+  useEffect(()=>{
+      console.log("TotalPage: ",TotalPage)
+      console.log("Page: ",Page)
+      
+    },[TotalPage,Page])
 
-function PetCardBody({Pet,SetPet,Header,SetSort,Petlength,type}){
-  
+    const handlePageClick = (pageNumber) => {
+    if (pageNumber !== Page && pageNumber >= 1 && pageNumber <= TotalPage) {
+      SetPage(pageNumber);
+      window.scrollTo({ top:0, behavior: 'smooth' });
+    }
+  };
+
+  const renderPagination = () => {
+    let items = [];
+
+    for (let number = 1; number <= TotalPage; number++) {
+      items.push(
+        <Pagination.Item
+          key={number}
+          active={number === Page}
+          onClick={() => handlePageClick(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+
+    return (
+    <div className="d-flex justify-content-center mt-4">
+      <Pagination>
+        <Pagination.Prev onClick={() => handlePageClick(Page - 1)} disabled={Page === 1} />
+        {items}
+        <Pagination.Next onClick={() => handlePageClick(Page + 1)} disabled={Page === TotalPage} />
+      </Pagination>
+    </div>
+  );
+
+  }
   
     const options =[
         {label: "Sắp xếp theo: Tất cả",value:0},
@@ -97,32 +143,37 @@ function PetCardBody({Pet,SetPet,Header,SetSort,Petlength,type}){
 
                 </PcTitleContainer>
 
-                <PcCardContainer className="pc-card-container">
                 
-                  {
-                    Pet.length>0?
+                  {isLoading? 
+                    <SpinnerContainer>
+                      <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                    </SpinnerContainer> 
+                  :
+                    (  Pet.length>0?
                     (
+                        <PcCardContainer className="pc-card-container">
+                                {Pet.map((item)=>{
+                                    return (
+                                    <PetsCard 
+                                    key={item._id}
+                                    Item = {item} 
+                                    type={type=="All"?item.type:type}>
 
-                                Pet.map((item)=>{
-                                  return (
-                                  <PetsCard 
-                                  key={item._id}
-                                  Item = {item} 
-                                  type={type=="All"?item.type:type}>
+                                    </PetsCard>
+                                    )
 
-                                  </PetsCard>
-                                  )
-
-                                }
-                              )
+                                  }
+                                )}
+                        </PcCardContainer> 
                     )
                     :
-                    (<div>Không tìm thấy kết quả</div>)
-                }
+                    (<div>Không tìm thấy kết quả</div>))
+                  }
+                  
                  
-                </PcCardContainer> 
-
                 
+
+                {renderPagination()}
             </PcContainer>          
         </>
     );

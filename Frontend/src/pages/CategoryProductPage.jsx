@@ -47,7 +47,7 @@ function CategoryProductPage({type,typePage}){
     const [Limit,SetLimit] = useState(16);
 
 
-    const {data:filterProduct = []} = useProductQueryFetchFilter({
+    const {data:filterProduct = [], isLoading:isLoadingProduct} = useProductQueryFetchFilter({
                   subcategory: ProductSubCategory ??"",
                   category: ProductCategory ??"",
                   sort: Sort,
@@ -82,11 +82,16 @@ function CategoryProductPage({type,typePage}){
                     
                     
                     <PicIntro/>
-                    <PageDirect NavDirect={NavDirect}/>
+                    <PageDirect NavDirect={NavDirect} SetPage={SetPage}/>
 
                     <CategoryPageBody className="CategoryPage-Body">
                         {/* <FilterBoard GenderChosen={Gender} SetGender={SetGender} ColorChosen={Color} SetColor={SetColor} SetPrice={SetPrice} ></FilterBoard> */}
-                        <PetCardBody Pet={products} SetPet={setPet} Header={header}SetSort={SetSort} Petlength={totalItems} type="Product"></PetCardBody>
+                        <PetCardBody Pet={products} SetPet={setPet} Header={header}SetSort={SetSort} Petlength={totalItems} type="Product" 
+                          Page={Page}
+                          SetPage={SetPage}
+                          TotalPage={totalPage}
+                          isLoading={isLoadingProduct}
+                        ></PetCardBody>
                     </CategoryPageBody>
 
                 </CategoryPageContainer>

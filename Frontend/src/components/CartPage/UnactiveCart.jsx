@@ -10,6 +10,7 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { useDeleteCartItem,useEditCartItem } from '../../services/hook/CartHook';
 import { AuthContext } from '../../context/AuthProvider';
 import { useMemo } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 const CartTableContainer = styled.div`
   width: 100%;
   display:flex;
@@ -135,8 +136,17 @@ const StatusDiv = styled.div`
     padding-block:0.3rem;
     border-radius:10px;
 `
+const SpinnerContainer = styled.div`
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    height:200px;
+    font-size:1.3rem;
 
-function UnactiveCartProduct({cartInfo,updatedUnactiveCart}){
+`
+
+function UnactiveCartProduct({cartInfo,updatedUnactiveCart,isLoading}){
     const [Selection,SetSelection] = useState([])
     const {accessToken}  = useContext(AuthContext)
     const {mutate: deleteItem}  = useDeleteCartItem(accessToken);
@@ -217,8 +227,16 @@ function UnactiveCartProduct({cartInfo,updatedUnactiveCart}){
                     </thead>
 
                     <tbody >
-                        
-                            {cartInfo?.items?.map((item, index)=>{
+                        { isLoading? 
+                                <tr>
+                                    <td colSpan={6}>
+                                    <SpinnerContainer>
+                                        <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                                    </SpinnerContainer>
+                                    </td>
+                                </tr>
+                            :
+                            (cartInfo?.items?.map((item, index)=>{
                                 
                                 return (<tr key={index}>
                                     
@@ -280,7 +298,9 @@ function UnactiveCartProduct({cartInfo,updatedUnactiveCart}){
                                 
                                 </tr>)
 
-                            })}
+                                }))
+                        }
+                           
 
                     </tbody>
                     

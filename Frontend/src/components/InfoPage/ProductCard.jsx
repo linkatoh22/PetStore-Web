@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import Detail1 from "../../assets/pic/detail-product/detail1.png"
 import { FormattedPrice } from "../../utils/FormatPrice"
+import { useEffect } from "react"
 const ProductImg = styled.img`
     width:100px;
     height:100px;
@@ -68,6 +69,7 @@ const VariantTitle = (variants,type) =>{
 }
 
 export default function ProductCard ({productItem}){
+   
     return(
         <OrderCardBody >
         

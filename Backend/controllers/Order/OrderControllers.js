@@ -110,10 +110,12 @@ const createOrder = async(req,res,next) =>{
 
         
         // TÍNH TỔNG GIÁ ĐƠN HÀNG
-        const totalPrice = items.reduce((total,item)=>{
+       
+        const originalPrice = items.reduce((total,item)=>{
             return total + item.price * item.quantity
         }, 0 );
-
+        const shippingFee = originalPrice>300000? 0 :30000;
+         const totalPrice = originalPrice + shippingFee;
         //CART
         const cart = await Cart.findOne({ user: userId }).session(session);
 
@@ -137,6 +139,8 @@ const createOrder = async(req,res,next) =>{
             user:userId,
             items:items,
             totalPrice,
+            originalPrice,
+            shippingFee,
             shippingInfo,
             status:"Đang đợi xác nhận",
             orderAt:Date.now(),
@@ -229,6 +233,8 @@ const getAllOrderUser = async(req,res,next) =>{
 
 const getDetailOrder = async(req,res,next)=>{
     try{
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("getDetailOrder: ", fullUrl);
         const {orderId} = req.query;
         
         if(!orderId){
@@ -236,38 +242,41 @@ const getDetailOrder = async(req,res,next)=>{
             throw Error('OrderId is required');
         }
 
-        const order = await Order.findOne({_id:orderId}).populate('items.item').populate('user');;
+        const order = await Order.findOne({_id:orderId});
+        if(!order){
+            res.status(404);
+            throw Error('No order found');
+        }
         const infoOrders = JSON.parse(JSON.stringify(order));
-
-
         
         await Promise.all(
             infoOrders.items.map(async (item, index) => {
+                
                 if (item.itemType === "Product") {
                     const product = await Product.findById(item.item);
                     const infoProduct = JSON.parse(JSON.stringify(product));
                     infoProduct.variants = infoProduct.variants.filter(
                         (vr) => vr._id == item.variant
                     );
-                    order.items[index].productItem = infoProduct;
+                    
+                    infoOrders.items[index].productItem = infoProduct;
                 } else if (item.itemType === "Pet") {
                     const pet = await Pet.findById(item.item);
-                    order.items[index].productItem = pet;
+                    infoOrders.items[index].productItem = pet;
+                    
                 }
             })
         );
             
+        
 
-        if(!order){
-            res.status(404);
-            throw Error('No order found');
-        }
+        
 
         res.status(200).json({
             message:"Get detail order successfully",
             status:"Success",
             code:200,
-            order
+            infoOrders
         })
 
     }

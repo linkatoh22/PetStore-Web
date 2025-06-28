@@ -26,9 +26,10 @@ const ArrowSymbol = styled.div`
 
 
 `
-function PageDirect({NavDirect}){
+function PageDirect({NavDirect,SetPage}){
     const navigate = useNavigate()
     const handleNav= (url)=>{
+        SetPage(1);
         navigate(url);
 
 

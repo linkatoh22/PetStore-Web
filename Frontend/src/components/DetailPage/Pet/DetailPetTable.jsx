@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useAddToCart } from "../../../services/hook/DetailHook";
 import { AuthContext } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const DetailPetContainer = styled.div`
     display:flex;
     flex-direction:column;
@@ -193,10 +194,11 @@ export function DetailPetTable({pet}){
             },
             {
               onSuccess:(data)=>{
-                alert("Thêm vào giỏ hàng thành công!");
+                toast.success("Thêm vào giỏ hàng thành công!");
               },
               onError:(error)=>{
                 const message =  error.response?.data?.message || error.message;
+                toast.error("Lỗi thêm vào giỏ hàng: ",message)
               }
             }
           )

@@ -11,7 +11,16 @@ import { DetailProduct } from "./DetailProduct";
 import { DescriptionProduct } from "./DescriptionProduct";
 import { useGetDetailProduct } from "../../../services/hook/DetailHook";
 import Recommmend from "../Recommend";
+import Spinner from 'react-bootstrap/Spinner';
+const SpinnerContainer = styled.div`
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    height:200px;
+    font-size:1.3rem;
 
+`
 const DetailContainer = styled.div`
   margin:auto;
   width: 80%;
@@ -78,16 +87,22 @@ const myPic=[
         {pic:detail6},
     ]
 export function ProductDetailContainter({id}){
-    const {data:product} = useGetDetailProduct(id);
+    const {data:product,isLoading:isLoadingProduct} = useGetDetailProduct(id);
     return(
         <>
             <DetailContainer>
+                {
+                        isLoadingProduct?
+                        <SpinnerContainer>
+                            <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                        </SpinnerContainer>
+                        :
+                        <DetailItem>
 
-                <DetailItem>
-
-                    <ImageSlider PicImg={product?.ProductDetail?.image}></ImageSlider>
-                    <DetailProduct product={product?.ProductDetail} ></DetailProduct>
-                </DetailItem>
+                            <ImageSlider PicImg={product?.ProductDetail?.image}></ImageSlider>
+                            <DetailProduct product={product?.ProductDetail} ></DetailProduct>
+                        </DetailItem>
+                }           
 
                 <DescriptionProduct product={product?.ProductDetail}></DescriptionProduct>
                 {/* <Recommmend></Recommmend> */}

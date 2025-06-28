@@ -12,7 +12,15 @@ import { useGetDetailPet } from "../../../services/hook/DetailHook";
 import { DescriptionPet } from "./DescriptionPet";
 
 import Recommmend from "../Recommend";
+import Spinner from 'react-bootstrap/Spinner';
+const SpinnerContainer = styled.div`
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    height:500px;
 
+`
 const DetailContainer = styled.div`
   margin:auto;
   width: 80%;
@@ -71,16 +79,27 @@ const PetValue = [
 ]
 
 export function PetDetailContainter({id}){
-    const {data:pet} = useGetDetailPet(id);
+    const {data:pet,isLoading: isLoadingPet} = useGetDetailPet(id);
     return(
         <>
             <DetailContainer>
 
-                <DetailItem>
+                
+                    {
+                        isLoadingPet?
+                        <SpinnerContainer>
+                            <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                        </SpinnerContainer>
+                        :
+                        <DetailItem>
+                            <ImageSlider PicImg={pet?.PetDetail?.image}></ImageSlider>
+                            <DetailPetTable pet={pet?.PetDetail} label={PetLabel} value={PetValue}></DetailPetTable>
+                        </DetailItem>
 
-                    <ImageSlider PicImg={pet?.PetDetail?.image}></ImageSlider>
-                    <DetailPetTable pet={pet?.PetDetail} label={PetLabel} value={PetValue}></DetailPetTable>
-                </DetailItem>
+                    }
+                
+                    
+                
 
                 <DescriptionPet></DescriptionPet>
                 {/* <Recommmend></Recommmend> */}

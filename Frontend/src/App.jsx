@@ -18,6 +18,8 @@ import InfoPage from './pages/InfoPage.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './context/AuthProvider.jsx'
 import DetailOrderInfoPage from './pages/DetailOrderInfoPage.jsx'
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
@@ -81,6 +83,7 @@ function App() {
           
           </Routes>
         </Router>
+        <ToastContainer />
       </AuthProvider>
       </CustomQueryClientProvider>
 

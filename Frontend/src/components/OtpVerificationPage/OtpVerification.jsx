@@ -5,6 +5,7 @@ import { useNavigate,useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useVerifyOtp, useResendOtp} from "../../services/hook/OtpVerificationHook";
+import { toast } from "react-toastify";
 const OtpVerifyContainer = styled.div`
   background-color: white;
   display: flex;
@@ -113,14 +114,14 @@ function OtpVerificationForm()
           {
             onSuccess: (data) => {
               if (data.status === "Success") {
-                alert("Tạo tài khoản thành công");
+                toast.success("Tạo tài khoản thành công");
                 navigate("/");
               }
             },
             onError: (error) => {
               
               const message = error.response?.data?.message || error.message;
-              alert("Lỗi xác thực OTP: " + message);
+              toast.error("Lỗi xác thực OTP: " + message);
             }
           }
 
@@ -138,14 +139,14 @@ function OtpVerificationForm()
           {
             onSuccess:(data)=>{
               if(data.status === "Success"){
-                alert("Mã OTP đã được gửi lại vào email của bạn")
+                toast.success("Mã OTP đã được gửi lại vào email của bạn")
               }
             }
           },
           {
             onError:(error)=>{
               const message = error.response?.data?.message || error.message;
-              alert("Lỗi khi gửi lại OTP: " + message);
+              toast.error("Lỗi khi gửi lại OTP: " + message);
             }
           }
       )

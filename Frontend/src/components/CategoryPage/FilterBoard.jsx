@@ -1,7 +1,7 @@
 // import "../styles/components/FilterBoard.css"
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { toast } from "react-toastify";
 const FilterContainer = styled.div`
   font-size: 18px;
   display: flex;
@@ -71,6 +71,7 @@ function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
     const [MaxPrice,setMaxPrice] = useState()
 
     const handleSetMinPrice = (price)=>{
+        
         setMinPrice(price)
     }
 
@@ -81,19 +82,22 @@ function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
 
     const ApplyPrice = ()=>{
         if( (!MinPrice && !MaxPrice) ){
-            alert("Bạn vui lòng nhập mức giá hợp lệ!")
+            toast.error("Bạn vui lòng nhập mức giá hợp lệ!")
         }
         else{
             if((MinPrice&&MaxPrice)&& MaxPrice<MinPrice ){
-                alert("Bạn vui lòng nhập mức giá hợp lệ!")
-
+                toast.error("Bạn vui lòng nhập mức giá hợp lệ!")
+                
             }
             else
             {
                 SetPrice({"minPrice":MinPrice,"maxPrice":MaxPrice})
+                SetPage(1)
+                
+                 
             }
         }
-
+        
 
     }
 
@@ -102,6 +106,8 @@ function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
             SetGender("")
         else
             SetGender(gender)
+        
+        SetPage(1)
     }
 
     const handleCheckColor = (color)=>{
@@ -120,6 +126,8 @@ function FilterBoard({GenderChosen,SetGender,ColorChosen,SetColor,SetPrice}){
             }
 
         )
+        
+        SetPage(1)
 
     }
 

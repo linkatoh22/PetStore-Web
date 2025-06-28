@@ -10,6 +10,7 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { useDeleteCartItem,useEditCartItem } from '../../services/hook/CartHook';
 import { AuthContext } from '../../context/AuthProvider';
 import { useMemo } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 const CartTableContainer = styled.div`
   width: 100%;
   display:flex;
@@ -92,17 +93,6 @@ const DeleteOption = styled.div`
 `
 
 
-const QuantityContainer = styled.div`
-
-    display:flex;
-    flex-direction:row;
-    
-    align-items:center;
-    gap:1rem;
-    font-size:1.1rem
-    
-`
-
 const QuantityBtn = styled.button`
     
     padding:0.35rem;
@@ -127,9 +117,23 @@ const QuantityInput = styled.input`
     }
     
 `
+const SpinnerContainer = styled.div`
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    height:200px;
+    font-size:1.3rem;
+
+`
 
 
-function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
+function CartProduct({
+    cartInfo,
+    setProductChosen,
+    productChosen,
+    updatedCart,
+    isLoading}){
     const [Selection,SetSelection] = useState([])
     const {accessToken}  = useContext(AuthContext)
     const {mutate: deleteItem}  = useDeleteCartItem(accessToken);
@@ -307,89 +311,103 @@ function CartProduct({cartInfo,setProductChosen,productChosen,updatedCart}){
                     </thead>
 
                     <tbody >
-                        
-                            {cartInfo?.items?.map((item, index)=>{
-                                
-                                return (<tr key={index}>
+                        {
+                            isLoading? 
+                                <tr>
+                                    <td colSpan={6}>
+                                    <SpinnerContainer>
+                                        <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                                    </SpinnerContainer>
+                                    </td>
+                                </tr>
+                            :
+                            (
+                                cartInfo?.items?.map((item, index)=>{
                                     
-                                    <td >
-                                        <input 
+                                    return (<tr key={index}>
                                         
-                                        type="checkbox" 
-                                        key={index} 
-                                        checked={Selection.includes(index)} 
-                                        onChange={()=>HandleSelection(index)} >
+                                        <td >
+                                            <input 
+                                            
+                                            type="checkbox" 
+                                            key={index} 
+                                            checked={Selection.includes(index)} 
+                                            onChange={()=>HandleSelection(index)} >
 
-                                        </input>
-                                    </td>
+                                            </input>
+                                        </td>
 
-                                    <td>
-                                        <ProductDetailContainer>
-                                            <ProductDetailImage src={item?.productItem?.image[0]??detail4} ></ProductDetailImage>
+                                        <td>
+                                            <ProductDetailContainer>
+                                                <ProductDetailImage src={item?.productItem?.image[0]??detail4} ></ProductDetailImage>
 
-                                            <ProductDetailParagraph>
-                                                
-                                               
-                                                <div style={{fontStyle:"italic"}}>
-                                                     {item?.productItem?.brand ?? `#${item?.productItem?.sku}`}
+                                                <ProductDetailParagraph>
                                                     
-                                                </div>
-                                                <div style={{fontWeight:"bold"}}>{item?.productItem?.name}</div>
-                                                <div>
-                                                    {VariantTitle(item?.productItem?.variants)}
-                                                </div>
+                                                
+                                                    <div style={{fontStyle:"italic"}}>
+                                                        {item?.productItem?.brand ?? `#${item?.productItem?.sku}`}
+                                                        
+                                                    </div>
+                                                    <div style={{fontWeight:"bold"}}>{item?.productItem?.name}</div>
+                                                    <div>
+                                                        {VariantTitle(item?.productItem?.variants)}
+                                                    </div>
 
-                                            </ProductDetailParagraph>
-                                        </ProductDetailContainer>
-                                    </td>
+                                                </ProductDetailParagraph>
+                                            </ProductDetailContainer>
+                                        </td>
 
-                                    <td style={{ textAlign: "center",verticalAlign: "middle"}} >
-                                        
-                                        <div >
-                                            <QuantityBtn 
-                                            onClick={()=>HandleQuantityCalc(tempQuantities[item._id]-1, item._id,item.productItem)}
-                                            >-</QuantityBtn>
-
-                                            <QuantityInput 
+                                        <td style={{ textAlign: "center",verticalAlign: "middle"}} >
                                             
-                                                type="number" 
-                                                onChange={  
-                                                    (e) => {
-                                                            const newVal = Number(e.target.value);
-                                                            setTempQuantities((prev) => ({
-                                                                ...prev,
-                                                                [item._id]: newVal,
-                                                            }));
-                                                        }
-                                                }
-                                                onBlur={(e)=>HandleQuantity(e.target.value, item._id,item.productItem)}
-                                                value = {tempQuantities[item._id]}
-                                               
-                                            ></QuantityInput>
+                                            <div >
+                                                <QuantityBtn 
+                                                onClick={()=>HandleQuantityCalc(tempQuantities[item._id]-1, item._id,item.productItem)}
+                                                >-</QuantityBtn>
 
-                                            <QuantityBtn 
-                                            onClick={()=>HandleQuantityCalc(tempQuantities[item._id]+1, item._id,item.productItem)} 
-                                             >+</QuantityBtn>
-                                        </div>
+                                                <QuantityInput 
+                                                
+                                                    type="number" 
+                                                    onChange={  
+                                                        (e) => {
+                                                                const newVal = Number(e.target.value);
+                                                                setTempQuantities((prev) => ({
+                                                                    ...prev,
+                                                                    [item._id]: newVal,
+                                                                }));
+                                                            }
+                                                    }
+                                                    onBlur={(e)=>HandleQuantity(e.target.value, item._id,item.productItem)}
+                                                    value = {tempQuantities[item._id]}
+                                                
+                                                ></QuantityInput>
 
-                                       
+                                                <QuantityBtn 
+                                                onClick={()=>HandleQuantityCalc(tempQuantities[item._id]+1, item._id,item.productItem)} 
+                                                >+</QuantityBtn>
+                                            </div>
+
                                         
-                                    </td>
-
-                                    <td style={{ textAlign: "center",verticalAlign: "middle"}} >{FormattedPrice(item.price)}</td>
-                                    <td style={{ textAlign: "center",verticalAlign: "middle"}}  >
                                             
-                                        {FormattedPrice(item.quantity * item.price)}
-                                        
-                                        
-                                    </td>
-                                    <td style={{ textAlign: "center",verticalAlign: "middle"}} >
-                                        <DeleteOption onClick={()=>HandleDelete(item._id)} >   Xóa </DeleteOption>
-                                    </td>
-                                
-                                </tr>)
+                                        </td>
 
-                            })}
+                                        <td style={{ textAlign: "center",verticalAlign: "middle"}} >{FormattedPrice(item.price)}</td>
+                                        <td style={{ textAlign: "center",verticalAlign: "middle"}}  >
+                                                
+                                            {FormattedPrice(item.quantity * item.price)}
+                                            
+                                            
+                                        </td>
+                                        <td style={{ textAlign: "center",verticalAlign: "middle"}} >
+                                            <DeleteOption onClick={()=>HandleDelete(item._id)} >   Xóa </DeleteOption>
+                                        </td>
+                                    
+                                    </tr>
+                            )
+
+                                })
+                            ) 
+                        }
+                            
 
                     </tbody>
                     

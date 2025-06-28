@@ -8,6 +8,9 @@ import { useContext, useState } from "react";
 import { useNavigate, useLocation  } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthProvider";
 import { useGoogleLogin } from '@react-oauth/google';
+import { toast } from "react-toastify";
+
+
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -115,7 +118,8 @@ function LoginForm(){
     const handleSubmit = (e)=>{
       e.preventDefault();
       if(formData.email == "" || formData.password == ""){
-        alert("Vui lòng nhập đầy đủ thông tin!");
+        // alert("Vui lòng nhập đầy đủ thông tin!");
+        toast.error(`Vui lòng nhập đầy đủ thông tin!`);
         return;
       }
       logIn(
@@ -129,8 +133,8 @@ function LoginForm(){
           onSuccess:(data)=>{
             if(data.status == "Success"){
               console.log(data)
-              alert("Đăng nhập thành công!");
-
+              toast.success(`Đăng nhập thành công!`);
+              
               if(data.token.accessToken){
                 login(data.token.accessToken)
               }
@@ -140,7 +144,8 @@ function LoginForm(){
           },
           onError:(error)=>{
             const message = error.response?.data?.message || error.message;
-              alert("Lỗi đăng nhập " + message);
+              toast.error("Lỗi đăng nhập: " + message);
+              
           }
         }
       )
@@ -150,8 +155,6 @@ function LoginForm(){
   const loginWithGoogle = useGoogleLogin({
 
     onSuccess: (tokenResponse) => {
-      console.log('Đăng nhập thành công: ',tokenResponse);
-      
       if(tokenResponse.access_token){
                 alert(tokenResponse.access_token)
                 login(tokenResponse.access_token)

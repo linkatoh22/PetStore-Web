@@ -8,7 +8,7 @@
   import { useSignUp } from "../../services/hook/SignUpHook";
   import { useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from "@react-oauth/google";
-
+import { toast } from "react-toastify";
   const SignUpFormContainer = styled.div`
     
     background-color: white;
@@ -125,13 +125,13 @@ import { useGoogleLogin } from "@react-oauth/google";
 
       const signUpWithGoogle = useGoogleLogin({
           onSuccess: (tokenResponse) => {
-            console.log('Đăng ký thành công: ',tokenResponse);
+            toast.success('Đăng ký thành công: ',tokenResponse);
             localStorage.setItem("accessToken",tokenResponse.access_token)
             navigate("/")
           },
 
           onError: () => {
-            console.log('Login Failed');
+            toast.error('Login Failed');
           },
       })
 
@@ -139,15 +139,15 @@ import { useGoogleLogin } from "@react-oauth/google";
           e.preventDefault();
           
           if (!isValidEmail(formData.email)) {
-            alert("Lỗi đăng nhập: Email không hợp lệ");
+            toast.error("Lỗi đăng nhập: Email không hợp lệ");
             return;
           }
           if(formData.password !== formData.confirmPassword) {
-            alert('Lỗi đăng nhập: Mật khẩu không khớp!');
+            toast.error('Lỗi đăng nhập: Mật khẩu không khớp!');
             return;
           }
           else if(formData.password.length < 8) {
-            alert('Lỗi đăng nhập: Mật khẩu phải có ít nhất 8 ký tự!');
+            toast.error('Lỗi đăng nhập: Mật khẩu phải có ít nhất 8 ký tự!');
             return;
           }
           
@@ -158,15 +158,15 @@ import { useGoogleLogin } from "@react-oauth/google";
           {
             onSuccess:(data) =>{
               if(data.status == "Success"){
-                navigate(`/dang-ky/otp/${data.data.userid}`);
+                toast.success(`/dang-ky/otp/${data.data.userid}`);
               } else {
-                alert(data?.message ?? "Đăng ký thất bại");
+                toast.error(data?.message ?? "Đăng ký thất bại");
               }
             }
           },
           {
             onError:(error)=>{
-              alert("Lỗi đăng nhập:"+error.message)
+              toast.error("Lỗi đăng nhập:"+error.message)
             }
           }
           );

@@ -12,6 +12,7 @@ import {useState,useEffect} from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import MainMenu from "../components/MainMenu.jsx";
+import Spinner from 'react-bootstrap/Spinner';
 
 import { PetFetchHook,ProductFetchHook } from "../services/hook/homepageHook.js";
 const PetsHomepageContainer = styled.div`
@@ -140,37 +141,22 @@ const BigFont = styled.span`
     color:#002A48
 
 `
-const DescriptionSubMenuHoldHand = styled.div`
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    top:70px;
-    left: 80px;
-`
-const ParagraphSubMenuHoldHand = styled.div`
-     width: 400px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    
-    
-    font-size: 20px;
-`
 
-const KnowledgeCardContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    column-gap: 10px;
-    row-gap: 20px;
+const SpinnerContainer = styled.div`
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    height:200px;
+    font-size:1.3rem;
+
 `
-
-
 
 
 function Homepage(){
     const navigate = useNavigate()
     const { data: pet, isLoading: loadingUser, error: errorUser } = PetFetchHook()
-    const { data: product, isLoading: loadingPosts, error: errorPosts } = ProductFetchHook()
+    const { data: product, isLoading: loadingProduct, error: errorPosts } = ProductFetchHook()
 
     const [PetData,setPetData] = useState([])
     const [ProductData,setProductData] = useState([])
@@ -237,27 +223,35 @@ function Homepage(){
 
                 </HomepageTitleContainer>
 
-                <CardContainer>
-
-                {
-                    PetData.length >0?
+                
+                {loadingUser? 
+                        <SpinnerContainer>
+                            <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                        </SpinnerContainer>
+                    : 
                     (
-                        PetData.map(
-                            item =>
-                                    <PetsCard 
-                                        key={item._id}
-                                        
-                                        Item = {item}
-                                        type="Pet"
-                                    /> 
+                        PetData.length >0?
+                        (
+                            <CardContainer>
+                            {PetData.map(
+                                item =>
+                                        <PetsCard 
+                                            key={item._id}
+                                            
+                                            Item = {item}
+                                            type="Pet"
+                                        /> 
+                            )}
+                            </CardContainer>
                         )
+                        :
+                        (<SpinnerContainer> <div> Không có dữ liệu hiển thị</div> </SpinnerContainer>)
                     )
-                    :
-                    (<h1> NO DATA</h1>)
-                } 
+                }
+                
                    
                     
-                </CardContainer>
+                
 
 
                 <BgrImg>
@@ -285,11 +279,6 @@ function Homepage(){
 
                 </BgrImg>
 
-            
-
-
-
-            
 
                 <div className="homepage-title-1-pets"
                 style={{
@@ -316,26 +305,34 @@ function Homepage(){
 
 
 
-                <CardContainer>
-                    {
-                        ProductData.length>0?
-                        (
-                            ProductData.map(
-                                item =>
-                                        <PetsCard 
-                                            key={item._id}
-                                            Item = {item}
-                                            onClick = {()=>handleNavItem("Product",item._id)}
-                                            type="Product"
-                                        /> 
-                            )
-                        )
+                
+                    { loadingProduct?  
+                        <SpinnerContainer>
+                            <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                        </SpinnerContainer>
                         :
-                        (<h1> NO DATA</h1>)
+                        (
+                            ProductData.length>0?
+                            (
+                                <CardContainer>
+                                {ProductData.map(
+                                    item =>
+                                            <PetsCard 
+                                                key={item._id}
+                                                Item = {item}
+                                                onClick = {()=>handleNavItem("Product",item._id)}
+                                                type="Product"
+                                            /> 
+                                )}
+                                </CardContainer>
+
+                            )
+                            :
+                            (<SpinnerContainer> <div> Không có dữ liệu hiển thị</div> </SpinnerContainer>)
+                        )
                     } 
                         
-                </CardContainer>
-
+                
 
 
                 <HomepageTitleContainer>
