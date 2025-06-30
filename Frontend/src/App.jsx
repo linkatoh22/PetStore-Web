@@ -20,6 +20,7 @@ import { AuthProvider } from './context/AuthProvider.jsx'
 import DetailOrderInfoPage from './pages/DetailOrderInfoPage.jsx'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import GoogleSuccess from './pages/GoogleSuccess.jsx'
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
@@ -71,7 +72,7 @@ function App() {
             {/* DETAIL */}
             <Route path="/detail/thu-cung/:id" element={<ProductDetail type="Pet"/>}></Route>
             <Route path="/detail/phu-kien/:id" element={<ProductDetail type="Product"/>}></Route>
-
+            <Route path="/google-success" element={<GoogleSuccess />} />
             
             <Route element={<PrivateRoute/>}>
                 <Route path="/info" element={<InfoPage></InfoPage>}> </Route>

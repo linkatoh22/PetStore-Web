@@ -96,7 +96,8 @@ const LoginButton = styled.button`
     background-color: var(--main-blue);
   }
 `;
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL_ORG;
+
 function LoginForm(){
     const {login} = useContext(AuthContext)
     const navigate = useNavigate()
@@ -152,23 +153,10 @@ function LoginForm(){
 
     }
 
-  const loginWithGoogle = useGoogleLogin({
-
-    onSuccess: (tokenResponse) => {
-      if(tokenResponse.access_token){
-                alert(tokenResponse.access_token)
-                login(tokenResponse.access_token)
-              }
-     
-      navigate("/")
-    },
-
-    onError: () => {
-      console.log('Login Failed');
-    },
-
-
-  });
+  const loginWithGoogle = ()=>{
+    
+    window.location.href = `${BASE_URL}/api/auth/google`;
+  };
 
 
     return(
@@ -243,7 +231,7 @@ function LoginForm(){
 
 
 
-                <p>Không có tài khoản <a href="#">Đăng ký ngay</a></p>
+                <p>Không có tài khoản <a href="/dang-ky">Đăng ký ngay</a></p>
                 
 
             </LoginFormContainer>

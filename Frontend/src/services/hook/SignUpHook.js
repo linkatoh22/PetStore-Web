@@ -14,7 +14,7 @@ export const useSignUp = () => {
     return useMutation(
         {
             mutationKey: ['Auth/Log in'],
-            mutationFn: ({ email, password }) => SignUpAPI({ email, password }),
+            mutationFn: ({ email, password,username }) => SignUpAPI({ email, password,username }),
             
         }
     )

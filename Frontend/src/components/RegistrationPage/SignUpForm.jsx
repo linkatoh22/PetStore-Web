@@ -1,6 +1,7 @@
 
   import { GrMailOption } from "react-icons/gr";
   import { MdLockOutline } from "react-icons/md";
+  import { BsPersonCheckFill } from "react-icons/bs";
   import Google from "../../assets/svg/google/google";
   import styled from 'styled-components';
   import React, { useState } from 'react';
@@ -101,10 +102,9 @@ import { toast } from "react-toastify";
   function SignUpForm()
   {
     const navigate = useNavigate()
-    var message = "";
-    var FilterItem = [];
     const {mutate:signup} = useSignUp();
     const[formData, setFormData] = useState({ 
+          username:'',
           email: '',
           password: '',
           confirmPassword: ''
@@ -152,13 +152,15 @@ import { toast } from "react-toastify";
           }
           
           signup({
+            username:formData.username,
             email: formData.email,
             password: formData.password,
           },
           {
             onSuccess:(data) =>{
               if(data.status == "Success"){
-                toast.success(`/dang-ky/otp/${data.data.userid}`);
+                toast.success("Đăng ký thành công")
+                navigate(`/dang-ky/otp/${data.data.userid}`);
               } else {
                 toast.error(data?.message ?? "Đăng ký thất bại");
               }
@@ -193,6 +195,19 @@ import { toast } from "react-toastify";
                   <SeperatorText className="seperator-text">or</SeperatorText>
 
                   <SignUpFormItem className="signup-form" onSubmit={handleSubmit}>
+                      <InputWrapper className="input-wrapper"> 
+
+                          <BsPersonCheckFill></BsPersonCheckFill>
+                          <InputForm 
+                          type="text" 
+                          placeholder="Nhập tên hiển thị của bạn" 
+                          className="input-form"
+                          name="username"
+                          value={formData.username}
+                          onChange={handleChange}
+                          ></InputForm>
+                          
+                      </InputWrapper>
 
                       <InputWrapper className="input-wrapper"> 
 

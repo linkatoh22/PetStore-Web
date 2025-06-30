@@ -17,17 +17,17 @@ const googleCallback = async (req,res,next) =>{
             sameSite:"Strict",
             maxAge:7 * 24 * 60 * 60 * 1000,
         })
-        
-        return res.status(200).json({
-            message:"Google Login Successfully",
-            status:"Success",
-            code:200,
-            token:{
-                accessToken,
-                refreshToken
-            }
+        res.redirect(`${process.env.ORIGIN}/google-success?accessToken=${accessToken}`);
+        // return res.status(200).json({
+        //     message:"Google Login Successfully",
+        //     status:"Success",
+        //     code:200,
+        //     token:{
+        //         accessToken,
+        //         refreshToken
+        //     }
             
-        })
+        // })
     }   
     catch(error){
         next(error);

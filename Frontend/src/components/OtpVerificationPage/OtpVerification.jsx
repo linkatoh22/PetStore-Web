@@ -3,7 +3,7 @@
 import { MdLockOutline } from "react-icons/md";
 import { useNavigate,useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useVerifyOtp, useResendOtp} from "../../services/hook/OtpVerificationHook";
 import { toast } from "react-toastify";
 const OtpVerifyContainer = styled.div`
@@ -91,6 +91,17 @@ function OtpVerificationForm()
     const {mutate: resendOtpData} = useResendOtp();
     const{id}= useParams();
     const navigate = useNavigate();
+    // const email = useMemo(()=>{
+      
+    //   if(otpData.data){
+    //     return otpData.data.email
+    //   }
+    //   return ""
+    // },[otpData])
+
+    useEffect(()=>{
+      console.log(otpData)
+    },[otpData])
     const [formData,setFormData]= useState({
       otp:"",
       userId:id
@@ -114,7 +125,7 @@ function OtpVerificationForm()
           {
             onSuccess: (data) => {
               if (data.status === "Success") {
-                toast.success("Tạo tài khoản thành công");
+                toast.success("Tạo tài khoản thành công. Vui lòng đăng nhập để vào tài khoản.");
                 navigate("/");
               }
             },
@@ -159,7 +170,7 @@ function OtpVerificationForm()
             <OtpVerifyContainer className="signup-form-container">
                 
                 <OtpVerifyFormTitle className="signup-form-title">Xác thực OTP</OtpVerifyFormTitle>
-
+                  <div>Chúng tôi vừa gửi mã OTP vào email của bạn vui lòng kiểm tra. OTP có hiệu lực trong 5 phút.</div>
                 
 
                 <SeperatorText className="seperator-text"></SeperatorText>

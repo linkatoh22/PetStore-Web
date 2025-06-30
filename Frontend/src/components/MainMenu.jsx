@@ -199,7 +199,7 @@ function MainMenu() {
                     logout();
                 },
                 onError:(error)=>{
-                    toast.success("Đăng xuất thất bại")
+                    toast.error("Đăng xuất thất bại")
                 }
             }
         )

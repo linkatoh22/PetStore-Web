@@ -1,6 +1,4 @@
-// import "../styles/pages/LoginPage.css"
 import Footer from "../components/Footer"
-import Logo from "../assets/logo.png"
 import LoginForm from "../components/LoginPage/LoginForm"
 import styled from "styled-components"
 import MainMenu from "../components/MainMenu" 
