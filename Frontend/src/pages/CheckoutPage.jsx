@@ -25,7 +25,7 @@ function CheckoutPage(){
     
     return(
         <>
-            <MainMenu></MainMenu>
+            
             <CheckoutPageContainer className="CheckoutPage-Container">
                 <CheckoutInfo className="Checkout-Info">
 
@@ -36,7 +36,7 @@ function CheckoutPage(){
 
             </CheckoutPageContainer>
             
-            <Footer></Footer>
+            
         </>
     )
 }

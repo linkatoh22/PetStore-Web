@@ -26,7 +26,7 @@ function LoginPage(){
     return (
 
         <>
-            <MainMenu></MainMenu>
+           
 
             <LoginContainer className="login-container">
 
@@ -40,7 +40,7 @@ function LoginPage(){
 
             </LoginContainer>
 
-            <Footer></Footer>
+          
         </>
     )
 

@@ -30,7 +30,7 @@ function OtpVerificationPage(){
     return(
         <>
           
-          <MainMenu></MainMenu>
+          
 
             <OtpVerifyContainer className="signup-container">
 
@@ -46,7 +46,7 @@ function OtpVerificationPage(){
 
             </OtpVerifyContainer>
 
-            <Footer></Footer>
+           
         </>
     )
 }

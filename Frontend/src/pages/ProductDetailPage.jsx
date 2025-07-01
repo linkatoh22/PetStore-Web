@@ -16,14 +16,14 @@ function ProductDetail({type}){
     
     return(
         <>
-            <MainMenu></MainMenu>
+           
             {type=="Pet"? 
             <PetDetailContainter id={id}></PetDetailContainter>
             :
             <ProductDetailContainter id={id}></ProductDetailContainter>}
 
             
-            <Footer></Footer>
+         
         </>
     )
 

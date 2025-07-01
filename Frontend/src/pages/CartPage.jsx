@@ -39,7 +39,7 @@ function CartPage(){
     
     return(
         <>
-            <MainMenu></MainMenu>
+           
             <CartContainer className="CartContainer">
                 
                 
@@ -70,9 +70,6 @@ function CartPage(){
 
             </CartContainer>        
 
-            <Footer>
-
-            </Footer>
         </>
     )
 

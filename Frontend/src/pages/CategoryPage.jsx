@@ -84,7 +84,6 @@ function CategoryPage({type,typePage}){
     return (
 
         <>
-        <MainMenu/>
             <CategoryPageWrapper className="CategoryPage">
                 <CategoryPageContainer className="CategoryPage-Container">
 
@@ -121,7 +120,7 @@ function CategoryPage({type,typePage}){
                 </CategoryPageContainer>
                 
             </CategoryPageWrapper>
-            <Footer></Footer>
+           
         </>
     )
 

@@ -75,7 +75,7 @@ function CategoryProductPage({type,typePage}){
     return (
 
         <>
-        <MainMenu/>
+        
             <CategoryPageWrapper className="CategoryPage">
                 <CategoryPageContainer className="CategoryPage-Container">
 
@@ -97,7 +97,7 @@ function CategoryProductPage({type,typePage}){
                 </CategoryPageContainer>
                 
             </CategoryPageWrapper>
-            <Footer></Footer>
+            
         </>
     )
 

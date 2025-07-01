@@ -78,7 +78,7 @@ export default function DetailOrderInfoPage(){
     
     return(
         <>
-        <MainMenu></MainMenu>
+        
         <DetailOrderInfoPageContainer>
             <DetailInfoPageSubContainer>
 

@@ -194,7 +194,7 @@ function Homepage(){
     return(
         
         <>
-            <MainMenu></MainMenu>   
+            <div>
             <BackgroundMenu></BackgroundMenu>
             
             
@@ -404,8 +404,8 @@ function Homepage(){
 
             
             
-            <Footer/>
-            
+           
+            </div>
                         
         </>
     )

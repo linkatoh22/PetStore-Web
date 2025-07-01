@@ -30,7 +30,7 @@ function RegistrationPage(){
     return(
         <>
           
-          <MainMenu></MainMenu>
+          
 
             <SignupContainer className="signup-container">
 
@@ -46,7 +46,7 @@ function RegistrationPage(){
 
             </SignupContainer>
 
-            <Footer></Footer>
+            
         </>
     )
 }

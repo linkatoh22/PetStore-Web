@@ -34,7 +34,7 @@ export default function InfoPage(){
     
     return(
         <>
-        <MainMenu></MainMenu>
+        
         <InfoPageContainer>
             <InfoPageSubContainer>
 

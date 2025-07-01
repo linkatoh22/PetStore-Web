@@ -158,7 +158,7 @@ function CategorySearchPage({type}){
     return (
 
         <>
-        <MainMenu/>
+        
             <CategoryPageWrapper className="CategoryPage">
                 <CategoryPageContainer className="CategoryPage-Container">
 
@@ -180,7 +180,7 @@ function CategorySearchPage({type}){
                 </CategoryPageContainer>
                 
             </CategoryPageWrapper>
-            <Footer></Footer>
+           
         </>
     )
 

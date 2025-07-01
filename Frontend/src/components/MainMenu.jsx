@@ -22,21 +22,36 @@ const MainMenuItem = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+        width:97%;
+    }
+
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        width:90%;
+    }
+
+    
+
+    
 `
 const ButtonMenu = styled.div`
     display: flex;
     flex-direction: row;
     gap:1.5rem;
     flex-shrink: 0;
+
+    @media (min-width: 392px) and (max-width: 991.98px) {
+        display:none;
+    }
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+        
+    }
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        gap:0.5rem;
+    }
 `
-const ButtonMenu2 = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    justify-content: space-between;
-    gap:1.2rem;
-    flex-shrink: 0;
-`
+
 
 const TitleBtnMenu = styled.div`
     position: relative;
@@ -45,28 +60,49 @@ const TitleBtnMenu = styled.div`
     align-items: center;
     cursor: pointer;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.2rem;
     color: white;
     transition: opacity 0.15s;
     &:hover{
         color:rgba(255, 255, 255, 0.78);
     }
+
+        
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        font-size: 1rem;
+    }
 `
 const SearchInputWrapper = styled.div`
     background-color: white;
     border-radius: 15px;
-    width: 450px;
+    // width: 100%;
     display: flex;
     
     flex-direction: row;
     align-items: center;
     padding: 10px;
+    
+    @media (min-width: 992px) and (max-width: 1139.98px){
+        width:205px;
+        padding: 0.3rem;
+    }
+    @media (min-width: 1140px) and (max-width: 1500.00px) {
+        width: 350px;
+        padding: 0.5rem;
+    }
 `
 
 const LogoImg = styled.img`
     width: 100px;
     height: 50px;
     object-fit: cover;
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+        width:80px;
+        height:40px;
+    }
 
 `
 const InputMenu = styled.input`
@@ -82,6 +118,10 @@ const InputMenu = styled.input`
         border: none;
     
     }
+
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+        font-size: 0.7rem;
+    }
 `
 
 const SearchContainer = styled.div`
@@ -96,22 +136,27 @@ const SearchSelect = styled.select`
     font-size: 0.9rem;
     padding-inline: 0.2rem;
     padding-left:0.3rem;
-`
-const btnMenu = styled.button`
-    margin-left: 25px;
-    font-size: 16px;
-    border:none;
-    background-color:#003459;
-    color:white;
-    display: inline-block;
-    padding: 10px 20px 10px 20px;
-    border-radius: 20px;
-    transition: opacity 0.15s;
-    cursor: pointer;
-    &:active{
-        opacity: 0.8;
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+       font-size: 0.6rem;
+    }
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        font-size: 0.6rem;
     }
 `
+
+const ButtonMenu_Responsive = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap:1.5rem;
+    flex-shrink: 0;
+    @media (min-width: 992px) and (max-width: 1311.98px) {
+        font-size: 0.3rem;
+    }
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        gap:0.5rem;
+    }
+`
+
 function MainMenu() {
     const {mutate:logoutHook} =useLogOut();
     const {accessToken,logout} = useContext(AuthContext);
@@ -209,117 +254,117 @@ function MainMenu() {
         <MainMenuContainer>
             <MainMenuItem>
 
-            <div className='logo-menu' style={{cursor:"pointer"}} onClick={()=>handleNavHome()}>
-                <LogoImg src={logo} width="115px" height="40px"/>
-            </div>
+                <div className='logo-menu' style={{cursor:"pointer"}} onClick={()=>handleNavHome()}>
+                    <LogoImg src={logo} width="115px" height="40px"/>
+                </div>
 
-            <ButtonMenu>
-                <TitleBtnMenu 
-                    onClick={()=>handleNavHome()}
-                >
-                    Trang chủ 
+                <ButtonMenu>
+                    <TitleBtnMenu 
+                        onClick={()=>handleNavHome()}
+                    >
+                        Trang chủ 
+                        
+                    </TitleBtnMenu>
+
+                    <TitleBtnMenu 
+                        onMouseOver={()=>handleHoverIn("Dog")} 
+                        onMouseOut={()=>handleHoverOut("Dog")}
+                        
+                    >
+
+
+                        <div onClick={()=>handleNavItem("Dog")} >Chó cảnh</div>
+                        <RiArrowDropDownLine style={{width:"30px",height:"30px"}} />
+
+                        { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
+                            />:<></>  }
+                        
+                    </TitleBtnMenu>
+
+
                     
-                </TitleBtnMenu>
+                    <TitleBtnMenu onMouseOver={()=>handleHoverIn("Cat")} 
+                        onMouseOut={()=>handleHoverOut("Cat")}
+                        
+                        >
+                        <div onClick={()=>handleNavItem("Cat")} >Mèo cảnh</div>
 
-                <TitleBtnMenu 
-                    onMouseOver={()=>handleHoverIn("Dog")} 
-                    onMouseOut={()=>handleHoverOut("Dog")}
-                    
-                >
+                        <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
+                        />
 
+                        { isHoverCat? <Dropdown menuType={2} setHover={setIsHoverCat}/>:<></>  }
 
-                    <div onClick={()=>handleNavItem("Dog")} >Chó cảnh</div>
-                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}} />
+                    </TitleBtnMenu>
 
-                    { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
-                         />:<></>  }
-                    
-                </TitleBtnMenu>
+                    <TitleBtnMenu onMouseOver={()=>handleHoverIn("Product")} 
+                        onMouseOut={()=>handleHoverOut("Product")}
+                        >
+                        <div onClick={()=>handleNavItem("Product")}>Phụ kiện</div>
+                        <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
+                        />
 
+                        { isHoverProduct? <Dropdown menuType={3}/>:<></>  }
+
+                    </TitleBtnMenu>
+                </ButtonMenu>
+
+                <SearchContainer>
+
+                        <SearchSelect onChange={(e)=>setSearchOption(e.target.value)}>
+                            <option value="All">Tất cả</option>
+                            <option value="Chó">Chó cảnh</option>
+                            <option value="Mèo">Mèo cảnh</option>
+                            <option value="Phụ kiện">Phụ kiện</option>
+                        </SearchSelect>
+
+                        
+                            <SearchInputWrapper>
+                                <CiSearch id="search-icon" style={{width: "1.5rem",height: "1.5rem"}}/>
+
+                                <InputMenu 
+
+                                    className='input-menu' 
+                                    placeholder='Nhập từ khóa tìm kiếm' 
+                                    classtype="text" 
+                                    onChange={(e)=>setKeyword(e.target.value)}
+                                    onKeyDown={handleKeyDown}
+                                ></InputMenu>
+                            
+                            </SearchInputWrapper>
+                        
+
+                </SearchContainer>
 
                 
-                <TitleBtnMenu onMouseOver={()=>handleHoverIn("Cat")} 
-                    onMouseOut={()=>handleHoverOut("Cat")}
-                     
-                    >
-                    <div onClick={()=>handleNavItem("Cat")} >Mèo cảnh</div>
 
-                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
-                     />
+                <ButtonMenu_Responsive>
 
-                    { isHoverCat? <Dropdown menuType={2} setHover={setIsHoverCat}/>:<></>  }
-
-                </TitleBtnMenu>
-
-                <TitleBtnMenu onMouseOver={()=>handleHoverIn("Product")} 
-                    onMouseOut={()=>handleHoverOut("Product")}
-                    >
-                    <div onClick={()=>handleNavItem("Product")}>Phụ kiện</div>
-                    <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
-                    />
-
-                    { isHoverProduct? <Dropdown menuType={3}/>:<></>  }
-
-                </TitleBtnMenu>
-            </ButtonMenu>
-
-            <SearchContainer>
-
-                    <SearchSelect onChange={(e)=>setSearchOption(e.target.value)}>
-                        <option value="All">Tất cả</option>
-                        <option value="Chó">Chó cảnh</option>
-                        <option value="Mèo">Mèo cảnh</option>
-                        <option value="Phụ kiện">Phụ kiện</option>
-                    </SearchSelect>
-
-                    <div className='search-input-container'>
-                        <SearchInputWrapper>
-                            <CiSearch id="search-icon" style={{width: "1.5rem",height: "1.5rem"}}/>
-
-                            <InputMenu 
-
-                                className='input-menu' 
-                                placeholder='Nhập từ khóa tìm kiếm' 
-                                classtype="text" 
-                                onChange={(e)=>setKeyword(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                            ></InputMenu>
-                        
-                        </SearchInputWrapper>
-                    </div>
-
-            </SearchContainer>
-
-            
-
-            <ButtonMenu2>
-
-            {accessToken?
+                {accessToken?
+                        <>
+                            <TitleBtnMenu onClick={()=>handleNavCart()}>Cart</TitleBtnMenu>
+                            <div>Info</div>
+                            
+                            <TitleBtnMenu onClick={()=>HandleLogout()}>
+                                Đăng xuất
+                            </TitleBtnMenu>
+                        </>
+                    :
                     <>
-                        <TitleBtnMenu onClick={()=>handleNavCart()}>Cart</TitleBtnMenu>
-                        <div>Info</div>
-                        
-                        <TitleBtnMenu onClick={()=>HandleLogout()}>
-                            Đăng xuất
+                        <TitleBtnMenu onClick={()=>handleNavItem("Sign Up")}>
+                            Đăng ký
+                        </TitleBtnMenu>
+
+                        <TitleBtnMenu  onClick={()=>handleNavItem("Log In")}>
+                            Đăng nhập
                         </TitleBtnMenu>
                     </>
-                :
-                <>
-                    <TitleBtnMenu onClick={()=>handleNavItem("Sign Up")}>
-                        Đăng ký
-                    </TitleBtnMenu>
-
-                    <TitleBtnMenu  onClick={()=>handleNavItem("Log In")}>
-                        Đăng nhập
-                    </TitleBtnMenu>
-                 </>
 
 
-                  
-                }
-                
+                    
+                    }
+                    
 
-            </ButtonMenu2>
+            </ButtonMenu_Responsive>
 
             </MainMenuItem>
                 
