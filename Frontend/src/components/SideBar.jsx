@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { IoLogoOctocat } from "react-icons/io";
-
+import Logo from "../assets/logo.png"
 import styled from "styled-components";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
+
+
 const Dog = ["Beagle","Boston Terrier","Corgi","Poodle","Husky","Chihuahua","Pug","Golden Retriever","Labrador","Phốc Sóc","Samoyed","Shiba Inu"];
 
 const Cat =["Anh Lông Dài","Anh Lông Ngắn","Ba Tư","Himalaya","Munchkin","Ragdoll","Scottish Fold"];
@@ -25,12 +27,20 @@ const ProductMedicineCat=["Thuốc Thú Y & Thiết bị y Tế","Thực Phẩm 
 
 
 const SidebarContainer  = styled.div`
-    width:25%;
-    background-color:var(--main-blue);
-    
-    height:100vh;
+    width: 25%;
+  background-color: var(--main-blue);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100vh;
+  transition: 1s ease-in-out;
 
+//   transform: ${({ isVisible }) => (isVisible ? "translateX(0%)" : "translateX(-100%)")};
 `
+
+
+
+
 const NavList = styled.ul`
   list-style: none;
   width:100%;
@@ -78,7 +88,10 @@ const SubNavList = styled.ul`
   list-style: none;
   padding: 1rem;
 `;
-export default function Sidebar (){
+
+
+
+export default function Sidebar ({isVisible,setIsSidebar}){
     const [isOpen, setIsOpen] = useState(false);
     const [isDogMenu,setIsDogMenu] = useState(false);
     const [isCatMenu,setIsCatMenu] = useState(false);
@@ -100,10 +113,12 @@ export default function Sidebar (){
     const [isProductMedicineCat,setIsProductMedicineCat] = useState(false);
 
   return (
-    <SidebarContainer>
-            
+    <SidebarContainer
+         
+    >
+
             <NavList>
-                <NavItem>
+                <NavItem style={{borderTop:"3px solid white"}} >
                     <NavLink href="/">TRANG CHỦ</NavLink>
                 </NavItem>
 
@@ -174,11 +189,11 @@ export default function Sidebar (){
 
                 </NavItem>
 
-                <NavItem>
-                        <NavItemContainer>
+                <NavItem style={{borderBottom:"3px solid white"}}>
+                        <NavItemContainer >
                             <NavLink 
                                 href="/category/phu-kien"
-                               
+                                
                             >PHỤ KIỆN</NavLink>
 
                             {
@@ -474,6 +489,7 @@ export default function Sidebar (){
                                     <NavSubItem>
                                         <NavItemContainer>
                                         <NavLink 
+                                        
                                         onClick={()=>setIsProductHygineCat(isProductHygineCat? false:true)}
                                         href="/category/phu-kien/phu-kien-cua-meo/Vệ%20sinh%20&%20Chăm%20sóc" >VỆ SINH & CHĂM SÓC</NavLink>
 

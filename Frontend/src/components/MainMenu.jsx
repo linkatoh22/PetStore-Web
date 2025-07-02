@@ -23,10 +23,17 @@ const MainMenuItem = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    @media (min-width: 992px) and (max-width: 1311.98px) {
-        width:97%;
+    @media (min-width: 300px) and (max-width: 598.98px) {
+        width:100%;   
     }
-
+    
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        width:100%; 
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        width:98%;
+    }
     @media (min-width: 1312px) and (max-width: 1500.00px) {
         width:90%;
     }
@@ -38,17 +45,12 @@ const MainMenuItem = styled.div`
 const ButtonMenu = styled.div`
     display: flex;
     flex-direction: row;
-    gap:1.5rem;
+    width:36%;
+    justify-content:space-between;
     flex-shrink: 0;
 
-    @media (min-width: 392px) and (max-width: 991.98px) {
+    @media (min-width: 0px) and (max-width: 1000px) {
         display:none;
-    }
-    @media (min-width: 992px) and (max-width: 1311.98px) {
-        
-    }
-    @media (min-width: 1312px) and (max-width: 1500.00px) {
-        gap:0.5rem;
     }
 `
 
@@ -67,43 +69,113 @@ const TitleBtnMenu = styled.div`
         color:rgba(255, 255, 255, 0.78);
     }
 
+    .search-icon{
+        width:30px; 
+        height:30px;
+        @media (min-width: 300px) and (max-width: 598.99px) {
+            width:15px; 
+            height:15px;
         
-    @media (min-width: 992px) and (max-width: 1311.98px) {
-        font-size: 0.8rem;
+        }
+    }
+
+    
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.6rem;
+        
     }
     @media (min-width: 1312px) and (max-width: 1500.00px) {
         font-size: 1rem;
     }
 `
-const SearchInputWrapper = styled.div`
-    background-color: white;
-    border-radius: 15px;
-    // width: 100%;
-    display: flex;
-    
-    flex-direction: row;
-    align-items: center;
-    padding: 10px;
-    
-    @media (min-width: 992px) and (max-width: 1139.98px){
-        width:205px;
-        padding: 0.3rem;
-    }
-    @media (min-width: 1140px) and (max-width: 1500.00px) {
-        width: 350px;
-        padding: 0.5rem;
-    }
-`
+
 
 const LogoImg = styled.img`
     width: 100px;
     height: 50px;
     object-fit: cover;
-    @media (min-width: 992px) and (max-width: 1311.98px) {
-        width:80px;
-        height:40px;
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        width: 50px;
+        height: 30px;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        width: 80px;
+        height: 50px;
+        
     }
 
+`
+
+
+const SearchContainer = styled.div`
+    width:35%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:0.5rem;
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        width:50%;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        width:60%;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1000px) {
+        width:50%;
+        
+    }
+`
+
+const SearchInputWrapper = styled.div`
+    background-color: white;
+    border-radius: 15px;
+    width: 75%;
+    display: flex;
+    
+    flex-direction: row;
+    align-items: center;
+    padding: 0.6rem;
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        padding: 0rem;
+        
+    }
+     @media (min-width: 300px) and (max-width: 598.99px) {
+        padding: 0.1rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding: 0.2rem;
+        
+    }
+    
+    
+    
+`
+
+
+const SearchSelect = styled.select`
+    border-radius: 15px;
+    font-size: 0.9rem;
+    width: 26%;
+    padding-inline: 0.2rem;
+    padding-left:0.3rem;
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        font-size: 0.7rem;
+    }
+        
 `
 const InputMenu = styled.input`
     
@@ -119,42 +191,42 @@ const InputMenu = styled.input`
     
     }
 
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        font-size: 0.3rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.6rem;
+    }
+
+
     @media (min-width: 992px) and (max-width: 1311.98px) {
         font-size: 0.7rem;
     }
 `
 
-const SearchContainer = styled.div`
-    
-    display: flex;
-    flex-direction: row;
-    gap:0.5rem;
-    
-`
-const SearchSelect = styled.select`
-    border-radius: 15px;
-    font-size: 0.9rem;
-    padding-inline: 0.2rem;
-    padding-left:0.3rem;
-    @media (min-width: 992px) and (max-width: 1311.98px) {
-       font-size: 0.6rem;
-    }
-    @media (min-width: 1312px) and (max-width: 1500.00px) {
-        font-size: 0.6rem;
-    }
-`
-
 const ButtonMenu_Responsive = styled.div`
+    width:14%;
+    
     display: flex;
     flex-direction: row;
-    gap:1.5rem;
+    // gap:1rem;
+    justify-content: space-between;
+    
     flex-shrink: 0;
-    @media (min-width: 992px) and (max-width: 1311.98px) {
-        font-size: 0.3rem;
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        width:20%; 
+        
     }
-    @media (min-width: 1312px) and (max-width: 1500.00px) {
-        gap:0.5rem;
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        width:20%;   
     }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        width:20%;
+        
+    }
+    
 `
 
 function MainMenu() {
@@ -274,7 +346,7 @@ function MainMenu() {
 
 
                         <div onClick={()=>handleNavItem("Dog")} >Chó cảnh</div>
-                        <RiArrowDropDownLine style={{width:"30px",height:"30px"}} />
+                        <RiArrowDropDownLine className="search-icon"  />
 
                         { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
                             />:<></>  }

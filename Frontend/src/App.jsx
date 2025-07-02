@@ -75,7 +75,7 @@ function App() {
                   {/* DETAIL */}
                   <Route path="/detail/thu-cung/:id" element={<ProductDetail type="Pet"/>}></Route>
                   <Route path="/detail/phu-kien/:id" element={<ProductDetail type="Product"/>}></Route>
-                  <Route path="/google-success" element={<GoogleSuccess />} />
+                  
                   
                   <Route element={<PrivateRoute/>}>
                       <Route path="/info" element={<InfoPage></InfoPage>}> </Route>
@@ -85,6 +85,8 @@ function App() {
                   </Route>
 
                   </Route>
+                  <Route path="/google-success" element={<GoogleSuccess />} />
+                  
                 
                 </Routes>
               </Router>

@@ -7,10 +7,7 @@ import MainMenu from "../components/MainMenu";
 const SignupContainer = styled.div`
     
    
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    width:100%;
 `;
 
 

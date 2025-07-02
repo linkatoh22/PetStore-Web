@@ -3,10 +3,7 @@ import LoginForm from "../components/LoginPage/LoginForm"
 import styled from "styled-components"
 import MainMenu from "../components/MainMenu" 
 const LoginContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    width:100%;
     
 `;
 const BackgroundAccount = styled.div`
@@ -26,21 +23,20 @@ function LoginPage(){
     return (
 
         <>
-           
+            
 
-            <LoginContainer className="login-container">
+                <LoginContainer className="login-container">
 
-                <BackgroundAccount>
-                  <LoginForm>
+                    <BackgroundAccount>
+                    <LoginForm>
 
-                      
-                  </LoginForm>
-                </BackgroundAccount>
+                        
+                    </LoginForm>
+                    </BackgroundAccount>
 
 
-            </LoginContainer>
-
-          
+                </LoginContainer>
+            
         </>
     )
 
