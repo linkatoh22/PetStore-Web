@@ -19,10 +19,9 @@ const PetsHomepageContainer = styled.div`
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     gap:1rem;
     padding-bottom: 2rem;
-    z-index:1;
+    
 `
 const CardContainer = styled.div`
     display: grid;
@@ -155,8 +154,8 @@ const SpinnerContainer = styled.div`
 
 function Homepage(){
     const navigate = useNavigate()
-    const { data: pet, isLoading: loadingUser, error: errorUser } = PetFetchHook()
-    const { data: product, isLoading: loadingProduct, error: errorPosts } = ProductFetchHook()
+    const { data: pet, isLoading: loadingUser } = PetFetchHook()
+    const { data: product, isLoading: loadingProduct } = ProductFetchHook()
 
     const [PetData,setPetData] = useState([])
     const [ProductData,setProductData] = useState([])
@@ -194,213 +193,175 @@ function Homepage(){
     return(
         
         <>
-            <div>
-            <BackgroundMenu></BackgroundMenu>
-            
-            
-            <div style={{width: "80%",margin:"auto"}}>
-            
-            <PetsHomepageContainer>
-
-                <div className="homepage-title-1-pets" style={{
-                        textAlign: "left",
-                        fontWeight: "500",
-                        fontSize: "18px"}}>
-
-                    Có gì hot?</div>
-
-                <HomepageTitleContainer className="homepage-title-container">
-
-                    <div className="homepage-title-2-pets"
-                        style={{
-                            color:"#002A48",
-                            fontSize: "25px",
-                            fontWeight: "bold",
-
-                        }}
-                    >Best-seller của store tụi mình  </div>
-                    <HomepageTitleBtn>Xem thêm</HomepageTitleBtn>
-
-                </HomepageTitleContainer>
-
+            <div >
                 
-                {loadingUser? 
-                        <SpinnerContainer>
-                            <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
-                        </SpinnerContainer>
-                    : 
-                    (
-                        PetData.length >0?
+                <BackgroundMenu></BackgroundMenu>
+                
+                
+                
+                
+                
+                <PetsHomepageContainer>
+
+                    <div className="homepage-title-1-pets" style={{
+                            textAlign: "left",
+                            fontWeight: "500",
+                            fontSize: "18px"}}>
+
+                        Có gì hot?</div>
+
+                    <HomepageTitleContainer className="homepage-title-container">
+
+                        <div className="homepage-title-2-pets"
+                            style={{
+                                color:"#002A48",
+                                fontSize: "25px",
+                                fontWeight: "bold",
+
+                            }}
+                        >Best-seller của store tụi mình  </div>
+                        <HomepageTitleBtn>Xem thêm</HomepageTitleBtn>
+
+                    </HomepageTitleContainer>
+
+                    
+                    {loadingUser? 
+                            <SpinnerContainer>
+                                <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                            </SpinnerContainer>
+                        : 
                         (
-                            <CardContainer>
-                            {PetData.map(
-                                item =>
-                                        <PetsCard 
-                                            key={item._id}
-                                            
-                                            Item = {item}
-                                            type="Pet"
-                                        /> 
-                            )}
-                            </CardContainer>
-                        )
-                        :
-                        (<SpinnerContainer> <div> Không có dữ liệu hiển thị</div> </SpinnerContainer>)
-                    )
-                }
-                
-                   
-                    
-                
-
-
-                <BgrImg>
-                    <PicPets src={Bgr}></PicPets>
-                     
-                    <DescriptionSubMenu>
-                        <Header1SubMenu>Một người bạn mới</Header1SubMenu>
-
-                            <Header2SubMenu>Thêm vạn niềm vui!</Header2SubMenu>
-
-                            <ParagraphSubMenu>DCAT Store là nơi cung cấp đa dạng loại thú cưng và các phụ kiện mà bạn thỏa thích lựa chọn</ParagraphSubMenu>
-
-
-                            <div  style={{display: "flex",gap: "20px"}}>
-
-                                <SubTransparentBlueButton onClick={()=>handleNavMenuItem("Cat")} > Mèo cảnh</SubTransparentBlueButton>
-
-                                <SubBlueButton onClick={()=>handleNavMenuItem("Dog")} >Chó cảnh</SubBlueButton>
-
-                            </div>
-
-
-                    </DescriptionSubMenu>
-                    
-
-                </BgrImg>
-
-
-                <div className="homepage-title-1-pets"
-                style={{
-                    textAlign: "left",
-                    fontWeight: "500",
-                    fontSize: "18px"
-                    
-                }}>Khó khăn trong việc chọn lựa sản phẩm phù hợp với các boss?</div>
-
-                <HomepageTitleContainer>
-                    <div 
-                        style={{
-                            color:"#002A48",
-                            fontSize: "25px",
-                            fontWeight: "bold"
-                        }}
-                        className="homepage-title-2-pets">
-                    Sản phẩm của tụi mình
-                    
-                    </div>
-
-                    <HomepageTitleBtn onClick={()=>handleNavMenuItem("Product")}> Xem thêm</HomepageTitleBtn>
-                </HomepageTitleContainer>
-
-
-
-                
-                    { loadingProduct?  
-                        <SpinnerContainer>
-                            <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
-                        </SpinnerContainer>
-                        :
-                        (
-                            ProductData.length>0?
+                            PetData.length >0?
                             (
                                 <CardContainer>
-                                {ProductData.map(
+                                {PetData.map(
                                     item =>
                                             <PetsCard 
                                                 key={item._id}
+                                                
                                                 Item = {item}
-                                                onClick = {()=>handleNavItem("Product",item._id)}
-                                                type="Product"
+                                                type="Pet"
                                             /> 
                                 )}
                                 </CardContainer>
-
                             )
                             :
                             (<SpinnerContainer> <div> Không có dữ liệu hiển thị</div> </SpinnerContainer>)
                         )
-                    } 
+                    }
+                    
+                    
                         
-                
+                    
 
 
-                <HomepageTitleContainer>
-                    <div className="title-1-pets" style={{
+                    <BgrImg>
+                        <PicPets src={Bgr}></PicPets>
+                        
+                        <DescriptionSubMenu>
+                            <Header1SubMenu>Một người bạn mới</Header1SubMenu>
+
+                                <Header2SubMenu>Thêm vạn niềm vui!</Header2SubMenu>
+
+                                <ParagraphSubMenu>DCAT Store là nơi cung cấp đa dạng loại thú cưng và các phụ kiện mà bạn thỏa thích lựa chọn</ParagraphSubMenu>
+
+
+                                <div  style={{display: "flex",gap: "20px"}}>
+
+                                    <SubTransparentBlueButton onClick={()=>handleNavMenuItem("Cat")} > Mèo cảnh</SubTransparentBlueButton>
+
+                                    <SubBlueButton onClick={()=>handleNavMenuItem("Dog")} >Chó cảnh</SubBlueButton>
+
+                                </div>
+
+
+                        </DescriptionSubMenu>
+                        
+
+                    </BgrImg>
+
+
+                    <div className="homepage-title-1-pets"
+                    style={{
                         textAlign: "left",
                         fontWeight: "500",
                         fontSize: "18px"
+                        
+                    }}>Khó khăn trong việc chọn lựa sản phẩm phù hợp với các boss?</div>
 
-                    }}>
-                        Tự hào là một phần của phân phối <BigFont>Các Brand uy tín</BigFont> 
-                    </div>
+                    <HomepageTitleContainer>
+                        <div 
+                            style={{
+                                color:"#002A48",
+                                fontSize: "25px",
+                                fontWeight: "bold"
+                            }}
+                            className="homepage-title-2-pets">
+                        Sản phẩm của tụi mình
+                        
+                        </div>
+
+                        <HomepageTitleBtn onClick={()=>handleNavMenuItem("Product")}> Xem thêm</HomepageTitleBtn>
+                    </HomepageTitleContainer>
+
+
 
                     
-                </HomepageTitleContainer>
+                        { loadingProduct?  
+                            <SpinnerContainer>
+                                <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                            </SpinnerContainer>
+                            :
+                            (
+                                ProductData.length>0?
+                                (
+                                    <CardContainer>
+                                    {ProductData.map(
+                                        item =>
+                                                <PetsCard 
+                                                    key={item._id}
+                                                    Item = {item}
+                                                    onClick = {()=>handleNavItem("Product",item._id)}
+                                                    type="Product"
+                                                /> 
+                                    )}
+                                    </CardContainer>
+
+                                )
+                                :
+                                (<SpinnerContainer> <div> Không có dữ liệu hiển thị</div> </SpinnerContainer>)
+                            )
+                        } 
+                            
+                    
 
 
-                
-                <img src={BrandPic} style={{marginTop: "20px",
-                    position:"relative",
-                    width: "100%",
-                    marginBottom: "10px"}} 
-                    className="bgr-img-brand"></img>
-                     
-
-                
-
-                
-
-            
-
-
-
-            
-                {/* <div className="homepage-title-1-pets"
-                    style={
-                        {
+                    <HomepageTitleContainer>
+                        <div className="title-1-pets" style={{
                             textAlign: "left",
                             fontWeight: "500",
                             fontSize: "18px"
-                        }
-                    }
-                >You already know?</div>
 
-                <HomepageTitleContainer className="homepage-title-container">
+                        }}>
+                            Tự hào là một phần của phân phối <BigFont>Các Brand uy tín</BigFont> 
+                        </div>
 
-                    <div style={{
-                        color:"#002A48",
-                        fontSize: "25px",
-                        fontWeight: "bold"
-                    }}
+                        
+                    </HomepageTitleContainer>
+
+
                     
-                    className="homepage-title-2-pets">Useful Pet Knowledge</div>
-                    <HomepageTitleBtn >View More</HomepageTitleBtn>
-
-                </HomepageTitleContainer>
-
-                <KnowledgeCardContainer className="knowledge-card-container">
-                    <KnowledgeCard/>
-                    <KnowledgeCard/>
-                    <KnowledgeCard/>
-                </KnowledgeCardContainer> */}
+                    <img src={BrandPic} style={{marginTop: "20px",
+                        position:"relative",
+                        width: "100%",
+                        marginBottom: "10px"}} 
+                        className="bgr-img-brand"></img>
 
 
+                </PetsHomepageContainer>
+                    
 
-            </PetsHomepageContainer>
                 
-
-            </div>
 
             
             

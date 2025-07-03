@@ -7,20 +7,31 @@ import { useState } from "react";
 const ContentWrapper  = styled.div`
     display:flex;
 `
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 5; 
+  transition: opacity 0.3s ease;
+`;
 export default function RootLayout(){
     const [isSidebar,setIsSidebar] = useState(false)
     return(
         <>
             <MainMenu isSidebar={isSidebar} setIsSidebar={setIsSidebar} ></MainMenu>
-            
+             
             <ContentWrapper>
-                    { isSidebar && <Sidebar isVisible={isSidebar} setIsSidebar={setIsSidebar}/> }
-                
+                    <Sidebar isVisible={isSidebar} setIsSidebar={setIsSidebar}/>
+                    {isSidebar && <Overlay onClick={() => setIsSidebar(false)} />}
                 
                     
                     <Outlet />
                 
             </ContentWrapper>
+            
         </>
     )
 }

@@ -10,10 +10,13 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 import { useLogOut } from '../services/hook/LogOutHook';
 import { toast } from "react-toastify";
-
+import { IoMdMenu } from "react-icons/io";
 const MainMenuContainer = styled.div`
+    position:fixed;
+    z-index:1111;
     width: 100%;
     background-color: #003459;
+    
 `
 const MainMenuItem = styled.div`
     margin: auto;
@@ -28,7 +31,7 @@ const MainMenuItem = styled.div`
     }
     
     @media (min-width: 300px) and (max-width: 598.99px) {
-        width:100%; 
+        width:95%; 
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
@@ -48,8 +51,8 @@ const ButtonMenu = styled.div`
     width:36%;
     justify-content:space-between;
     flex-shrink: 0;
-
-    @media (min-width: 0px) and (max-width: 1000px) {
+    
+    @media (min-width: 0px) and (max-width: 1050px) {
         display:none;
     }
 `
@@ -79,8 +82,11 @@ const TitleBtnMenu = styled.div`
         }
     }
 
-    
-    @media (min-width: 300px) and (max-width: 598.99px) {
+    @media (min-width: 0px) and (max-width: 399.99px) {
+        font-size: 0.4rem;
+        
+    }
+    @media (min-width: 400px) and (max-width: 598.99px) {
         font-size: 0.5rem;
         
     }
@@ -88,9 +94,16 @@ const TitleBtnMenu = styled.div`
         font-size: 0.6rem;
         
     }
-    @media (min-width: 1312px) and (max-width: 1500.00px) {
-        font-size: 1rem;
+    @media (min-width: 800px) and (max-width: 1000.98px) {
+        font-size: 0.6rem;
+        
     }
+
+    @media (min-width: 1001px) and (max-width: 1500px) {
+        font-size: 0.7rem;
+        
+    }
+    
 `
 
 
@@ -98,7 +111,12 @@ const LogoImg = styled.img`
     width: 100px;
     height: 50px;
     object-fit: cover;
-    @media (min-width: 300px) and (max-width: 598.99px) {
+    @media (min-width: 0px) and (max-width: 399.99px) {
+        width: 30px;
+        height: 15px;
+        
+    }
+    @media (min-width: 400px) and (max-width: 598.99px) {
         width: 50px;
         height: 30px;
         
@@ -127,7 +145,7 @@ const SearchContainer = styled.div`
         
     }
     @media (min-width: 800px) and (max-width: 1000px) {
-        width:50%;
+        width:60%;
         
     }
 `
@@ -172,8 +190,9 @@ const SearchSelect = styled.select`
     @media (min-width: 599px) and (max-width: 799.99px) {
         font-size: 0.6rem;
     }
-    @media (min-width: 1312px) and (max-width: 1500.00px) {
+    @media (min-width: 800px) and (max-width: 1000px) {
         font-size: 0.7rem;
+        
     }
         
 `
@@ -192,17 +211,17 @@ const InputMenu = styled.input`
     }
 
     @media (min-width: 300px) and (max-width: 598.99px) {
-        font-size: 0.3rem;
+        font-size: 0.5rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
         font-size: 0.6rem;
     }
-
-
-    @media (min-width: 992px) and (max-width: 1311.98px) {
+    @media (min-width: 800px) and (max-width: 1000px) {
         font-size: 0.7rem;
+        
     }
+
 `
 
 const ButtonMenu_Responsive = styled.div`
@@ -228,8 +247,44 @@ const ButtonMenu_Responsive = styled.div`
     }
     
 `
+const SidebarBtn = styled.div`
+    
+    align-items:center;
+    justify-content:center;
+    padding:0.5rem;
+    color:white;
+    border-radius:100%;
+    background-color:var(--main-blue);
+    display:none;
+    font-size:1.4rem;
 
-function MainMenu() {
+    cursor:pointer;
+    &:hover{
+        background-color: rgb(2, 79, 134);
+    }
+
+    &:active{
+        background-color: rgb(1, 84, 143);
+    }
+
+    @media (min-width: 0px) and (max-width: 1050px) {
+        display:flex;
+    }
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        font-size:0.9rem; 
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:1rem; 
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        font-size:1.2rem;
+        
+    }
+
+`
+function MainMenu({isSidebar,setIsSidebar}) {
     const {mutate:logoutHook} =useLogOut();
     const {accessToken,logout} = useContext(AuthContext);
     
@@ -325,7 +380,10 @@ function MainMenu() {
       <>
         <MainMenuContainer>
             <MainMenuItem>
+                <SidebarBtn onClick={()=>setIsSidebar(!isSidebar)}>
+                    <IoMdMenu></IoMdMenu>
 
+                </SidebarBtn>
                 <div className='logo-menu' style={{cursor:"pointer"}} onClick={()=>handleNavHome()}>
                     <LogoImg src={logo} width="115px" height="40px"/>
                 </div>
@@ -396,7 +454,7 @@ function MainMenu() {
                                 <InputMenu 
 
                                     className='input-menu' 
-                                    placeholder='Nhập từ khóa tìm kiếm' 
+                                    placeholder='Tìm kiếm...' 
                                     classtype="text" 
                                     onChange={(e)=>setKeyword(e.target.value)}
                                     onKeyDown={handleKeyDown}

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoLogoOctocat } from "react-icons/io";
 import Logo from "../assets/logo.png"
 import styled from "styled-components";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-
+import { IoMdClose } from "react-icons/io";
 
 const Dog = ["Beagle","Boston Terrier","Corgi","Poodle","Husky","Chihuahua","Pug","Golden Retriever","Labrador","Phốc Sóc","Samoyed","Shiba Inu"];
 
@@ -27,20 +27,36 @@ const ProductMedicineCat=["Thuốc Thú Y & Thiết bị y Tế","Thực Phẩm 
 
 
 const SidebarContainer  = styled.div`
-    width: 25%;
+    padding-top: 3rem;
+    position: fixed;
+  
+  height: 100vh;
+  width: 300px;
   background-color: var(--main-blue);
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 100vh;
-  transition: 1s ease-in-out;
+  transition: transform 0.5s ease;
+  transform: ${({ isVisible }) => (isVisible ? "translateX(0%)" : "translateX(-100%)")};
+  z-index: 10;
+  overflow-y: auto;
 
-//   transform: ${({ isVisible }) => (isVisible ? "translateX(0%)" : "translateX(-100%)")};
+  @media (min-width: 300px) and (max-width: 598.99px) {
+        width: 150px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+    padding-top: 2.5rem;
+        width: 200px;
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        
+        width: 250px;
+        
+    }
+    
+  
 `
-
-
-
-
 const NavList = styled.ul`
   list-style: none;
   width:100%;
@@ -48,25 +64,40 @@ const NavList = styled.ul`
 `;
 
 const NavItemContainer = styled.div`
-    
+    width:100%;
     cursor:pointer;
     color:white;
-    font-size:1.2rem;
+    
     display:flex;
     align-items:center;
     justify-content: space-between;
+
+    
 `
 
 const NavLink = styled.a`
-    
+    width:100%;
     
   color: var(--grey-300);
   font-weight:bold;
-  font-size:1.2rem;
+  font-size:1rem;
   text-decoration: none;
   &:hover {
     color: white;
   }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.4rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:0.5rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        font-size:0.8rem;
+        
+    }
 `;
 
 const NavItem = styled.li`
@@ -75,23 +106,95 @@ const NavItem = styled.li`
     border-bottom:1px solid white;
     padding-inline:1.5rem;
     padding-block:1rem;
+
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        padding-inline:0.9rem;
+        padding-block:0.6rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding-inline:1.1rem;
+        padding-block:0.6rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        padding-inline:1.3rem;
+        padding-block:0.8rem;
+        
+    }
+        
 `;
 
 const NavSubItem = styled.li`
+width:100%;
     border-left:1px solid white;
     // border-bottom:1px solid white;
     padding-inline:0.8rem;
     padding-block:0.4rem;
+
+
+    @media (min-width: 300px) and (max-width: 598.99px) {
+        padding-inline:0.4rem;
+        padding-block:0.2rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding-inline:0.4rem;
+        padding-block:0.2rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        padding-inline:0.8rem;
+        padding-block:0.4rem;
+        
+    }
 `;
 
 const SubNavList = styled.ul`
+width:100%;
   list-style: none;
   padding: 1rem;
 `;
 
+const SidebarBtn = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0.5rem;
+    color:white;
+   
+    border-radius:100%;
+    background-color:var(--main-blue);
+    font-size:1.4rem;
+    cursor:pointer;
+    &:hover{
+        background-color: rgb(2, 79, 134);
+    }
 
+    &:active{
+        background-color: rgb(1, 84, 143);
+    }
+
+    
+
+`
 
 export default function Sidebar ({isVisible,setIsSidebar}){
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1050) {
+            setIsSidebar(false);
+            }
+        };
+
+        // Run once on mount
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     const [isOpen, setIsOpen] = useState(false);
     const [isDogMenu,setIsDogMenu] = useState(false);
     const [isCatMenu,setIsCatMenu] = useState(false);
@@ -114,8 +217,13 @@ export default function Sidebar ({isVisible,setIsSidebar}){
 
   return (
     <SidebarContainer
-         
+         isVisible={isVisible}
     >
+        <div style={{padding:"1rem",width:"100%",display:"flex",justifyContent:'flex-end'}}>
+            <SidebarBtn onClick={()=>setIsSidebar(!isVisible)}>
+                <IoMdClose></IoMdClose>
+            </SidebarBtn>
+        </div>
 
             <NavList>
                 <NavItem style={{borderTop:"3px solid white"}} >
@@ -239,9 +347,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                                  {
                                                     isProductFoodDog?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductFoodDog(isProductFoodDog?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductFoodDog(isProductFoodDog?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductFoodDog(isProductFoodDog?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductFoodDog(isProductFoodDog?false:true)} ></FaChevronDown>
 
                                                 }
                                             </NavItemContainer> 
@@ -271,9 +379,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                                  {
                                                     isProductAccessoriesDog?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductAccessoriesDog(isProductAccessoriesDog?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductAccessoriesDog(isProductAccessoriesDog?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductAccessoriesDog(isProductAccessoriesDog?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductAccessoriesDog(isProductAccessoriesDog?false:true)} ></FaChevronDown>
 
                                                 }
 
@@ -301,9 +409,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                                  {
                                                     isProductHygineDog?
 
-                                                    <FaChevronUp  style={{fontSize:"1.5rem"}}onClick={()=>setIsProductHygineDog(isProductHygineDog?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp  onClick={()=>setIsProductHygineDog(isProductHygineDog?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"1.5rem"}}  onClick={()=>setIsProductHygineDog(isProductHygineDog?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductHygineDog(isProductHygineDog?false:true)} ></FaChevronDown>
 
                                                 }
                                             
@@ -334,9 +442,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                                 {
                                                     isProductCageDog?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductCageDog(isProductCageDog?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductCageDog(isProductCageDog?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductCageDog(isProductCageDog?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductCageDog(isProductCageDog?false:true)} ></FaChevronDown>
 
                                                 }
                                             </NavItemContainer>
@@ -369,9 +477,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                                 {
                                                     isProductMedicineDog?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductMedicineDog(isProductMedicineDog?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductMedicineDog(isProductMedicineDog?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductMedicineDog(isProductMedicineDog?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductMedicineDog(isProductMedicineDog?false:true)} ></FaChevronDown>
 
                                                 }
                                             </NavItemContainer>
@@ -430,9 +538,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                             {
                                                     isProductFoodCat?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductFoodCat(isProductFoodCat?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductFoodCat(isProductFoodCat?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductFoodCat(isProductFoodCat?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductFoodCat(isProductFoodCat?false:true)} ></FaChevronDown>
 
                                                 }
 
@@ -462,9 +570,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                             {
                                                     isProductAccessoriesCat?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductAccessoriesCat(isProductAccessoriesCat?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductAccessoriesCat(isProductAccessoriesCat?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductAccessoriesCat(isProductAccessoriesCat?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductAccessoriesCat(isProductAccessoriesCat?false:true)} ></FaChevronDown>
 
                                                 }
                                         </NavItemContainer>
@@ -524,9 +632,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                             {
                                                     isProductCageCat?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductCageCat(isProductCageCat?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductCageCat(isProductCageCat?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductCageCat(isProductCageCat?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductCageCat(isProductCageCat?false:true)} ></FaChevronDown>
 
                                                 }
                                         </NavItemContainer>
@@ -555,9 +663,9 @@ export default function Sidebar ({isVisible,setIsSidebar}){
                                             {
                                                     isProductMedicineCat?
 
-                                                    <FaChevronUp  style={{fontSize:"2rem"}}onClick={()=>setIsProductMedicineCat(isProductMedicineCat?false:true)} ></FaChevronUp>
+                                                    <FaChevronUp   onClick={()=>setIsProductMedicineCat(isProductMedicineCat?false:true)} ></FaChevronUp>
                                                     :
-                                                    <FaChevronDown style={{fontSize:"2rem"}}  onClick={()=>setIsProductMedicineCat(isProductMedicineCat?false:true)} ></FaChevronDown>
+                                                    <FaChevronDown    onClick={()=>setIsProductMedicineCat(isProductMedicineCat?false:true)} ></FaChevronDown>
 
                                                 }
 
