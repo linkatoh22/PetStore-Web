@@ -3,34 +3,98 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 const FilterContainer = styled.div`
-  font-size: 18px;
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
   width: 20%;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 `;
 
-const FTitle = styled.h3`
+const FTitle = styled.div`
   color: #003459;
-  font-size: 30px;
+  font-size: 1.5rem;
   font-weight: bold;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.3rem;
+    }
 `;
 
 const FSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.3rem;
+  .f-checkbox{
+    height:1rem;
+    width:1rem;
+
+     @media (min-width: 0px) and (max-width: 598.99px) {
+        height:0.4rem;
+        width:0.4rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       height:0.6rem;
+        width:0.6rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        height:0.8rem;
+        width:0.8rem;
+        
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        height:0.8rem;
+        width:0.8rem;
+        
+    }
+  
+  }
 `;
 
 const FLabelCheckbox = styled.label`
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  align-items:center;
+  gap: 0.3rem;
+  
 `;
 
 const FSubTitle = styled.p`
-  font-size: 20px;
+  font-size: 1.3rem;
   font-weight: bold;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.1rem;
+    }
 `;
 
 const FLineDivider = styled.div`
@@ -45,23 +109,48 @@ const FPriceGroup = styled.div`
 
 const FPriceInput = styled.input`
   width: 45%;
-  font-size: 18px;
+  font-size: 1.2rem;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 `;
 
 const FBtnPrice = styled.button`
-  font-family: "Poppins", serif;
-  background-color: #003459;
+  
+  background-color: var(--clr-dark-blue);
   color: white;
   border-radius: 15px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1rem;
   border: none;
   padding: 7px;
   transition: background-color 0.15s;
 
   &:active {
-    background-color: #0063aa;
+    background-color: var(--main-blue);
   }
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.9rem;
+    }
 `;
 
 const Color = ["Trắng","Kem","Vàng","Nâu","Đỏ","Xám","Xanh","Đen","Tam Thể"]

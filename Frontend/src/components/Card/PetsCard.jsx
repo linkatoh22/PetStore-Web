@@ -11,6 +11,19 @@ const CardContainer = styled.div`
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     padding:0.8rem;
     gap: 0.5rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        padding:0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding:0.5rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.7rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.7rem;
+    }
 `
 
 const PetImage = styled.img`
@@ -19,6 +32,19 @@ const PetImage = styled.img`
     object-fit: cover;
     border-radius: 5px;
     object-position: center;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        height:130px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        height:150px;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:200px;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        height:200px;
+    }
 
 `
 const InfoContainer = styled.div`
@@ -30,20 +56,58 @@ const InfoContainer = styled.div`
 `
 
 const PetName = styled.div`
-    color: #00171F;
+    color: var(--main-blue);
     font-weight: bold;
-    font-size: 17px;
+    font-size: 1.1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 `
 const PetInfo = styled.div`
     color: #667479;
-    font-size: 13px;
+    font-size: 0.9rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.8rem;
+    }
 `
 
 const PetPrice = styled.div`
-    font-size: 15px;
+    font-size: 1.1rem;
     color: #00171F;
     
     font-weight: bold;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 `
 
 

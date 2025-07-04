@@ -6,6 +6,24 @@ const PageDirectContainer = styled.div`
     gap:1rem;
     
     font-size: 1.2rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.2rem;    
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.4rem;      
+        font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.6rem;
+        font-size: 0.7rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:0.8rem;
+        font-size: 1rem;
+    }
+        
 `
 
 const PageDirectItem = styled.div`
@@ -19,6 +37,7 @@ const PageDirectItem = styled.div`
         color:var(--blue-900);
         
     }
+    
 
 `
 const ArrowSymbol = styled.div`

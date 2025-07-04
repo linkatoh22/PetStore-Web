@@ -11,26 +11,59 @@ import { usePetQueryFetch,usePetQueryFetchFilter } from "../services/hook/catego
 import { GenHeaderPet } from "../utils/GenHeader";
 import { GenNavPet } from "../utils/GenNav";
 const CategoryPageWrapper = styled.div`
-  padding-block:1rem;
+  width:80%;
+  margin:auto;
+  padding-top:5.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 50px;
+  gap: 0.5rem;
+   @media (min-width: 0px) and (max-width: 598.99px) {
+        width:95%;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          width:90%;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        width:85%;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        width:80%;
+    }
 `;
 
 const CategoryPageContainer = styled.div`
+
   display: flex;
   flex-direction: column;
-  padding-left: 150px;
-  padding-right: 150px;
-  gap: 15px;
+  gap: 1rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 `;
 
 const CategoryPageBody = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  gap: 1.2rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+  }
 `;
 
 

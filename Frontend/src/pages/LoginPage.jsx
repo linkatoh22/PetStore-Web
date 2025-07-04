@@ -1,21 +1,19 @@
 import Footer from "../components/Footer"
+import Bgr from "../assets/background-0.jpg"
 import LoginForm from "../components/LoginPage/LoginForm"
 import styled from "styled-components"
 import MainMenu from "../components/MainMenu" 
 const LoginContainer = styled.div`
-    width:100%;
+    width: 100%;
+  height: 100vh;
+  background-image: url(${Bgr});
+  display: flex;
+  align-items: center;     /* căn giữa theo chiều dọc */
+  justify-content: center; /* căn giữa theo chiều ngang */
     
 `;
-const BackgroundAccount = styled.div`
-  
-  width: 100%;
-  display: flex;
-  align-items: center;
-    justify-content: center;
-    padding-block: 5rem;
-  
-  
-`
+
+
 
 
 function LoginPage(){
@@ -27,12 +25,12 @@ function LoginPage(){
 
                 <LoginContainer className="login-container">
 
-                    <BackgroundAccount>
-                    <LoginForm>
+                    
+                        <LoginForm>
 
-                        
-                    </LoginForm>
-                    </BackgroundAccount>
+                            
+                        </LoginForm>
+                 
 
 
                 </LoginContainer>

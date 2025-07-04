@@ -7,8 +7,21 @@ import Spinner from 'react-bootstrap/Spinner';
 const PcContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
   width: 100%;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        gap: 0.4rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          gap: 0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap: 0.6rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap: 0.8rem;
+    }
 `;
 
 const PcTitleContainer = styled.div`
@@ -22,26 +35,80 @@ const PcTitle = styled.div`
   flex-direction: row;
   gap:1rem;
   align-items: baseline;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        gap: 0.4rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          gap: 0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap: 0.6rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap: 0.8rem;
+    }
 `;
 
-const PcTitleName = styled.h2`
+const PcTitleName = styled.div`
   font-weight: bold;
-  font-size: 28px;
+  font-size: 2rem;
   color: #003459;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 1.2rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.4rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.6rem;
+    }
 `;
 
 const PcTitleQuantity = styled.span`
   color: var(--grey-600);
-  font-size: 20px;
+  font-size: 1.2rem;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 `;
 
 const PcSort = styled.select`
-  font-size: 18px;
-  padding: 10px 15px;
+  font-size: 1.2rem;
+  padding: 0.7rem 1rem;
   
   &:focus {
     outline: none;
   }
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.3rem;
+        padding: 0.2rem 0.3rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 0.7rem;
+          padding: 0.3rem 0.6rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.7rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+        padding: 0.5rem 0.8rem;
+    }
 `;
 
 const PcCardContainer = styled.div`
@@ -49,7 +116,29 @@ const PcCardContainer = styled.div`
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
   width: 100%;
-  gap: 10px;
+  gap: 0.5rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        grid-template-columns: repeat(2,1fr);
+        column-gap: 0.2rem;
+        row-gap: 0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 0.2rem;
+        row-gap: 0.6rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 0.3rem;
+        row-gap: 0.7rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        grid-template-columns: repeat(4,1fr);
+        column-gap: 0.4rem;
+        row-gap: 0.8rem;
+        
+    }
 `;
 const SpinnerContainer = styled.div`
     display:flex;
@@ -58,6 +147,41 @@ const SpinnerContainer = styled.div`
     justify-content:center;
     height:200px;
     font-size:1.3rem;
+    .mr-2{
+        width: 4rem;
+         height: 4rem;
+
+        @media (min-width: 0px) and (max-width: 598.99px) {
+            width: 2rem;
+            height: 2rem;
+        }
+        @media (min-width: 599px) and (max-width: 799.99px) {
+            width: 2rem;
+            height: 2rem;
+        }
+        @media (min-width: 800px) and (max-width: 1199.98px) {
+            width: 3rem;
+            height:3rem;
+        }
+        @media (min-width: 1200px) and (max-width: 1500px) {
+            width: 3rem;
+            height:3rem;
+        }
+    
+    }
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        height:100px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        height:100px;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:200px;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        height:200px;
+    }
+    
 
 `
 

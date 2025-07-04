@@ -1,26 +1,19 @@
 
 import Footer from "../components/Footer";
-import Logo from "../assets/logo.png";
+
 import SignUpForm from "../components/RegistrationPage/SignUpForm";
 import styled from "styled-components";
+import Bgr from "../assets/background-0.jpg"
 import MainMenu from "../components/MainMenu";
 const SignupContainer = styled.div`
-    
-   
-    width:100%;
+    width: 100%;
+      height: 100vh;
+      background-image: url(${Bgr});
+      display: flex;
+      align-items: center;     /* căn giữa theo chiều dọc */
+      justify-content: center; /* căn giữa theo chiều ngang */
 `;
 
-
-const BackgroundAccount = styled.div`
-  
-  width: 100%;
-  display: flex;
-  align-items: center;
-    justify-content: center;
-    padding-block: 5rem;
-  
-  
-`
 
 function RegistrationPage(){
 
@@ -32,14 +25,14 @@ function RegistrationPage(){
             <SignupContainer className="signup-container">
 
               
-                <BackgroundAccount className="background-account">
+                
 
                 
                         <SignUpForm>
                             
                         </SignUpForm>
                 
-                </BackgroundAccount>
+                
 
             </SignupContainer>
 

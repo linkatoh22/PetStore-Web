@@ -16,28 +16,71 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import { PetFetchHook,ProductFetchHook } from "../services/hook/homepageHook.js";
 const PetsHomepageContainer = styled.div`
-    margin-top: 20px;
+    width:80%;
+    margin:auto;
+    margin-top: 0.7rem;
     display: flex;
     flex-direction: column;
     gap:1rem;
     padding-bottom: 2rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.5rem;
+        padding-bottom: 0.8rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.5rem;
+        padding-bottom: 0.8rem;
+    }
+    
     
 `
-const CardContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    column-gap: 1rem;
-    row-gap: 1rem;
+
+const TitleContainer  = styled.div`
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.2rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
+
 
 `
 
 const HomepageTitleContainer = styled.div`
     display: flex;
-
+    align-items:center;
     flex-direction: row;
     justify-content: space-between;
     
     margin-bottom: 10px;
+     color:var(--main-blue);
+        font-size: 1.5rem;
+        font-weight: bold;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.3rem;
+        
+    }
+    
 
 `
 
@@ -48,31 +91,84 @@ const HomepageTitleBtn = styled.button`
     
     border-color: #003459;
     color: #003459;
-    font-size: 18px;
+    font-size: 1.2rem;
     
     font-weight: bold;
     cursor: pointer;
     border-radius: 100px;
-    padding: 10px 15px;
+    padding: 0.7rem 1rem;
     transition: background-color 0.15s;
     &:active{
         background-color: white;
     }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+        padding: 0.2rem 0.4rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+        padding: 0.6rem 0.9rem;
+    }
 `
-const BgrImg = styled.div`
-    margin-top: 20px;
-    position:relative;
+
+
+
+
+const CardContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        grid-template-columns: repeat(2,1fr);
+        column-gap: 0.5rem;
+        row-gap: 0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 0.7rem;
+        row-gap: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 0.8rem;
+        row-gap: 0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        grid-template-columns: repeat(4,1fr);
+        column-gap: 0.8rem;
+        row-gap: 0.8rem;
+        
+    }
     
-    min-height: 350px;
-    margin-bottom: 120px;
 
 `
 
-const PicPets = styled.img`
+
+
+
+const BgrImg = styled.div`
+    width:100%;
+    background-image:url(${Bgr});
+    margin-top: 1rem;
+    position:relative;
     background-size: cover;
-    position: absolute;
-    width: 100%;
-    height: 460px;
+    height: 530px;
+    margin-bottom: 1rem;
+    @media (min-width: 0px) and (max-width: 1500px) {
+        display:none;
+    }
+
 `
 
 const DescriptionSubMenu = styled.div`
@@ -80,7 +176,7 @@ const DescriptionSubMenu = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    top:30%;
+    top:20%;
     right:5%;
 
 `
@@ -135,9 +231,24 @@ const SubBlueButton = styled.button`
     cursor: pointer;
 `
 const BigFont = styled.span`
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: bold;
-    color:#002A48
+    color:#002A48;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+         font-size: 0.8rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.1rem;
+    }
+
+    
 
 `
 
@@ -148,7 +259,47 @@ const SpinnerContainer = styled.div`
     justify-content:center;
     height:200px;
     font-size:1.3rem;
+    .mr-2{
+        width: 4rem;
+         height: 4rem;
 
+        @media (min-width: 0px) and (max-width: 598.99px) {
+            width: 2rem;
+            height: 2rem;
+        }
+        @media (min-width: 599px) and (max-width: 799.99px) {
+            width: 2rem;
+            height: 2rem;
+        }
+        @media (min-width: 800px) and (max-width: 1199.98px) {
+            width: 3rem;
+            height:3rem;
+        }
+        @media (min-width: 1200px) and (max-width: 1500px) {
+            width: 3rem;
+            height:3rem;
+        }
+    
+    }
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        height:100px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        height:100px;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:200px;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        height:200px;
+    }
+    
+
+`
+
+const BackgroundMenuWrapper = styled.div`
+    min-height: 200px;
+    
 `
 
 
@@ -194,8 +345,9 @@ function Homepage(){
         
         <>
             <div >
-                
-                <BackgroundMenu></BackgroundMenu>
+                <BackgroundMenuWrapper>
+                    <BackgroundMenu></BackgroundMenu>
+                </BackgroundMenuWrapper>
                 
                 
                 
@@ -203,23 +355,16 @@ function Homepage(){
                 
                 <PetsHomepageContainer>
 
-                    <div className="homepage-title-1-pets" style={{
-                            textAlign: "left",
-                            fontWeight: "500",
-                            fontSize: "18px"}}>
+                    <TitleContainer>
 
-                        Có gì hot?</div>
+                        Có gì hot?
+                    </TitleContainer>
 
-                    <HomepageTitleContainer className="homepage-title-container">
+                    <HomepageTitleContainer>
 
-                        <div className="homepage-title-2-pets"
-                            style={{
-                                color:"#002A48",
-                                fontSize: "25px",
-                                fontWeight: "bold",
-
-                            }}
-                        >Best-seller của store tụi mình  </div>
+                        <div className="homepage-title-1-pets">
+                            Best-seller của store tụi mình  
+                        </div>
                         <HomepageTitleBtn>Xem thêm</HomepageTitleBtn>
 
                     </HomepageTitleContainer>
@@ -227,7 +372,7 @@ function Homepage(){
                     
                     {loadingUser? 
                             <SpinnerContainer>
-                                <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                                <Spinner animation="border" variant="info" className='mr-2' />
                             </SpinnerContainer>
                         : 
                         (
@@ -256,7 +401,7 @@ function Homepage(){
 
 
                     <BgrImg>
-                        <PicPets src={Bgr}></PicPets>
+                        {/* <PicPets src={Bgr}></PicPets> */}
                         
                         <DescriptionSubMenu>
                             <Header1SubMenu>Một người bạn mới</Header1SubMenu>
@@ -281,22 +426,11 @@ function Homepage(){
                     </BgrImg>
 
 
-                    <div className="homepage-title-1-pets"
-                    style={{
-                        textAlign: "left",
-                        fontWeight: "500",
-                        fontSize: "18px"
-                        
-                    }}>Khó khăn trong việc chọn lựa sản phẩm phù hợp với các boss?</div>
+                    <TitleContainer>Khó khăn trong việc chọn lựa sản phẩm phù hợp với các boss?</TitleContainer>
 
                     <HomepageTitleContainer>
                         <div 
-                            style={{
-                                color:"#002A48",
-                                fontSize: "25px",
-                                fontWeight: "bold"
-                            }}
-                            className="homepage-title-2-pets">
+                            className="homepage-title-1-pets">
                         Sản phẩm của tụi mình
                         
                         </div>
@@ -337,14 +471,9 @@ function Homepage(){
 
 
                     <HomepageTitleContainer>
-                        <div className="title-1-pets" style={{
-                            textAlign: "left",
-                            fontWeight: "500",
-                            fontSize: "18px"
-
-                        }}>
+                        <TitleContainer style={{color:"black"}}>
                             Tự hào là một phần của phân phối <BigFont>Các Brand uy tín</BigFont> 
-                        </div>
+                        </TitleContainer>
 
                         
                     </HomepageTitleContainer>

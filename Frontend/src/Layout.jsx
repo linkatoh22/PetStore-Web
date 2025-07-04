@@ -21,8 +21,9 @@ export default function RootLayout(){
     const [isSidebar,setIsSidebar] = useState(false)
     return(
         <>
+            
             <MainMenu isSidebar={isSidebar} setIsSidebar={setIsSidebar} ></MainMenu>
-             
+           
             <ContentWrapper>
                     <Sidebar isVisible={isSidebar} setIsSidebar={setIsSidebar}/>
                     {isSidebar && <Overlay onClick={() => setIsSidebar(false)} />}

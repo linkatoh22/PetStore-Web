@@ -12,21 +12,53 @@ const CategoryParagraphContainer = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  top: 23%;
-  right: 4%;
+  gap: 0.3rem;
+  top: 15%;
+  right: 2%;
   width: 38%;
 `;
 
 const CategoryTitle = styled.h1`
   font-size: 3.7rem;
   font-weight: bold;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       font-size: 1.1rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 999.99px) {
+        font-size: 1.6rem;
+        
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        font-size: 1.8rem;
+        
+    }
 `;
 
 const CategorySubTitle = styled.h2`
   text-align: right;
-  font-size: 40px;
+  font-size: 2rem;
   font-weight: bold;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       font-size: 1rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 999.99px) {
+        font-size: 1.2rem;
+        
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        font-size: 1.4rem;
+        
+    }
 `;
 
 const CategoryParagraph = styled.p`
@@ -35,37 +67,27 @@ const CategoryParagraph = styled.p`
   justify-content: right;
   font-size: 1.2rem;
   font-weight:600;
+   @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.24rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       font-size: 0.5rem;
+    }
+
+    @media (min-width: 800px) and (max-width: 1000px) {
+        font-size: 0.6rem;
+        
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        font-size: 0.7rem;
+        
+    }
 
 `;
 
-const CBtnGroup = styled.div`
-  margin-top: 5px;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  justify-content: right;
-`;
 
-const CTransparentBtn = styled.button`
-  color: white;
-  background-color: transparent;
-  font-weight: bold;
-  font-size: 18px;
-  border-width: 1px;
-  border-radius: 20px;
-  border-color: white;
-  padding: 13px 30px;
-`;
 
-const CBlueBtn = styled.button`
-  color: #002A48;
-  background-color: white;
-  font-weight: bold;
-  font-size: 18px;
-  border: none;
-  border-radius: 20px;
-  padding: 13px 30px;
-`;
 
 function PicIntro(){
 

@@ -13,18 +13,44 @@ import { toast } from "react-toastify";
   const SignUpFormContainer = styled.div`
     
     background-color: white;
+    border-radius:10px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    width: 35%;
+    gap: 1rem;
+    width: 40%;
     border: 1px solid rgb(170, 169, 169);
-    padding: 2rem;
+    padding-inline: 2rem;
+    padding-block: 4rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        padding-inline: 1rem;
+      padding-block: 2rem;
+        width:80%; 
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+      padding-inline: 1rem;
+      padding-block: 3rem;
+        width:60%;
+    }
+    @media (min-width: 1312px) and (max-width: 1500.00px) {
+        width:50%;
+    }
+  
+  
   `;
 
   const SignUpFormTitle = styled.h2`
     text-align: center;
     font-weight: bold;
-    font-size: 1.8em;
+    font-size: 1.8rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 1.2rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1.5rem;
+    }
   `;
 
 
@@ -33,16 +59,29 @@ import { toast } from "react-toastify";
     display: flex;
     align-items: center;
     gap: 3px;
-    padding: 10px;
+    padding: 0.8rem;
     background-color: rgba(255, 248, 248, 0.568);
     border: 1px solid rgb(170, 169, 169);
-    font-size: 1.3rem;
-    font-weight: 600; 
+    font-size: 1.25rem;
+    font-weight: bold; 
     cursor: pointer;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        font-size: 0.4rem;
+        font-size: 0.8rem;
+
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+        padding: 0.6rem;
+        font-size: 1rem;
+    }
   `;
 
   const SeperatorText = styled.div`
-    font-size: 20px;
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
     color: rgb(49, 49, 49);
@@ -54,10 +93,21 @@ import { toast } from "react-toastify";
       background-color: rgb(170, 169, 169);
       margin: 10px;
     }
+    
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          font-size: 1rem;
+    }
+
+
   `;
 
   const SignUpFormItem = styled.form`
-    gap: 10px;
+    gap: 0.5rem;
     display: flex;
     flex-direction: column;
   `;
@@ -66,36 +116,69 @@ import { toast } from "react-toastify";
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-left: 5px;
+    padding-left: 0.5em;
     gap: 5px;
-    font-size: var(--fs-m);
+    font-size: 1.2rem;
     width: 100%;
     border: 1px solid rgb(170, 169, 169);
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+  }
+
+
   `;
 
   const InputForm = styled.input`
     width: 100%;
-    padding-inline: 10px;
-    padding-block: 5px;
+    padding-inline: 0.5rem;
+  padding-block: 0.3rem;
     font-size: 1.2rem;
     border: none;
 
     &:focus {
       outline: none;
     }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        
+        
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+        
+        
+  }
+      
   `;
 
   const SignUpButton = styled.button`
-    background-color: var(--main-blue);
+    background-color: var(--clr-dark-blue);
     color: white;
-    font-size: var(--fs-m);
+    font-size: 1.2rem;
     font-weight: bold;
     border: none;
-    padding-block: 10px;
+    padding-block: 0.5rem;
     cursor: pointer;
     &:active{
-      background-color: var(--clr-dark-blue);
+      background-color: var(--main-blue);
     }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        
+        
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+        
+        
+  }
   `;
 
 

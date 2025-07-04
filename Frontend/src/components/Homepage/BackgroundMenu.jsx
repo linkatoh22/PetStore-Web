@@ -7,22 +7,27 @@ import { useState } from 'react';
 
 
 import { useNavigate } from 'react-router-dom';
+
+
 const BackgroundMenuContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 890px;
   background-image: url(${Background});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  @media (max-width: 598.99px) {
-    height: 520px;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+     height: 350px;
   }
   @media (min-width: 599px) and (max-width: 799.99px) {
-    height: 720px;
+    height: 450px;
   }
-  @media (min-width: 800px) and (max-width: 1000px) {
-    height: 620px;
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+    height: 540px;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    height: 650px;
   }
         
 `;
@@ -36,7 +41,15 @@ const DescriptionMenu = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   left: 5%;
-  top: 25%;
+  top: 35%;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+     gap: 0.3rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    gap: 0.3rem;
+  }
+  
 `;
 
 const Header1Menu = styled.div`
@@ -45,16 +58,20 @@ const Header1Menu = styled.div`
   font-weight: bold;
 
   
-    @media (min-width: 300px) and (max-width: 598.99px) {
-        font-size: 1.5rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 1rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-       font-size: 2.5rem;
+       font-size: 2rem;
     }
 
-    @media (min-width: 800px) and (max-width: 1000px) {
-        font-size: 3.5rem;
+    @media (min-width: 800px) and (max-width: 999.99px) {
+        font-size: 2.5rem;
+        
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        font-size: 3rem;
         
     }
 `;
@@ -67,8 +84,8 @@ const Header2Menu = styled.div`
   
 
   font-size: 3.5rem;
-    @media (min-width: 300px) and (max-width: 598.99px) {
-        font-size: 1rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
@@ -76,6 +93,9 @@ const Header2Menu = styled.div`
     }
 
     @media (min-width: 800px) and (max-width: 1000px) {
+        font-size: 2rem;
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
         font-size: 2.5rem;
         
     }
@@ -84,19 +104,22 @@ const Header2Menu = styled.div`
 const ParagraphMenu = styled.div`
 
   width: 40%;
-  
   font-weight: 450;
   font-size: 1.2rem;
-    @media (min-width: 300px) and (max-width: 598.99px) {
+    @media (min-width: 0px) and (max-width: 598.99px) {
         font-size: 0.5rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-       font-size: 0.8rem;
+       font-size: 0.6rem;
     }
 
     @media (min-width: 800px) and (max-width: 1000px) {
-        font-size: 1rem;
+        font-size: 0.8rem;
+        
+    }
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        font-size: 0.9rem;
         
     }
 `;
@@ -106,15 +129,24 @@ const BtnGroupMenu = styled.div`
   display: flex;
   gap: 1rem;
 
-  @media (min-width: 300px) and (max-width: 598.99px) {
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        margin-top: 0.5rem;
         gap: 0.5rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-       gap: 0.7rem;
+      margin-top: 0.6rem;
+       gap: 0.6rem;
     }
 
     @media (min-width: 800px) and (max-width: 1000px) {
+        margin-top: 0.7rem;
+        gap: 0.7rem;
+        
+    }
+
+    @media (min-width: 1000px) and (max-width: 1500px) {
+        margin-top: 0.8rem;
         gap: 0.8rem;
         
     }
@@ -140,21 +172,31 @@ const TransparentBlueButton = styled.button`
   }
 
 
-  @media (min-width: 300px) and (max-width: 598.99px) {
-    font-size: 0.5rem ;
-        padding-inline: 0.8rem;
-        padding-block: 0.5rem;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+    border-width: 1px;
+      font-size: 0.5rem ;
+        padding-inline: 0.5rem;
+        padding-block: 0.2rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        font-size: 0.7rem ;
-       padding-inline: 1.2rem;
+        border-width: 1px;
+        font-size: 0.5rem ;
+       padding-inline: 0.8rem;
       padding-block: 0.6rem;
     }
 
     @media (min-width: 800px) and (max-width: 1000px) {
-    font-size: 1rem ;
-        padding-inline: 1.5rem;
+        font-size: 0.8rem ;
+        padding-inline: 1rem;
+        padding-block: 0.6rem;
+        
+    }
+    
+    @media (min-width: 1000px) and (max-width: 1500px) {
+
+        font-size: 0.9rem ;
+        padding-inline: 1rem;
         padding-block: 0.6rem;
         
     }
@@ -182,8 +224,9 @@ function BackgroundMenu(){
     return (
 
         <>
+          
             <BackgroundMenuContainer src={Background}>
-            </BackgroundMenuContainer>
+            
 
                     
                    
@@ -207,6 +250,8 @@ function BackgroundMenu(){
                     </BtnGroupMenu>
 
                 </DescriptionMenu>
+            </BackgroundMenuContainer>
+          
             
         </>
     )

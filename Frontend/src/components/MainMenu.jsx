@@ -17,25 +17,24 @@ const MainMenuContainer = styled.div`
     width: 100%;
     background-color: #003459;
     
+    
 `
 const MainMenuItem = styled.div`
     margin: auto;
-    width:85%;
+    width:90%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
-    @media (min-width: 300px) and (max-width: 598.98px) {
-        width:100%;   
-    }
     
-    @media (min-width: 300px) and (max-width: 598.99px) {
+    
+    @media (min-width: 0px) and (max-width: 598.99px) {
         width:95%; 
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        width:98%;
+        width:95%;
     }
     @media (min-width: 1312px) and (max-width: 1500.00px) {
         width:90%;
@@ -75,7 +74,7 @@ const TitleBtnMenu = styled.div`
     .search-icon{
         width:30px; 
         height:30px;
-        @media (min-width: 300px) and (max-width: 598.99px) {
+        @media (min-width: 0px) and (max-width: 598.99px) {
             width:15px; 
             height:15px;
         
@@ -112,8 +111,8 @@ const LogoImg = styled.img`
     height: 50px;
     object-fit: cover;
     @media (min-width: 0px) and (max-width: 399.99px) {
-        width: 30px;
-        height: 15px;
+        width: 40px;
+        height: 20px;
         
     }
     @media (min-width: 400px) and (max-width: 598.99px) {
