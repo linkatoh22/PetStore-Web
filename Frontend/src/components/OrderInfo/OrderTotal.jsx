@@ -10,17 +10,36 @@ const summary = [
 
 const TableContainer = styled.div`
   width: 100%;
-  
-  
   font-size: 1.2rem;
-  padding: 16px;
+  padding: 1.3rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+        padding: 0.8rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+        padding: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+        padding: 1.1rem;
+
+    }
+
 `;
 
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, .09);;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .09);
+
+  
 `;
 
 const Label = styled.div`

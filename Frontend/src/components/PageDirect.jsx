@@ -8,8 +8,8 @@ const PageDirectContainer = styled.div`
     font-size: 1.2rem;
 
     @media (min-width: 0px) and (max-width: 598.99px) {
-        gap:0.2rem;    
-        font-size: 0.6rem;
+        gap:0.1rem;    
+        font-size: 0.5rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
         gap:0.4rem;      

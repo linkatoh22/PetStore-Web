@@ -8,58 +8,180 @@ import { toast } from "react-toastify";
 const DetailPetContainer = styled.div`
     display:flex;
     flex-direction:column;
-    gap:1.5rem;
+    gap:1rem;
     width: 50%;
     padding:1.5rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+       gap:0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:1rem;
+
+    }
     
 `
 const DetailNameContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+       gap:0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:1rem;
+
+    }
 `;
 
 const DetailNameId = styled.div`
-  font-size: 17px;
+  font-size: 1.1rem;
   color: gray;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+    font-size:0.6rem;     
+  
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size:0.8rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+       
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+        
+
+    }
 `;
 
 const DetailName = styled.div`
-  font-size: 28px;
+  font-size: 2rem;
   font-weight: bold;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+       font-size: 0.8rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size: 1.2rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.4rem;
+
+  }
 `;
 
 const DetailPrice = styled.div`
   color: #002a48;
-  font-size: 25px;
+  font-size: 1.6rem;
   font-weight: bold;
+
+   @media (min-width: 0px) and (max-width: 598.99px) {
+       font-size: 0.8rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size: 1.1rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.3rem;
+
+  }
+
 `;
 
 const DetailBtnGroup = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top:1rem;
-  gap: 10px;
+  font-size: 1.1rem;
+  width:90%;
+  justify-content:space-between;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        width:100%;
+      font-size:0.5rem;     
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size:0.8rem;
+        
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+       
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+  }
 `;
 
 const BuyBtn = styled.button`
+    width:45%;
   background-color: #002a48;
   color: white;
-  font-size: 18px;
   font-weight: bold;
   border: none;
-  border-radius: 25px;
-  padding: 10px 20px;
+  border-radius: 15px;
+  padding-block:0.9rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      padding-block:0.3rem;    
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    padding-block:0.6rem;
+        
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       padding-block:0.7rem;
+       
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        padding-block:0.8rem;
+  }
 `;
 
 const CartBtn = styled.button`
+    width:45%;
   background-color: transparent;
   color: #002a48;
-  font-size: 18px;
   font-weight: bold;
-  border: solid 2px #002a48;
-  border-radius: 25px;
-  padding: 10px 20px;
+  border: solid 1px #002a48;
+  border-radius: 15px;
+  padding-block:0.9rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      padding-block:0.3rem;    
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    padding-block:0.6rem;
+        
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       padding-block:0.7rem;
+       
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        padding-block:0.8rem;
+  }
 `;
 const QuantityContainer = styled.div`
 
@@ -68,31 +190,85 @@ const QuantityContainer = styled.div`
     
     align-items:center;
     gap:1rem;
-    font-size:1.1rem
+    font-size:1.2rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+      gap:0.5rem; 
+      font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          gap0.7rem;
+          font-size: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.9rem;
+          font-size: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+          gap:1rem;
+          font-size: 1.1rem;
+
+    }
     
 `
 
 const QuantityBtn = styled.button`
     
-    padding:0.2rem;
-    font-size:1.4rem;
+     padding:0.2rem;
     padding-inline:0.6rem;
     background-color:white;
     &:focus{
         outline:none;
     }
-    border:1px solid var(--grey-600)
+   
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+        
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
+    }
 
 `
 const QuantityInput = styled.input`
-    width:20%;
-    padding:0.15rem;
-    padding-block:0.14rem;
+    width:25%;
     text-align:center;
-    font-size:1.4rem;
+    padding:0.2rem;
     border:1px solid var(--grey-600)
     &:focus{
         outline:none;
+    }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+          
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
     }
     
 `
@@ -102,6 +278,24 @@ const DescriptionInfo= styled.div`
     span{
         font-weight:bold;
     }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+    font-size:0.6rem;     
+  
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size:0.8rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+       
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+        
+
+    }
 `
 
 const VariantContainer =styled.div`
@@ -109,35 +303,103 @@ const VariantContainer =styled.div`
     flex-direction:column;
     gap:1.5rem;
     justify-content:center;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.7rem;     
+  
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.9rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:1.1rem;
+       
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:1.3rem;
+    }
 `
 
 const VariantOptionGroup = styled.div`
+    
     display:flex;
     flex-direction:row;
     align-items:center;
     gap:0.5rem
+    @media (min-width: 0px) and (max-width: 598.99px) {
+      
+            gap:0.2rem
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          
+          gap:0.3rem
+    }
+    
+    
 `
 
-const VariantTitle = styled.h4`
-    font-size:1.3rem;
-    width:120px;
-    margin-bottom:0.5rem;
+const VariantTitle = styled.div`
+    width:23%;
+    
+    font-weight:bold;
+    font-size:1.2rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+      
+            font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          
+          font-size: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        
+          font-size: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+          font-size: 1.1rem;
+
+    }
+    
 `
 
 const VariantButton = styled.button`
     margin:4px;
-    padding:6px 12px;
     background-color: ${  (props)=>(props.selected?  "#007bff" : "white") };
     padding-inline:1.5rem;
     padding-block:0.5rem;
-    
-    
-    font-size:1.1rem;
-    color: ${(props) =>(props.selected? "white" : "black")};
+   
+    color: ${(props) =>(props.selected? "white" : "#002a48")};
 
     cursor:pointer;
     border-radius:5px;
     transition: background-color 0.2 ease;
+     font-size:1.2rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        padding-inline:0.5rem;
+        padding-block:0.2rem;
+        font-size: 0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding-inline:0.7rem;
+        padding-block:0.2rem;
+        font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding-inline:0.7rem;
+            padding-block:0.3rem;
+         font-size: 0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+            padding-inline:1rem;
+            padding-block:0.4rem;
+            font-size: 1rem;
+
+    }
+
+
+    
 
 `
 
@@ -358,7 +620,7 @@ export function DetailProduct({product}){
                 
             }
             else{
-               alert("Vui lòng chọn phân loại") 
+               toast.warning("Vui lòng chọn phân loại") 
             }
         }
         else{

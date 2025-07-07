@@ -8,35 +8,85 @@ import { useVerifyOtp, useResendOtp} from "../../services/hook/OtpVerificationHo
 import { toast } from "react-toastify";
 const OtpVerifyContainer = styled.div`
   background-color: white;
+  border-radius:10px;
   display: flex;
   flex-direction: column;
-  
   width: 30%;
   border: 1px solid rgb(170, 169, 169);
   padding-block: 5rem;
   padding-inline: 2rem;
   gap:2rem;
+
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        width: 90%;
+        padding-block: 3rem;
+        padding-inline: 0.8rem;
+        
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        width: 70%;
+        padding-block: 2rem;
+        padding-inline: 1rem;
+  }
+  @media (min-width: 800px) and (max-width: 1311.99px) {
+        width: 55%;
+        padding-block: 3rem;
+        padding-inline: 1.5rem;
+  }
+  @media (min-width: 1312px) and (max-width: 1500.00px) {
+        width: 40%;
+        padding-block: 4rem;
+        padding-inline: 2rem;
+        gap:2rem;
+    }
+
   
 `;
 
-const OtpVerifyFormTitle = styled.h2`
+const OtpVerifyFormTitle = styled.div`
   text-align: center;
   font-weight: bold;
-  font-size: 1.8em;
+  font-size: 1.8rem;
+  .paragraph{
+    font-size:1.3rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+      font-size: 0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1311.99px) {
+          font-size: 1rem;
+    }
+
+
+  }
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      font-size: 1.3rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+      font-size: 1.5rem;
+  }
+  @media (min-width: 800px) and (max-width: 1311.99px) {
+        font-size: 1.5rem;
+  }
+
+
 `;
 
 
 const SeperatorText = styled.div`
-  background-color: rgb(170, 169, 169);
-  width: 100%;
-  height: 1px;
+    background-color: rgb(170, 169, 169);
+    width: 100%;
+    height: 1px;
 `;
 
 const OtpVerifyFormItem = styled.form`
   
-  display: flex;
-  flex-direction: column;
-  gap:1rem;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
   
 `;
 
@@ -45,10 +95,24 @@ const InputWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   padding-left: 5px;
-  gap: 5px;
-  font-size: var(--fs-m);
+  gap: 0.3rem;
+  font-size: 1.2rem;
   width: 100%;
   border: 1px solid rgb(170, 169, 169);
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      font-size: 0.7rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+      font-size: 0.8rem;
+  }
+  @media (min-width: 800px) and (max-width: 1311.99px) {
+        font-size: 0.9rem;
+  }
+  @media (min-width: 1312px) and (max-width: 1500.00px) {
+        font-size: 1rem;
+  }
+
 `;
 
 const InputForm = styled.input`
@@ -57,22 +121,49 @@ const InputForm = styled.input`
   padding-block: 5px;
   font-size: 1.2rem;
   border: none;
-
   &:focus {
     outline: none;
   }
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      font-size: 0.7rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+      font-size: 0.8rem;
+  }
+  @media (min-width: 800px) and (max-width: 1311.99px) {
+        font-size: 0.9rem;
+  }
+  @media (min-width: 1312px) and (max-width: 1500.00px) {
+        font-size: 1rem;
+  }
+
+
 `;
 
 const OtpVerifyButton = styled.button`
   background-color: var(--clr-dark-blue);
   color: white;
-  font-size: var(--fs-m);
+  font-size: 1.2rem;
   font-weight: bold;
   border: none;
   padding-block: 10px;
   cursor: pointer;
   &:active{
     background-color: var(--main-blue);
+  }
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      font-size: 0.7rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+      font-size: 0.8rem;
+  }
+  @media (min-width: 800px) and (max-width: 1311.99px) {
+        font-size: 0.9rem;
+  }
+  @media (min-width: 1312px) and (max-width: 1500.00px) {
+        font-size: 1rem;
   }
 `;
 const ResendOTPButton = styled.div`
@@ -170,7 +261,7 @@ function OtpVerificationForm()
             <OtpVerifyContainer className="signup-form-container">
                 
                 <OtpVerifyFormTitle className="signup-form-title">Xác thực OTP</OtpVerifyFormTitle>
-                  <div>Chúng tôi vừa gửi mã OTP vào email của bạn vui lòng kiểm tra. OTP có hiệu lực trong 5 phút.</div>
+                  <div className="paragraph">Chúng tôi vừa gửi mã OTP vào email của bạn vui lòng kiểm tra. OTP có hiệu lực trong 5 phút.</div>
                 
 
                 <SeperatorText className="seperator-text"></SeperatorText>
@@ -184,7 +275,7 @@ function OtpVerificationForm()
                         name="otp"
                         value = {formData.otp}
                         onChange={handleChange}
-                        placeholder="Nhập mã OTP ở đây" 
+                        placeholder="Nhập mã OTP" 
                         className="input-form"
                         ></InputForm>
                         

@@ -8,8 +8,8 @@ const LoginContainer = styled.div`
   height: 100vh;
   background-image: url(${Bgr});
   display: flex;
-  align-items: center;     /* căn giữa theo chiều dọc */
-  justify-content: center; /* căn giữa theo chiều ngang */
+  align-items: center;     
+  justify-content: center; 
     
 `;
 

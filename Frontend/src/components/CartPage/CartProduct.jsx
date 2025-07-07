@@ -11,11 +11,26 @@ import { useDeleteCartItem,useEditCartItem } from '../../services/hook/CartHook'
 import { AuthContext } from '../../context/AuthProvider';
 import { useMemo } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+
+import { toast } from "react-toastify";
 const CartTableContainer = styled.div`
   width: 100%;
   display:flex;
   flex-direction:column;
   gap:1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:0.9rem;
+    }
   
  
 `;
@@ -24,6 +39,22 @@ const CartTitleContainer = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
+    font-size:2.2rem;
+    font-weight:bold;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.9rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:1.3rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:1.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1.8rem;
+    }
+
     
 `
 const LineDivider = styled.div`
@@ -33,9 +64,40 @@ const LineDivider = styled.div`
 const CartTable = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 1.2rem; 
+  border-spacing: 0 0.5rem; 
+    font-size:1.2rem;
+    
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.47rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:0.6rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.7rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:0.9rem;
+    }
 
-  
+
+    .checkbox-btn{
+        width:20px;
+
+        @media (min-width: 0px) and (max-width: 598.99px) {
+            width:7px;
+        }
+        @media (min-width: 599px) and (max-width: 799.99px) {
+            width:8px;
+        }
+        @media (min-width: 800px) and (max-width: 1199.98px) {
+            width:10px;
+        }
+        @media (min-width: 1200px) and (max-width: 1500px) {
+             width:15px;
+        }
+    }
+
   th {
     background-color:white;
     text-align: center;
@@ -55,11 +117,25 @@ const ProductDetailContainer = styled.div`
     display:flex;
     flex-direction:row;
     gap:1rem;
+
+     @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+       gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:0.9rem;
+    }
 `
 
 const ProductDetailImage = styled.img`
-    height:150px;
-    width:150px;
+    width:20%;
+    aspect-ratio: 1 / 1;
+    
     object-fit:cover;
     object-position:center;
 `
@@ -82,7 +158,7 @@ const ScrollTable = styled.div`
 const DeleteOption = styled.div`
     font-weight:bold;
     cursor:pointer;
-    padding:7px;
+    padding:0.3rem;
     disable:true;
     border-radius:20px;
     &:hover{
@@ -95,25 +171,62 @@ const DeleteOption = styled.div`
 
 const QuantityBtn = styled.button`
     
-    padding:0.35rem;
-    font-size:1.2rem;
-    
+    padding:0.2rem;
+    padding-inline:0.6rem;
     background-color:white;
     &:focus{
         outline:none;
     }
-    border:1px solid var(--grey-600)
+   
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+        
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
+    }
+    
 
 `
 const QuantityInput = styled.input`
-    width:15%;
-    padding-inline:0.12rem;
-    padding-block:0.1rem;
+    width:25%;
     text-align:center;
-    font-size:1.4rem;
+    padding:0.2rem;
     border:1px solid var(--grey-600)
     &:focus{
         outline:none;
+    }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+          
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
     }
     
 `
@@ -125,8 +238,20 @@ const SpinnerContainer = styled.div`
     height:200px;
     font-size:1.3rem;
 
-`
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1.1rem;
+    }
 
+`
 
 function CartProduct({
     cartInfo,
@@ -161,12 +286,12 @@ function CartProduct({
             {
                 onSuccess:(data)=>{
                         
-                         alert("Xóa item trong giỏ hàng thành công!");
+                         toast.success("Xóa item trong giỏ hàng thành công!");
                          updatedCart();
                     },
                 onError:(error)=>{
                         const message =  error.response?.data?.message || error.message;
-                        console.log(message);
+                        toast.error("Lỗi chỉnh sửa item: ",message)
                     }
             }
         )
@@ -192,13 +317,13 @@ function CartProduct({
                 {
                     onSuccess:(data)=>{
                         
-                        alert("Chỉnh sửa Item thành công")
+                        toast.success("Chỉnh sửa Item thành công")
                         
                         
                     },
                     onError:(error)=>{
                         const message =  error.response?.data?.message || error.message;
-                        console.log(message);
+                        toast.error("Lỗi chỉnh sửa item: ",message)
                     }
                 }
             )
@@ -226,11 +351,12 @@ function CartProduct({
                             [ItemId]: amount,
                         }));
 
-                    alert("Chỉnh sửa Item thành công")            
+                    toast.success("Chỉnh sửa Item thành công")            
                 },
                 onError:(error)=>{
                     const message =  error.response?.data?.message || error.message;
-                    console.log(message);
+                    toast.error("Lỗi chỉnh sửa item: ",message)
+                 
                 }
             }
         )
@@ -287,8 +413,8 @@ function CartProduct({
         <>
             <CartTableContainer className="cartTable-container">
                 <CartTitleContainer>
-                    <h2 style={{fontWeight:"bold"}}>Giỏ hàng</h2>
-                    <h3 style={{fontWeight:"bold"}}> {Selection.length} Sản Phẩm </h3>
+                    <div>Giỏ hàng</div>
+                    <div> {Selection.length} Sản Phẩm </div>
                 </CartTitleContainer>
                 
                 <LineDivider></LineDivider>
@@ -299,7 +425,9 @@ function CartProduct({
                     <thead >
                         <tr style={{color:"var(--grey-600)"}}>
                             <th>
-                                <input type="checkbox" checked={Selection.length === cartInfo?.items?.length} onChange={()=>HandleSelection("All")}></input>
+                                <input 
+                                className='checkbox-btn'
+                                type="checkbox" checked={Selection.length === cartInfo?.items?.length} onChange={()=>HandleSelection("All")}></input>
                             </th>
 
                             <th>Chi tiết sản phẩm</th>
@@ -328,6 +456,7 @@ function CartProduct({
                                         
                                         <td >
                                             <input 
+                                            className='checkbox-btn'
                                             
                                             type="checkbox" 
                                             key={index} 

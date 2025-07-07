@@ -1,82 +1,110 @@
-// import '../../styles/components/ImageSlider.css'
-import detail1 from '../../assets/pic/detail-product/detail1.png';
-import detail2 from '../../assets/pic/detail-product/detail2.png';
-import detail3 from '../../assets/pic/detail-product/detail3.png';
-import detail4 from '../../assets/pic/detail-product/detail4.png';
-import detail5 from '../../assets/pic/detail-product/detail5.png';
-import detail6 from '../../assets/pic/detail-product/detail6.png';
+
+import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
+
+
+import cantLoad from "../../assets/loadPic.png"
 import { useState,useRef } from 'react';
 import styled from 'styled-components';
 const ITEM_WIDTH=50;
+
 const ImageSliderContainer = styled.div`
-    padding:1.5rem;
-  display: flex;
-  flex-direction: column;
-  width:40%;
-  gap: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    width:40%;
+    gap: 0.8rem;
+
+   
+
+
 `;
 
 const MainPicContainer = styled.div`
-  position: relative;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+   
+    background-size: cover;
+    background-position: center;    
+    background-repeat: no-repeat;
+    
+    background-image: url(${props => props.bg});
+    border-radius:20px;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    
+
 `;
 
-const MainPic = styled.img`
-  width: 100%;
-  border-radius: 50px;
-  object-fit: cover;
-  object-position: center;
-  height:500px;
-`;
 
 const PrevBtn = styled.button`
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  font-size: 30px;
+  font-size: 1.7rem;
   border-radius: 50px;
-  padding: 10px 15px;
+  display:flex;
+  padding:1.1rem;
+  align-items:center;
+  justify-content:center;
   color: white;
   background-color: rgba(240, 248, 255, 0.61);
   border: none;
-  font-weight: bold;
-`;
+  &:hover{
+    background-color:rgba(240, 248, 255, 0.45);
+  }
+  &:active{
+    background-color:rgba(240, 248, 255, 0.56);
+  }
 
-const NextBtn = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  font-size: 30px;
-  border-radius: 50px;
-  padding: 10px 15px;
-  color: white;
-  background-color: rgba(240, 248, 255, 0.61);
-  border: none;
-  font-weight: bold;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+        padding:0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       font-size: 0.9rem;
+        padding:0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.1rem;
+        padding:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.3rem;
+        padding:1rem;
+    }
 `;
 
 const PicSlider = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  scroll-behavior: smooth;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
 `;
 
 const PicItem = styled.img`
-  width: 15%;
-  border-radius: 15px;
+   object-fit: cover;
+  object-position: center;
+  
+ 
+  border-radius: 5px;
   cursor: pointer;
+
+  width: 25%;
+  aspect-ratio: 1 / 1;
+
 `;
 
 const myPic=[
-        {pic:detail1},
-        {pic:detail2},
-        {pic:detail3},
-        {pic:detail4},
-        {pic:detail5},
-        {pic:detail6},
-        {pic:detail6},
+        {pic:cantLoad},
+        {pic:cantLoad},
+        {pic:cantLoad},
+        {pic:cantLoad}
     ]
 
 
@@ -126,13 +154,19 @@ function ImageSlider({PicImg}){
         <>
 
             <ImageSliderContainer className="Image-Silder-Container">
-                <MainPicContainer className='Main-Pic-Container'>
+                <MainPicContainer className='Main-Pic-Container' bg={PicImgMain[index] || cantLoad}>
 
-                    <MainPic className="Main-Pic" src={PicImgMain[index]}></MainPic>
+                    {/* <MainPic className="Main-Pic" src={PicImgMain[index]}></MainPic> */}
 
-                    <PrevBtn onClick={()=>{Prev(index)}} className='prev-btn'>{"<"}</PrevBtn> 
+                    <PrevBtn onClick={()=>{Prev(index)}} className='prev-btn'>
+                        <FaChevronLeft></FaChevronLeft>    
+                        
+                    </PrevBtn> 
 
-                    <NextBtn onClick={()=>{Next(index)}} className='next-btn'>{">"}</NextBtn>
+                    <PrevBtn onClick={()=>{Next(index)}} className='next-btn'>
+                        <FaChevronRight></FaChevronRight>  
+
+                    </PrevBtn>
 
                 </MainPicContainer>
 

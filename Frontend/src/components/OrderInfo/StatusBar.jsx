@@ -12,6 +12,25 @@ const StatusTitle= styled.div`
     margin-left: auto;
     padding:1rem;
 
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.35rem;
+        padding:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       font-size:0.5rem;
+       padding:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.6rem;
+        padding:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:0.7rem;
+        padding:0.9rem;
+
+    }
+    
+
 
 `
 const LineDivider = styled.div`
@@ -25,8 +44,20 @@ const StatusBarContainer = styled.div`
     padding:1rem;
     display:flex;
     flex-direction:column;
-    
     align-items:center;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        padding:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       padding:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.9rem;
+    }
 `
 const StatusBarSubcontainer = styled.div`
 
@@ -34,6 +65,19 @@ const StatusBarSubcontainer = styled.div`
     flex-direction:row;
     align-items:center;
     gap:200px;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+         gap:50px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:90px;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+         gap:100px;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:100px;
+    }
     
 
 `
@@ -43,6 +87,7 @@ const StatusContainer = styled.div`
     flex-direction:column;
     align-items:center;
     position:relative;
+    width:20%;
 `
 const Circle = styled.div`
     
@@ -55,11 +100,30 @@ const Circle = styled.div`
   justify-content: center;
   align-items: center;
   
-  font-size: 20px;
-    z-index:2;
-  .status-icon{
-    font-size:2rem;
-  }
+  font-size: 2rem;
+  z-index:2;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+        width: 30px;
+        height: 30px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       font-size: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.3rem;
+        width: 50px;
+        height: 50px;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.6rem;
+        width: 55px;
+        height: 55px;
+    }
 `;
 
 const Line = styled.div`
@@ -67,23 +131,65 @@ const Line = styled.div`
     top:25%;
     left:70%;
     z-index:0;
-
-
     width:280px;
-  height: 6px;
-  background-color: ${(props) => (props.active ? "#198754" : "#dee2e6")};
+    height: 6px;
+    background-color: ${(props) => (props.active ? "#198754" : "#dee2e6")};
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        width:90px;
+        height: 2px;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        width:130px;
+        height: 2px;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        width:170px;
+        height: 4px;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        width:200px;
+    }
   
 `;
 
 const Label = styled.div`
   font-weight: 600;
-  font-size: 13px;
-  margin-top: 8px;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+    text-align:center;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.35rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.45rem;
+    }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.5rem;
+    }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.7rem;
+    }
 `;
 
 const Time = styled.div`
-  font-size: 12px;
+  font-size: 0.8rem;
   color: #6c757d;
+  text-align:center;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.35rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.45rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.6rem;
+        
+    }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.7rem;
+    }
 `;
 
 

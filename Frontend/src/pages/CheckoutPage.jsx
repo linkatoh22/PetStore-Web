@@ -9,13 +9,49 @@ import { useEffect } from "react";
 const CheckoutPageContainer = styled.div`
   width: 80%;
   margin: auto;
-  padding-block:1.5rem;
+  padding-top:5.5rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        padding-top:5rem;
+        width:98%;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding-top:5.5rem;
+          width:90%;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding-top:5.5rem;
+        width:85%;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding-top:5.5rem;
+        width:80%;
+    }
 `;
 
 const CheckoutInfo = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 5rem;
+  gap: 1.5rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+  
+        gap:0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+       
+          gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+    
+        gap:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+  
+        gap:1.1rem;
+
+    }
+
+  
 `;
 
 

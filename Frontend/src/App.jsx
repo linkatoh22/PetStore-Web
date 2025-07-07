@@ -73,8 +73,8 @@ function App() {
                   <Route path="/dang-ky/otp/:id" element={<OtpVerificationPage></OtpVerificationPage>}></Route>
 
                   {/* DETAIL */}
-                  <Route path="/detail/thu-cung/:id" element={<ProductDetail type="Pet"/>}></Route>
-                  <Route path="/detail/phu-kien/:id" element={<ProductDetail type="Product"/>}></Route>
+                  <Route path="/detail/thu-cung/:id" element={<ProductDetail type="Pet"/>}> </Route>
+                  <Route path="/detail/phu-kien/:id" element={<ProductDetail type="Product"/>}> </Route>
                   
                   
                   <Route element={<PrivateRoute/>}>

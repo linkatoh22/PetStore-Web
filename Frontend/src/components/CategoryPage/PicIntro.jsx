@@ -13,7 +13,7 @@ const CategoryParagraphContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  top: 15%;
+  top: 20%;
   right: 2%;
   width: 38%;
 `;

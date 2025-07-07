@@ -1,26 +1,20 @@
 
-import Footer from "../components/Footer";
-import Logo from "../assets/logo.png";
+
+import Bgr from "../assets/background-0.jpg"
 import OtpVerificationForm from "../components/OtpVerificationPage/OtpVerification"
 import styled from "styled-components";
-import MainMenu from "../components/MainMenu";
+
 const OtpVerifyContainer = styled.div`
-    
-   
-    width:100%;
-`;
+    width: 100%;
+      height: 100vh;
+      background-image: url(${Bgr});
+      display: flex;
+      align-items: center;     
+      justify-content: center; 
+    `
 
 
-const BackgroundAccount = styled.div`
-  
-  width: 100%;
-  display: flex;
-  align-items: center;
-    justify-content: center;
-    padding-block: 5rem;
-  
-  
-`
+
 
 function OtpVerificationPage(){
 
@@ -32,14 +26,14 @@ function OtpVerificationPage(){
             <OtpVerifyContainer className="signup-container">
 
               
-                <BackgroundAccount className="background-account">
+                
 
                 
                         <OtpVerificationForm>
                             
                         </OtpVerificationForm>
                 
-                </BackgroundAccount>
+              
 
             </OtpVerifyContainer>
 

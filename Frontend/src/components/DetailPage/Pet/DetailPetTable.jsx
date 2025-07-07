@@ -9,14 +9,48 @@ const DetailPetContainer = styled.div`
     flex-direction:column;
     gap:1rem;
     width: 50%;
-    padding:1.5rem;
+    
+    @media (min-width: 0px) and (max-width: 598.99px) {
+       gap:0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:1rem;
+
+    }
+
 `
 
 const Table = styled.div`
   display: table;
   border-collapse: collapse;
   width: 100%;
-  max-width: 600px;
+  
+  font-size:1.1rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+    font-size:0.6rem;     
+  
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size:0.8rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+       
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+        
+
+    }
+  
 `;
 
 const Row = styled.div`
@@ -26,59 +60,107 @@ const Row = styled.div`
 const Cell = styled.div`
   display: table-cell;
   border: 1px dashed #aaa;
-  padding: 8px 12px;
+  padding: 0.5rem;
   vertical-align: top;
   width: 50%;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      padding: 0.2rem; 
+  
+  }
+
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    padding: 0.4rem;
+        
+  }
+
+  
+
+
 `;
 
 
 const DetailNameContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.2rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+       gap: 0.8rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+       gap: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap: 1.1rem;
+
+    }
+  
 `;
 
 const DetailNameId = styled.div`
-  font-size: 17px;
+  font-size: 1.2rem;
   color: gray;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+       font-size: 0.8rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.9rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size: 1rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.1rem;
+
+  }
 `;
 
 const DetailName = styled.div`
-  font-size: 28px;
+  font-size: 2rem;
   font-weight: bold;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+       font-size: 0.8rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size: 1.2rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.4rem;
+
+  }
 `;
 
 const DetailPrice = styled.div`
   color: #002a48;
-  font-size: 25px;
+  font-size: 1.6rem;
   font-weight: bold;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+       font-size: 0.8rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size: 1.1rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.3rem;
+
+  }
+
 `;
 
-const DetailBtnGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-`;
 
-const BuyBtn = styled.button`
-  background-color: #002a48;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 20px;
-`;
-
-const CartBtn = styled.button`
-  background-color: transparent;
-  color: #002a48;
-  font-size: 18px;
-  font-weight: bold;
-  border: solid 2px #002a48;
-  border-radius: 25px;
-  padding: 10px 20px;
-`;
 const QuantityContainer = styled.div`
 
     display:flex;
@@ -86,34 +168,163 @@ const QuantityContainer = styled.div`
     
     align-items:center;
     gap:1rem;
-    font-size:1.3rem
+    font-size:1.2rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+      gap:0.5rem; 
+      font-size: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          gap0.7rem;
+          font-size: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.9rem;
+          font-size: 1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+          gap:1rem;
+          font-size: 1.1rem;
+
+    }
     
 `
 
 const QuantityBtn = styled.button`
     
     padding:0.2rem;
-    font-size:1.4rem;
     padding-inline:0.6rem;
     background-color:white;
     &:focus{
         outline:none;
     }
-    border:1px solid var(--grey-600)
+   
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+        
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
+    }
+    
 
 `
 const QuantityInput = styled.input`
     width:25%;
     text-align:center;
-    padding:0.15rem;
-    font-size:1.4rem;
+    padding:0.2rem;
     border:1px solid var(--grey-600)
     &:focus{
         outline:none;
     }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+          
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
+    }
     
 `
 
+
+const DetailBtnGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 1.1rem;
+  gap: 0.5rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      font-size:0.6rem;     
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size:0.8rem;
+        
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+       
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+  }
+  
+`;
+
+const BuyBtn = styled.button`
+  background-color: #002a48;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  padding: 1rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      padding:0.4rem;     
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    padding:0.7rem;
+        
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.9rem;
+       
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:1rem;
+  }
+
+  
+`;
+
+const CartBtn = styled.button`
+  background-color: transparent;
+  color: #002a48;
+  font-weight: bold;
+  border: solid 1px #002a48;
+  border-radius: 15px;
+  padding: 1rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+      padding:0.4rem;     
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    padding:0.8rem;
+        
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.9rem;
+       
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:1rem;
+  }
+`;
 const PetLabel = [
     
     { "sku": "SKU"},

@@ -16,6 +16,20 @@ const CartTableContainer = styled.div`
   display:flex;
   flex-direction:column;
   gap:1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:0.9rem;
+    }
+  
   
  
 `;
@@ -24,6 +38,22 @@ const CartTitleContainer = styled.div`
     display:flex;
     justify-content:space-between;
     align-items:center;
+    font-size:2.2rem;
+    font-weight:bold;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.9rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:1.3rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:1.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1.8rem;
+    }
+
     
 `
 const LineDivider = styled.div`
@@ -33,7 +63,21 @@ const LineDivider = styled.div`
 const CartTable = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 1.2rem; 
+  border-spacing: 0 0.3rem; 
+     font-size:1.2rem;
+    
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.47rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:0.6rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.7rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:0.9rem;
+    }
 
   
   th {
@@ -55,11 +99,24 @@ const ProductDetailContainer = styled.div`
     display:flex;
     flex-direction:row;
     gap:1rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+       gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:0.9rem;
+    }
 `
 
 const ProductDetailImage = styled.img`
-    height:150px;
-    width:150px;
+    width:20%;
+    aspect-ratio: 1 / 1;
+    
     object-fit:cover;
     object-position:center;
 `
@@ -82,7 +139,7 @@ const ScrollTable = styled.div`
 const DeleteOption = styled.div`
     font-weight:bold;
     cursor:pointer;
-    padding:7px;
+    padding:0.3rem;
     disable:true;
     border-radius:20px;
     &:hover{
@@ -106,29 +163,66 @@ const QuantityContainer = styled.div`
 
 const QuantityBtn = styled.button`
     
-    padding:0.35rem;
-    font-size:1.2rem;
-    
+    padding:0.2rem;
+    padding-inline:0.6rem;
     background-color:white;
     &:focus{
         outline:none;
     }
-    border:1px solid var(--grey-300)
+   
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+        
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
+    }
+    
 
 `
 const QuantityInput = styled.input`
-
-    width:15%;
-    padding-inline:0.12rem;
-    padding-block:0.1rem;
+    width:25%;
     text-align:center;
-    font-size:1.4rem;
-    border:1px solid var(--grey-300)
+    padding:0.2rem;
+    border:1px solid var(--grey-600)
     &:focus{
         outline:none;
     }
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+          padding:0.1rem;
+          
+          padding-inline:0.1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+          padding:0.2rem;
+          
+          padding-inline:0.4rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding:0.2rem;
+        padding-inline:0.5rem;
+
+    }
     
 `
+
 const StatusDiv = styled.div`
     background-color:var(--grey-500);
     color:white;
@@ -143,6 +237,19 @@ const SpinnerContainer = styled.div`
     justify-content:center;
     height:200px;
     font-size:1.3rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size:0.8rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+       font-size:0.9rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1.1rem;
+    }
 
 `
 

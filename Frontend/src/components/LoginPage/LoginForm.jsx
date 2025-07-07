@@ -33,6 +33,11 @@ const LoginFormContainer = styled.div`
       padding-block: 3rem;
         width:60%;
     }
+
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        width:60%;
+        
+    }
     @media (min-width: 1312px) and (max-width: 1500.00px) {
         width:50%;
     }
@@ -69,10 +74,9 @@ const LoginGgBtn = styled.div`
         font-size: 0.8rem;
         font-size: 0.4rem;
         font-size: 0.8rem;
-
-        
+  
     }
-    @media (min-width: 599px) and (max-width: 799.99px) {
+  @media (min-width: 599px) and (max-width: 799.99px) {
         font-size: 1rem;
         padding: 0.6rem;
         font-size: 1rem;

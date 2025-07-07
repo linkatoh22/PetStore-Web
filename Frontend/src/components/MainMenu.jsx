@@ -2,7 +2,7 @@ import logo from '../assets/logo.png'
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { IoCartOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
-import { FaRegUser,FaCartPlus } from "react-icons/fa";
+import { FaShoppingCart,FaUserCircle } from "react-icons/fa";
 import styled from "styled-components";
 import { Dropdown } from './Dropdown';
 import { useContext, useEffect, useState } from 'react';
@@ -320,6 +320,9 @@ function MainMenu({isSidebar,setIsSidebar}) {
     const handleNavCart = ()=>{
             navigate("/cart")
     }
+    const handleNavInfo = ()=>{
+            navigate("/info")
+    }
     const handleNavItem = (type)=>{
         switch(type){
             case "Dog":
@@ -470,8 +473,14 @@ function MainMenu({isSidebar,setIsSidebar}) {
 
                 {accessToken?
                         <>
-                            <TitleBtnMenu onClick={()=>handleNavCart()}>Cart</TitleBtnMenu>
-                            <div>Info</div>
+                            <TitleBtnMenu onClick={()=>handleNavCart()}>
+                                <FaShoppingCart></FaShoppingCart>
+                            </TitleBtnMenu>
+                            <TitleBtnMenu onClick={()=>handleNavInfo()}>
+                                
+                                <FaUserCircle></FaUserCircle>
+                            </TitleBtnMenu>
+                                
                             
                             <TitleBtnMenu onClick={()=>HandleLogout()}>
                                 Đăng xuất

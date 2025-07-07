@@ -11,6 +11,24 @@ const DescriptionItem = styled.div`
     gap:1rem;
     font-size:1.1rem;
 
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.7rem;
+        gap:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+            font-size:0.8rem;
+          gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+        gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+        gap:0.9rem;
+
+    }
+
 `
 const StyledList = styled.ul`
     li{
@@ -38,14 +56,37 @@ const FeedbackItemContainer = styled.div`
 
 `
 const ImgDescription = styled.img`
-    width:600px;
-    height:600px;
+    width:100%;
+    aspect-ratio: 1 / 1;
 `
 const ContentContainer = styled.div`
     padding-left:1rem;
 
 ` 
+const HeaderTitle = styled.div`
+    font-size:2.5rem;
+    font-weight:bold;
 
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.9rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+            font-size:1rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:1.5rem;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:2rem;
+        
+
+    }
+
+
+`
 export function DescriptionProduct({product}){
     
     return(
@@ -55,7 +96,7 @@ export function DescriptionProduct({product}){
                         <Accordion.Header>Mô tả</Accordion.Header>
                         <Accordion.Body>
                             <DescriptionItem>
-                            <h1>{product?.name}</h1>
+                            <HeaderTitle>{product?.name}</HeaderTitle>
                             <div>{product?.description}</div>
                             <div style={{margin:"auto"}}>
                                 {
@@ -69,9 +110,9 @@ export function DescriptionProduct({product}){
                                
                                 {product?.features?.length>0?
                                         <>
-                                            <h3>
+                                            <HeaderTitle>
                                                 Công dụng và ưu điểm của sản phẩm:
-                                            </h3>
+                                            </HeaderTitle>
                                             <StyledList>
                                             {
                                                 product?.features?.map((item)=>
@@ -91,9 +132,9 @@ export function DescriptionProduct({product}){
 
                                 {product?.ingredients?.length>0?
                                         <>
-                                            <h3>
+                                            <HeaderTitle>
                                                 Công dụng và ưu điểm của sản phẩm:
-                                            </h3>
+                                            </HeaderTitle>
                                             <StyledList>
                                             {
                                                 product?.features?.map((item)=>
@@ -111,9 +152,9 @@ export function DescriptionProduct({product}){
                                 }
 
 
-                                <h3>
+                                <HeaderTitle>
                                     Quyền lợi khi mua hàng tại DCAT Store:
-                                </h3>
+                                </HeaderTitle>
                                 <StyledList>
                                     <li> Cam kết hàng chính hãng 100% </li>
                                     <li>Hoàn tiền và đổi trả sản phẩm nếu không đúng miêu tả. Nếu phát hiện ra hàng Fake hoàn tiền gấp đôi sản phẩm</li>
@@ -126,7 +167,7 @@ export function DescriptionProduct({product}){
                         </Accordion.Body>
                     </Accordion.Item>
 
-                    <Accordion.Item eventKey="1">
+                    {/* <Accordion.Item eventKey="1">
                         <Accordion.Header>Đánh giá</Accordion.Header>
                         <Accordion.Body>
                             <FeedbackContainer>
@@ -140,7 +181,7 @@ export function DescriptionProduct({product}){
                                 <FeedbackInput></FeedbackInput>
                             </FeedbackContainer>
                         </Accordion.Body>
-                    </Accordion.Item>
+                    </Accordion.Item> */}
 
                 </Accordion>
     )

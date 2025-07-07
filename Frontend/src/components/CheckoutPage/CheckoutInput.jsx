@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import Form from 'react-bootstrap/Form';
 import { useCheckOut, useGetPhuongXa, useGetQuanHuyen, useGetTinhThanh } from "../../services/hook/CheckoutHook";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CheckoutInputContainer = styled.div`
@@ -11,23 +11,60 @@ const CheckoutInputContainer = styled.div`
   flex-direction: column;
   width: 60%;
   gap:1.5rem;
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+        gap:0.7rem;
+        width: 40%;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        gap:0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        gap:1.1rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        gap:1.3rem;
+    }
 `;
 
-const CheckoutInputTitle = styled.h2`
+const CheckoutInputTitle = styled.div`
     font-weight:bold;
 `;
 
 
 
 const CheckoutBtn = styled.button`
+    border: none;
     width:100%;
-  cursor: pointer;
-  background-color: var(--clr-dark-blue);
-  color: white;
-  font-size: var(--fs-m);
-  border: none;
-  padding-block: 0.5rem;
-  padding-inline: 2rem;
+    cursor: pointer;
+    background-color: var(--clr-dark-blue);
+    color: white;
+
+    font-size: 1.2rem;
+    padding-block: 0.5rem;
+    padding-inline: 2rem;
+  
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+        padding-block: 0.1rem;
+        padding-inline: 0.7rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.6rem;
+        padding-block: 0.2rem;
+        padding-inline: 0.9rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.7rem;
+        padding-block: 0.3rem;
+        padding-inline: 1.2rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.9rem;
+        padding-block: 0.4rem;
+        padding-inline: 1.5rem;
+    }
+
   border-radius: 5px;
   font-weight:bold;
   &:active {
@@ -38,6 +75,66 @@ const LineDivider = styled.div`
     width:100%;
     border:1px solid var(--grey-200);
 `
+
+const FormContainter = styled.div`
+    font-size: 1.2rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+        
+    }
+
+
+`
+
+
+const StyledFormControl = styled(Form.Control)`
+  font-size: 1.2rem;
+
+  @media (max-width: 598.99px) {
+    font-size: 0.5rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size: 0.8rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+    font-size: 0.9rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    font-size: 1rem;
+  }
+`;
+
+
+const StyledFormSelect = styled(Form.Select)`
+  font-size: 1.2rem;
+
+  @media (max-width: 598.99px) {
+    font-size: 0.5rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size: 0.8rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+    font-size: 0.9rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    font-size: 1rem;
+  }
+`;
+
+
 function CheckoutInput({cartInfo}){
     const [TinhThanhChosen,SetTinhThanhChosen] =useState({});
     const [QuanHuyenChosen,SetQuanHuyenChosen] =useState({});
@@ -52,6 +149,8 @@ function CheckoutInput({cartInfo}){
     const {mutate:CreateOrder} = useCheckOut();
     const [QuanHuyenData,SetQuanHuyenData] = useState();
     const [PhuongXaData,SetPhuongXaData] = useState();
+
+    
     const handleCheckout =(e)=>{
          e.preventDefault();
          if( !TinhThanhChosen.value || !QuanHuyenChosen.value ||!PhuongXaChosen.value){
@@ -154,133 +253,137 @@ function CheckoutInput({cartInfo}){
                     Thanh toán đơn hàng
                 </CheckoutInputTitle>
                 <LineDivider></LineDivider>
+                    <FormContainter>
+                        <Form onSubmit={handleCheckout}>
 
-                <Form onSubmit={handleCheckout}>
+                            <Form.Group
+                                onChange={(e)=>SetFullName(e.target.value)}
+                                className="mb-3" 
+                                controlId="Checkout.Form"
+                                
+                            >
+                                <Form.Label>Họ và tên: </Form.Label>
 
-                    <Form.Group
-                        onChange={(e)=>SetFullName(e.target.value)}
-                        className="mb-3" 
-                        controlId="Checkout.Form"
-                        
-                    >
-                        <Form.Label>Họ và tên: </Form.Label>
-                        <Form.Control type="name" placeholder="Nhập họ tên" required/>
-                    </Form.Group>
-
-                    <Form.Group 
-                        className="mb-3" 
-                        controlId="Checkout.Form"
-                        onChange={(e)=>SetPhoneNumber(e.target.value)}
-                        
-                    >
-                        <Form.Label>Số điện thoại: </Form.Label>
-                        <Form.Control type="name" placeholder="Nhập họ tên" required/>
-                    </Form.Group>
-
-                    
-                    <Form.Group 
-                        className="mb-3" 
-                        controlId="Checkout.Form">
-                        <Form.Label>Tỉnh/Thành Phố:</Form.Label>
-                        <Form.Select 
-                        aria-label="Default select example" 
-                        onChange={(e)=>{
-                            const selectedIndex = e.target.selectedIndex;
-                            const selectedOption = e.target.options[selectedIndex];
-                            SetTinhThanhChosen({
-                                key: selectedOption.getAttribute('data-id'),
-                                value: e.target.value
-                            })
-
-                        }
+                                <StyledFormControl type="name" placeholder="Nhập họ tên" required/>
                             
-                        }
-                        required
-                        >
-                            <option>Tỉnh thành</option>
-                            {tinhThanhData?.data.map((item)=>{
-                                return <option 
+                            </Form.Group>
+
+                            <Form.Group 
+                                className="mb-3" 
+                                controlId="Checkout.Form"
+                                onChange={(e)=>SetPhoneNumber(e.target.value)}
+                                
+                            >
+                                <Form.Label>Số điện thoại: </Form.Label>
+                                
+                                <StyledFormControl type="name" placeholder="Nhập họ tên" required/>
+                            </Form.Group>
+
+                            
+                            <Form.Group 
+                                className="mb-3" 
+                                controlId="Checkout.Form">
+                                <Form.Label>Tỉnh/Thành Phố:</Form.Label>
+                                <StyledFormSelect
+                                aria-label="Default select example" 
+                                onChange={(e)=>{
+                                    const selectedIndex = e.target.selectedIndex;
+                                    const selectedOption = e.target.options[selectedIndex];
+                                    SetTinhThanhChosen({
+                                        key: selectedOption.getAttribute('data-id'),
+                                        value: e.target.value
+                                    })
+
+                                }
                                     
-                                    value = {item.name}
-                                    data-id={item.id}
-                                    >{item.name}</option>
-                            })}
-                            
-                        </Form.Select>
-                    </Form.Group>
-                   
-                       
-                    <Form.Group 
-                        className="mb-3" 
-                        controlId="Checkout.Form">
-                        <Form.Label>Quận/Huyện:</Form.Label>
-                        <Form.Select 
-                        aria-label="Default select example"
-                        onChange={(e)=>{
-                            const selectedIndex = e.target.selectedIndex;
-                            const selectedOption = e.target.options[selectedIndex];
-                            SetQuanHuyenChosen({
-                                key: selectedOption.getAttribute('data-id'),
-                                value: e.target.value
-                            })
+                                }
+                                required
+                                >
+                                    <option>Tỉnh thành</option>
+                                    {tinhThanhData?.data?.map((item)=>{
+                                        return <option 
+                                            
+                                            value = {item.name}
+                                            data-id={item.id}
+                                            >{item.name}</option>
+                                    })}
+                                    
+                                </StyledFormSelect>
+                            </Form.Group>
                         
-                        }}
-                        required
-                        >
-                            <option>Quận huyện</option>
-                            {
-
-                                QuanHuyenData?.map((item)=>{
-                                    return <option 
-                                    value={item.name}
-                                    data-id={item.id}
-                                    >{item.name}</option>
-                                })
-                            }
                             
-                        </Form.Select>
-                    </Form.Group>
-                    
-                        
-                    <Form.Group 
-                        className="mb-3" 
-                        controlId="Checkout.Form">
+                            <Form.Group 
+                                className="mb-3" 
+                                controlId="Checkout.Form">
+                                <Form.Label>Quận/Huyện:</Form.Label>
+                                <StyledFormSelect
+                                aria-label="Default select example"
+                                onChange={(e)=>{
+                                    const selectedIndex = e.target.selectedIndex;
+                                    const selectedOption = e.target.options[selectedIndex];
+                                    SetQuanHuyenChosen({
+                                        key: selectedOption.getAttribute('data-id'),
+                                        value: e.target.value
+                                    })
+                                
+                                }}
+                                required
+                                >
+                                    <option>Quận huyện</option>
+                                    {
 
-                        <Form.Label>Phường/Xã:</Form.Label>
-
-                        <Form.Select aria-label="Default select example" onChange={(e)=>{
-                            const selectedIndex = e.target.selectedIndex;
-                            const selectedOption = e.target.options[selectedIndex];
-                            SetPhuongXa({
-                                key: selectedOption.getAttribute('data-id'),
-                                value: e.target.value
-                            })
+                                        QuanHuyenData?.map((item)=>{
+                                            return <option 
+                                            value={item.name}
+                                            data-id={item.id}
+                                            >{item.name}</option>
+                                        })
+                                    }
+                                    
+                                </StyledFormSelect>
+                            </Form.Group>
                             
-                            }} required>
-                            <option>Phường xã</option>
-                            {
-                                PhuongXaData?.map((item)=>{
-                                    return <option 
-                                    value={item.name}
-                                    data-id={item.id}
-                                    >{item.name}</option>
-                                })
-                            }
-                            
-                        </Form.Select>
-                    </Form.Group>
+                                
+                            <Form.Group 
+                                className="mb-3" 
+                                controlId="Checkout.Form">
 
-                    <Form.Group 
-                        onChange={(e)=>SetAddress(e.target.value)}
-                        className="mb-3" 
-                        controlId="Checkout.Form">
-                        <Form.Label>Địa chỉ: </Form.Label>
-                        <Form.Control type="name" placeholder="Nhập địa chỉ (số nhà, tên đường)" required />
-                    </Form.Group>
-                    
-                    
-                    <CheckoutBtn type="submit">Thanh toán</CheckoutBtn>
-                </Form>
+                                <Form.Label>Phường/Xã:</Form.Label>
+
+                                <StyledFormSelect aria-label="Default select example" onChange={(e)=>{
+                                    const selectedIndex = e.target.selectedIndex;
+                                    const selectedOption = e.target.options[selectedIndex];
+                                    SetPhuongXa({
+                                        key: selectedOption.getAttribute('data-id'),
+                                        value: e.target.value
+                                    })
+                                    
+                                    }} required>
+                                    <option>Phường xã</option>
+                                    {
+                                        PhuongXaData?.map((item)=>{
+                                            return <option 
+                                            value={item.name}
+                                            data-id={item.id}
+                                            >{item.name}</option>
+                                        })
+                                    }
+                                    
+                                </StyledFormSelect>
+                            </Form.Group>
+
+                            <Form.Group 
+                                onChange={(e)=>SetAddress(e.target.value)}
+                                className="mb-3" 
+                                controlId="Checkout.Form">
+                                <Form.Label>Địa chỉ: </Form.Label>
+                                <StyledFormControl type="name" placeholder="Nhập địa chỉ (số nhà, tên đường)" required />
+                            </Form.Group>
+                            
+                            
+                            <CheckoutBtn type="submit">Thanh toán</CheckoutBtn>
+                        </Form>
+                    </FormContainter>
 
             </CheckoutInputContainer>
         </>

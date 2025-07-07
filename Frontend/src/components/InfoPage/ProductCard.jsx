@@ -3,10 +3,13 @@ import Detail1 from "../../assets/pic/detail-product/detail1.png"
 import { FormattedPrice } from "../../utils/FormatPrice"
 import { useEffect } from "react"
 const ProductImg = styled.img`
-    width:100px;
-    height:100px;
+    width: 10%;
     object-fit: cover;
     object-position: center;
+
+    aspect-ratio: 1 / 1;
+    
+    
 `
 
 
@@ -17,12 +20,47 @@ const OrderCardBody = styled.div`
     border-bottom:1px solid rgba(0, 0, 0, .09);;
     display:flex;
     flex-direction:row;
+    align-items:center;
     gap:1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        padding-block:0.5rem;
+        gap:0.5rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        padding-block:0.7rem;
+        gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        padding-block:0.8rem;
+        gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        padding-block:0.9rem;
+        gap:0.9rem;
+
+    }
 
 `
 
 const OrderCardName = styled.div`
     font-size:1.1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.7rem;
+
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.8rem;
+
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.9rem;
+
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1rem;
+    }
 
 `
 
@@ -30,10 +68,42 @@ const OrderCardVariant = styled.div`
     font-size:0.9rem;
     color:rgba(0, 0, 0, .54);
 
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
+
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.7rem;
+
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.8rem;
+
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.9rem;
+    }
+
 `
 
 const OrderCardQuantity= styled.div`
     font-size:0.8rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.5rem;
+
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 0.5rem;
+
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 0.6rem;
+
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 0.7rem;
+    }
 
 `
 

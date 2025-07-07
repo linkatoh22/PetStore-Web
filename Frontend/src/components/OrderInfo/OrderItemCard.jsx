@@ -11,16 +11,6 @@ const OrderCardContainer = styled.div`
 
 
 `
-const Header = styled.div`
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-
-`
-const Status = styled.div`
-    margin-left: auto;
-
-`
 
 export default function OrderItemCard({items}){
     return(

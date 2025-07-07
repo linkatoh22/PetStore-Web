@@ -4,10 +4,54 @@ import { FeedBackItem } from "../FeedbackItem";
 import { FeedbackInput } from "../FeedbackInput";
 const DescriptionItem = styled.div`
     width:100%;
-    padding:1.5rem;
+    align-items:center;
     display:flex;
     flex-direction:column;
     gap:1rem;
+    font-size:1.1rem;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.7rem;
+        gap:0.6rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+            font-size:0.8rem;
+          gap:0.7rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:0.9rem;
+        gap:0.8rem;
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:1rem;
+        gap:0.9rem;
+
+    }
+
+`
+
+const HeaderTitle = styled.div`
+    font-size:2.5rem;
+    font-weight:bold;
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size:0.9rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+            font-size:1rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size:1.5rem;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size:2rem;
+        
+
+    }
+
 
 `
 const StyledList = styled.ol`
@@ -46,7 +90,7 @@ export function DescriptionPet(){
                         <Accordion.Header>Mô tả</Accordion.Header>
                         <Accordion.Body>
                             <DescriptionItem>
-                            <h1>Quyền lợi có được khi mua Thú cưng tại DCAT Store:</h1>
+                            <HeaderTitle>Quyền lợi có được khi mua Thú cưng tại DCAT Store:</HeaderTitle>
 
                             <StyledList>
                                 <li>Bảo hành thuần chủng trọn đời.</li>
@@ -78,7 +122,7 @@ export function DescriptionPet(){
                         </Accordion.Body>
                     </Accordion.Item>
 
-                    <Accordion.Item eventKey="1">
+                    {/* <Accordion.Item eventKey="1">
                         <Accordion.Header>Đánh giá</Accordion.Header>
                         <Accordion.Body>
                             <FeedbackContainer>
@@ -92,7 +136,7 @@ export function DescriptionPet(){
                                 <FeedbackInput></FeedbackInput>
                             </FeedbackContainer>
                         </Accordion.Body>
-                    </Accordion.Item>
+                    </Accordion.Item> */}
 
                 </Accordion>
     )

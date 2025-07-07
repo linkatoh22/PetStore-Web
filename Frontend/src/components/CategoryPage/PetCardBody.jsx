@@ -94,7 +94,7 @@ const PcSort = styled.select`
     outline: none;
   }
   @media (min-width: 0px) and (max-width: 598.99px) {
-        font-size: 0.3rem;
+        font-size: 0.5rem;
         padding: 0.2rem 0.3rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
