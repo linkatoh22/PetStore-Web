@@ -33,7 +33,7 @@ app.use("/api/product",require("./routes/ProductRoutes"));
 app.use("/api/user",require("./routes/UserRoutes"))
 app.use("/api/cart",require("./routes/CartRoutes"))
 app.use("/api/order",require("./routes/OrderRoutes"))
-
+app.use("/api/reset-password",require("./routes/ResetPasswordRoutes"))
 // app.use("/api/order",require("./routes/OrderRoutes"))
 
 app.use(errorHandler);

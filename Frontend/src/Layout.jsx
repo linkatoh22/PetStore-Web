@@ -3,7 +3,7 @@ import MainMenu from "./components/MainMenu";
 import Sidebar from "./components/SideBar";
 import { Outlet } from 'react-router-dom';
 import { useState } from "react";
-
+import Footer from "./components/Footer";
 const ContentWrapper  = styled.div`
     display:flex;
 `
@@ -32,7 +32,7 @@ export default function RootLayout(){
                     <Outlet />
                 
             </ContentWrapper>
-            
+            <Footer></Footer>
         </>
     )
 }

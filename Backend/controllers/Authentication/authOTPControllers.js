@@ -17,7 +17,7 @@ const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
             from: process.env.USER,
             to:email,
             subject: "Verify your email",
-            html:`<p>Chào! Bạn vừa sử dụng email này để đăng ký website của chúng mình đây là mã OTP xác thực của bạn:</p>\
+            html:`<p>Chào! Bạn vừa sử dụng email này để đăng ký website DCAT Store của chúng mình đây là mã OTP xác thực của bạn:</p>\
             <h1>${otp}</h1>
             <p>OTP này sẽ hết hạn trong 5 phút</p>`
         }
@@ -33,7 +33,6 @@ const sendOTPVerificationEmail = async ({_id,email},res,next)=>{
         await newUserOTPVerification.save(); //save lai
         await transporter.sendMail(mailOptions); //gui mail
         return res.status(200).json({
-
             status:"Success",
             code:200,
             message:"Verification otp email sent",

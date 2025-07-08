@@ -21,6 +21,8 @@ import DetailOrderInfoPage from './pages/DetailOrderInfoPage.jsx'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import GoogleSuccess from './pages/GoogleSuccess.jsx'
+import ForgotPasswordPage from './pages/ForgotPassword.jsx'
+import ResetPasswordPage from './pages/ResetPassword.jsx'
 import RootLayout from './Layout.jsx'
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -58,6 +60,9 @@ function App() {
                   <Route path="/category/phu-kien/phu-kien-cua-meo" element={<CategoryProductPage type={"Mèo"} typePage={"Phụ kiện của pet"}/>}/>
 
 
+                  {/* FORGOT PASSWORD */}
+                  <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
+                  <Route path="/reset-password" element={<ResetPasswordPage/>}/>
 
                   {/* SEARCH */}
                   <Route path="/category/tim-kiem/all/:keyword" element={<CategorySearchPage type={"All"}/>}/>
