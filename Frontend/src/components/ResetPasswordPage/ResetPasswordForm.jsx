@@ -6,6 +6,10 @@ import styled from 'styled-components';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useResetPassword } from "../../services/hook/ResetPasswordHook";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
+import { useLogOut } from "../../services/hook/LogOutHook";
 const ResetPasswordContainer = styled.div`
   background-color: white;
   border-radius:10px;
@@ -180,11 +184,12 @@ const ResetPasswordButton = styled.button`
 
 
 
-function ResetPasswordForm()
+function ResetPasswordForm({id,setIsSuccessfully})
 {
-    
+    const {mutate: ResetPasswordHook,isLoading }=useResetPassword();
+    const {logout} =useContext(AuthContext)
     const navigate = useNavigate();
-    
+    const{mutate:LogoutHook} = useLogOut();
     const [password,setPassword]= useState("")
 
     const handleChange = (e)=>{
@@ -193,7 +198,48 @@ function ResetPasswordForm()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("password: ",password);
+        if(password.length<8){
+            toast.error("Mật khẩu phải trên 8 ký tự")
+            return;
+        }
+        if(!isLoading){
+                ResetPasswordHook(
+                    {
+                        token:id,
+                        password:password
+                    },
+                    {
+                        onSuccess: (data) => {
+                            if (data.status === "Success") {
+                                toast.success("Thay đổi mật khẩu thành công. Vui lòng đăng nhập lại");
+                                LogoutHook(
+                                        {},
+                                        {
+                                            onSuccess:(data)=>{
+                                                console.log("Đăng xuất thành công")
+                                                
+                                                logout();
+                                            },
+                                            onError:(error)=>{
+                                                console.error("Đăng xuất thất bại")
+                                            }
+                                        }
+                                    )
+                                setIsSuccessfully(true);
+                            }
+                        },
+                        onError: (error) => {
+                            
+                            const message = error.response?.data?.message || error.message;
+                            toast.error("Lỗi: " + message);
+                        }
+                    }
+                )
+        }
+        else{
+            toast.warning("Yêu cầu đang được xử lý...")
+
+        }
     }
 
     return(

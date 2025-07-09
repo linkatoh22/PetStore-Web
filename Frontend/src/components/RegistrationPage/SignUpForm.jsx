@@ -8,7 +8,6 @@
 
   import { useSignUp } from "../../services/hook/SignUpHook";
   import { useNavigate } from 'react-router-dom';
-import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
   const SignUpFormContainer = styled.div`
     
@@ -181,7 +180,7 @@ import { toast } from "react-toastify";
   }
   `;
 
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL_ORG;
   function SignUpForm()
   {
     const navigate = useNavigate()
@@ -206,17 +205,9 @@ import { toast } from "react-toastify";
         return /\S+@\S+\.\S+/.test(email);
       };
 
-      const signUpWithGoogle = useGoogleLogin({
-          onSuccess: (tokenResponse) => {
-            toast.success('Đăng ký thành công: ',tokenResponse);
-            localStorage.setItem("accessToken",tokenResponse.access_token)
-            navigate("/")
-          },
-
-          onError: () => {
-            toast.error('Login Failed');
-          },
-      })
+      const signUpWithGoogle = ()=>{
+        window.location.href = `${BASE_URL}/api/auth/google`;
+      }
 
       const handleSubmit = (e) => {
           e.preventDefault();

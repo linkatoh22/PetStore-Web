@@ -1,10 +1,12 @@
 // import '../../styles/components/SignUpForm.css'
 
 import { MdLockOutline } from "react-icons/md";
+
+import { GrMailOption } from "react-icons/gr";
 import { useNavigate,useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useVerifyOtp, useResendOtp} from "../../services/hook/OtpVerificationHook";
+import {useSendLinkToEmail } from "../../services/hook/ResetPasswordHook";
 import { toast } from "react-toastify";
 const ForgotPasswordContainer = styled.div`
   background-color: white;
@@ -16,7 +18,7 @@ const ForgotPasswordContainer = styled.div`
   padding-block: 5rem;
   padding-inline: 2rem;
   gap:2rem;
-
+  cursor: ${(props) => (props.isLoading ? 'wait' : 'auto')};
 
   @media (min-width: 0px) and (max-width: 598.99px) {
         width: 90%;
@@ -169,48 +171,54 @@ const ForgotPasswordButton = styled.button`
 
 
 
-function ForgotPasswordForm()
+function ForgotPasswordForm({setIsSuccessfully,setEmailChosen})
 {
-    
+    const {mutate: SendLink }=useSendLinkToEmail();
     const navigate = useNavigate();
-    
+    const [isLoading,setIsLoading] = useState(false);
     const [email,setEmail]= useState("")
 
     const handleChange = (e)=>{
       setEmail(e.target.value)
     }
-
+    
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("email: ",email);
-        // otpData(
-        //   {
-        //       userId: formData.userId,
-        //       otp: formData.otp
-        //   },
-        //   {
-        //     onSuccess: (data) => {
-        //       if (data.status === "Success") {
-        //         toast.success("Tạo tài khoản thành công. Vui lòng đăng nhập để vào tài khoản.");
-        //         navigate("/");
-        //       }
-        //     },
-        //     onError: (error) => {
-              
-        //       const message = error.response?.data?.message || error.message;
-        //       toast.error("Lỗi xác thực OTP: " + message);
-        //     }
-        //   }
+        if(!isLoading){
+            setIsLoading(true);
+            SendLink(
+              {
+                  email: email
+              },
+              {
+                onSuccess: (data) => {
+                  if (data.status === "Success") {
+                    toast.success("Đã gửi link thay đổi mật khẩu vào email.Vui lòng hãy check email");
+                    setIsSuccessfully(true);
+                    setEmailChosen(email);
+                    setIsLoading(false);
+                  }
+                },
+                onError: (error) => {
+                  
+                  const message = error.response?.data?.message || error.message;
+                  toast.error("Lỗi: " + message);
+                }
+              }
+            )
 
-
-          
-        // )
+        }
+        else{
+          toast.warning("Yêu cầu đang được xử lý...")
+        }
+        
     }
 
     return(
 
         <>
-            <ForgotPasswordContainer className="signup-form-container">
+            <ForgotPasswordContainer isLoading={isLoading}>
                 
                 <ForgotPasswordTitle className="signup-form-title">Đặt lại mật khẩu</ForgotPasswordTitle>
                   <div className="paragraph">Vui lòng nhập email của bạn để chúng tôi có thể gửi email set lại mật khẩu cho bạn.</div>
@@ -222,7 +230,7 @@ function ForgotPasswordForm()
 
                     
                     <InputWrapper className="input-wrapper"> 
-                        <MdLockOutline></MdLockOutline>
+                        <GrMailOption></GrMailOption>
                         <InputForm 
                         type="email"
                         name="email"

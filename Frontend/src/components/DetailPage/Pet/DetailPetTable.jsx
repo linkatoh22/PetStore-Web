@@ -395,7 +395,6 @@ export function DetailPetTable({pet}){
      }
 
      const HandleAddToCart = () => { 
-        console.log("Thêm vào giỏ hàng với số lượng: " + cartQuantity);
         if(accessToken){
            
             addToCart({
@@ -419,6 +418,29 @@ export function DetailPetTable({pet}){
         }
         
      }
+
+     const BuyNow =()=>{
+
+          var PetItem = {
+              item : pet?._id,
+              itemType : "Pet",
+              price : pet?.price,
+              productItem : pet,
+              quantity : cartQuantity,
+              status : pet?.status
+
+
+          };
+          var cartItems = [];
+          cartItems.push(PetItem)
+
+          
+          localStorage.setItem("cartItems", JSON.stringify(cartItems))
+          navigate("/checkout")
+          
+     }
+
+     
     return(
         <DetailPetContainer>  
 
@@ -477,7 +499,7 @@ export function DetailPetTable({pet}){
             <DetailBtnGroup>
                     
 
-                    <BuyBtn>Mua ngay</BuyBtn>
+                    <BuyBtn onClick={()=>BuyNow()}>Mua ngay</BuyBtn>
                     <CartBtn onClick={()=>HandleAddToCart()}>Bỏ vào giỏ hàng</CartBtn>
             </DetailBtnGroup>
 

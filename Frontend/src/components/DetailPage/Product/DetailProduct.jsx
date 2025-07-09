@@ -628,6 +628,29 @@ export function DetailProduct({product}){
         }
     }
 
+
+    const BuyNow = ()=>{
+        var ProductItem = {
+                itemType : "Product",
+                item : product?._id,
+                quantity : QuantitySelection,
+                variant:filteredVariants[0]._id,
+                
+                price : filteredVariants[0].price??product?.minPriceproduct?.minPrice,
+                productItem : product,
+                
+                
+
+
+          };
+          var cartItems = [];
+          cartItems.push(ProductItem)
+
+          
+          localStorage.setItem("cartItems", JSON.stringify(cartItems))
+          navigate("/checkout")
+
+    }
     return(
         <DetailPetContainer>  
 
@@ -681,7 +704,7 @@ export function DetailProduct({product}){
             <DetailBtnGroup>
                     
 
-                    <BuyBtn>Mua ngay</BuyBtn>
+                    <BuyBtn onClick={()=>BuyNow()}>Mua ngay</BuyBtn>
                     <CartBtn onClick={()=>HandleAddToCart()}>Bỏ vào giỏ hàng</CartBtn>
             </DetailBtnGroup>
 

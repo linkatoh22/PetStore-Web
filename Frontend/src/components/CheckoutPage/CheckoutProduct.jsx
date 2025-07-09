@@ -17,6 +17,7 @@ const CartTableContainer = styled.div`
   flex-direction:column;
   gap:1rem;
   font-size:1.1rem;
+  
   @media (min-width: 0px) and (max-width: 598.99px) {
         font-size:0.5rem;
         gap:0.2rem;
@@ -109,6 +110,10 @@ const ScrollTable = styled.div`
 
 function CheckoutProductTable({cartInfo}){
     const [shippingFee, setShippingFee] = useState(30000)
+
+    useEffect(()=>{
+        console.log("cartInfo: ",cartInfo)
+    },[cartInfo])
     const totalPriceValue  = useMemo(()=>{
         if(cartInfo?.length>0){
             var sum=0;

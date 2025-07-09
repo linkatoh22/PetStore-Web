@@ -244,7 +244,7 @@ function LoginForm(){
 
   const loginWithGoogle = ()=>{
     
-    window.location.href = `${BASE_URL}/api/auth/google`;
+      window.location.href = `${BASE_URL}/api/auth/google`;
   };
 
 
@@ -302,7 +302,7 @@ function LoginForm(){
                         
                     </InputWrapper>
 
-                      <a href="#" className="forgot-pass-link">Quên mật khẩu?</a>
+                      <a href="/forgot-password" className="forgot-pass-link">Quên mật khẩu?</a>
 
                     <LoginButton 
                       type="submit" 
