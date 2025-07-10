@@ -420,13 +420,15 @@ export function DetailPetTable({pet}){
      }
 
      const BuyNow =()=>{
-
-          var PetItem = {
+      if(accessToken){
+        if(cartQuantity>0){
+            var PetItem = {
               item : pet?._id,
               itemType : "Pet",
               price : pet?.price,
-              productItem : pet,
               quantity : cartQuantity,
+              productItem : pet,
+              
               status : pet?.status
 
 
@@ -437,6 +439,15 @@ export function DetailPetTable({pet}){
           
           localStorage.setItem("cartItems", JSON.stringify(cartItems))
           navigate("/checkout")
+
+        }
+        else toast.warning("Vui lòng chọn số lượng lớn hơn 0.")
+      }
+      else
+      {
+        navigate("/dang-nhap");
+      }
+          
           
      }
 

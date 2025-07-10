@@ -620,7 +620,7 @@ export function DetailProduct({product}){
                 
             }
             else{
-               toast.warning("Vui lòng chọn phân loại") 
+               toast.warning("Vui lòng chọn phân loại trước khi thêm vào giỏ hàng.") 
             }
         }
         else{
@@ -630,25 +630,43 @@ export function DetailProduct({product}){
 
 
     const BuyNow = ()=>{
-        var ProductItem = {
-                itemType : "Product",
-                item : product?._id,
-                quantity : QuantitySelection,
-                variant:filteredVariants[0]._id,
-                
-                price : filteredVariants[0].price??product?.minPriceproduct?.minPrice,
-                productItem : product,
-                
-                
+        if(accessToken)
+        {
+            if(PriceQuantity.price &&PriceQuantity.quantity&&filteredVariants.length===1 ){
+                var productVariants = product;
+
+                productVariants.variants = product.variants.filter((item)=>{
+                    return item._id === filteredVariants[0]._id
+                })
+                // console.log("productVariants: ",productVariants) 
+
+                var ProductItem = {
+                        itemType : "Product",
+                        item : product?._id,
+                        quantity : QuantitySelection,
+                        variant:filteredVariants[0]._id,
+                        
+                        price : filteredVariants[0].price??product?.minPriceproduct?.minPrice,
+                        productItem : productVariants,
+                        
+                        
 
 
-          };
-          var cartItems = [];
-          cartItems.push(ProductItem)
+                };
+                var cartItems = [];
+                cartItems.push(ProductItem)
 
-          
-          localStorage.setItem("cartItems", JSON.stringify(cartItems))
-          navigate("/checkout")
+                
+                localStorage.setItem("cartItems", JSON.stringify(cartItems))
+                navigate("/checkout")
+            }
+            else{
+               toast.warning("Vui lòng chọn phân loại trước khi mua hàng.") 
+            }
+        }
+        else{
+            navigate("/dang-nhap");
+        }
 
     }
     return(

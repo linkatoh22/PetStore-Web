@@ -92,8 +92,41 @@ const OrderContainer = styled.div`
     }
 
 `
+
+const OrderCardContainer = styled.div`
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:40vh;
+    background-color: #f5f5f5;
+    font-weight:500;
+    font-size:2rem;
+    
+
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1.1rem;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.3rem;
+       
+        
+    }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.6rem;
+      
+    }
+
+
+`
 const HeaderTitle = ["Tất cả","Chờ xác nhận","Xác nhận","Đang vận chuyển","Giao thất bại","Hoàn thành","Đã Hủy"]
-export default function OrderInfo({orders}){
+export default function OrderInfo({orders,refetchOrder}){
     const [HeaderChosen,SetHeaderChosen] = useState("Tất cả")
     
     const FilterOrders = useMemo(() => {
@@ -135,9 +168,20 @@ export default function OrderInfo({orders}){
             </HeaderContainer>
             
             <OrderContainer>
-                {FilterOrders?.map(item=>{
-                    return <OrderCard items={item.items} order={item}></OrderCard>
-                })}
+                {
+                    FilterOrders.length >0?
+                    <>
+                        {   FilterOrders?.map(item=>{
+                                return <OrderCard items={item.items} order={item} refetchOrder={refetchOrder}></OrderCard>
+                            })}
+                    </>
+                    :
+                    <OrderCardContainer>
+                        Không có đơn hàng hiển thị
+
+                    </OrderCardContainer>
+                }
+                
                 
 
             </OrderContainer>

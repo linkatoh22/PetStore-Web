@@ -187,7 +187,7 @@ const GetCartActive = async(req,res,next)=>{
         
             }
         ));
-       
+        infoCart.items = [...infoCart.items].reverse();
         return res.status(200).json({
             message:"Get Cart Successfully",
             status:"Success",

@@ -4,7 +4,7 @@ import { FaCheck,FaTruck } from "react-icons/fa";
 import { LuShare } from "react-icons/lu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useMemo } from "react";
-
+import { IoWarning } from "react-icons/io5";
 import formatDate from "../../utils/FormatDate";
 const StatusTitle= styled.div`
     font-weight:bold;
@@ -193,7 +193,35 @@ const Time = styled.div`
 `;
 
 
+const CancelOrder = styled.div`
+    display:flex;
+    align-items:center;
+    text-align:center;
+    gap:0.2rem;
+    font-weight:600;
+    font-size:2rem;
+    padding-block:3.5rem;
 
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 0.8rem;
+        padding-block:1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1.1rem;
+        padding-block:2rem;
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        font-size: 1.3rem;
+        padding-block:2.5rem;
+        
+    }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+        font-size: 1.6rem;
+        padding-block:3rem;
+    }
+
+`
 
 const Header = [
     {
@@ -256,8 +284,11 @@ export default function StatusBar({statusHistory,status}){
             <LineDivider></LineDivider>
 
         <StatusBarContainer>
-            <StatusBarSubcontainer>
 
+            {
+                status!="Đã hủy"? 
+                <StatusBarSubcontainer>
+            
                 {Header.map((item,index)=>{
                     return <StatusContainer>
 
@@ -278,6 +309,16 @@ export default function StatusBar({statusHistory,status}){
                 
 
             </StatusBarSubcontainer>
+            :
+            <CancelOrder>
+                <IoWarning style={{color:"var(--error-600)"}}/> 
+                <div>Đơn hàng đã hủy</div>
+                
+
+            </CancelOrder>
+        
+            }
+            
         </StatusBarContainer    >
 
         

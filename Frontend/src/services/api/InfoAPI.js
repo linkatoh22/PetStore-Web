@@ -37,3 +37,25 @@ export const getDetailOrderFetch = async(orderId)=>{
     }
 
 }
+
+export const CancelOrder = async({orderId})=>{
+    try{
+        var queryParams = {}
+        queryParams.orderId=orderId;
+        const response = await axiosClient.put(`/order/update-order-status/${orderId}`,
+            {
+                status:"Đã hủy",
+            },
+            {
+                useAuth:true
+            }
+        )
+
+        return response.data;
+    }
+    catch(error){
+         console.error("Lỗi khi fetch Data: ",error);
+        return [];
+    }
+
+}

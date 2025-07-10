@@ -5,25 +5,27 @@ import OrderInfo from "../components/InfoPage/OrderInfo"
 import { useGetOrder } from "../services/hook/InfoHook"
 import { useEffect } from "react"
 import Spinner from 'react-bootstrap/Spinner';
+import { useQueryClient } from "@tanstack/react-query"
+
 
 const InfoPageContainer = styled.div`
     width: 90%;
     margin:auto;
-    padding-top:5.5rem;
+    padding-block:5.5rem;
     @media (min-width: 0px) and (max-width: 598.99px) {
-        padding-top:4.5rem;
+        padding-block:4.5rem;
         width:95%;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding-top:4.3rem; 
+        padding-block:4.3rem; 
             width:95%;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
-        padding-top:4.6rem;
+        padding-block:4.6rem;
         width:95%;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
-        padding-top:5.3rem;
+        padding-block:5.3rem;
         width:90%;
     }
 
@@ -100,6 +102,10 @@ const SpinnerContainer = styled.div`
 
 export default function InfoPage(){
     const {data:orderInfo, isLoading: isLoadingOrder} = useGetOrder()
+    const queryClient = useQueryClient();
+    const refetchOrder = ()=>{
+        queryClient.invalidateQueries(['Cart/GetAllOrder']);
+    }
 
     
     return(
@@ -116,7 +122,7 @@ export default function InfoPage(){
                         </SpinnerContainer>
                     )
                     :
-                    <OrderInfo orders={orderInfo?.infoOrders}></OrderInfo>
+                    <OrderInfo orders={orderInfo?.infoOrders} refetchOrder={refetchOrder}></OrderInfo>
                 }
                 
 

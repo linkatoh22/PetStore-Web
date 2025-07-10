@@ -13,21 +13,21 @@ import Spinner from 'react-bootstrap/Spinner';
 const DetailOrderInfoPageContainer = styled.div`
     width: 80%;
     margin:auto;
-    padding-top:5.5rem;
+    padding-block:5.5rem;
     @media (min-width: 0px) and (max-width: 598.99px) {
-        padding-top:4.5rem;
+        padding-block:4.5rem;
         width:95%;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding-top:4.3rem; 
+        padding-block:4.3rem; 
             width:90%;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
-        padding-top:4.6rem;
+        padding-block:4.6rem;
         width:90%;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
-        padding-top:5.3rem;
+        padding-block:5.3rem;
         width:80%;
     }
 
@@ -206,6 +206,7 @@ const SpinnerContainer = styled.div`
 export default function DetailOrderInfoPage(){
     const {id} = useParams();
     const {data:orderInfo,isLoading:isLoadingOrder} = useGetDetailOrderFetch(id)
+
     const InfoOrder = useMemo(()=>{
         if(orderInfo?.infoOrders){
             return orderInfo.infoOrders
@@ -213,10 +214,7 @@ export default function DetailOrderInfoPage(){
         return []
     },[orderInfo])
 
-    useEffect(()=>{
-        console.log("InfoOrder: ",InfoOrder)
-    },[InfoOrder])
-
+    
     
     
     return(

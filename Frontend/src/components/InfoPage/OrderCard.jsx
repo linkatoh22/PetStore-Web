@@ -5,7 +5,9 @@ import ProductCard from "./ProductCard"
 import { FormattedPrice } from "../../utils/FormatPrice"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/AuthProvider"
-import { useAddToCart } from "../../services/hook/DetailHook"
+import { useCancelOrder } from "../../services/hook/InfoHook.js"
+import { toast } from "react-toastify"
+
 const OrderCardContainer = styled.div`
     width:100%;
    
@@ -49,7 +51,7 @@ const Header = styled.div`
 const Status = styled.div`
     margin-left: auto;
     font-size:1.2rem;
-
+    font-weight:bold;
     @media (min-width: 0px) and (max-width: 598.99px) {
        
         font-size:0.7rem;
@@ -78,51 +80,81 @@ const BtnGroup = styled.div`
 `
 
 const BuyButton = styled.button`
-    color:white;
-    background-color:var(--main-blue);
-    border: 1px solid #ddd;
+  color: white;
+  background-color: var(--clr-dark-blue);
+  border: 1px solid #ddd;
+  font-size: 1.2rem;
+  font-weight:bold;
+  border-radius: 4px;
+  padding: 0.4rem 3rem;
+  cursor: pointer;
 
-    font-size:1.1rem;
-    border-radius: 4px;
-    padding: 0.3rem 2rem;
-    cursor: pointer;
+  @media (min-width: 0px) and (max-width: 598.99px) {
+    font-size: 0.5rem;
+    padding: 0.2rem 0.5rem;
+  }
+  @media (min-width: 599px) and (max-width: 799.99px) {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.1rem;
+  }
+  @media (min-width: 800px) and (max-width: 1199.98px) {
+    font-size: 0.8rem;
+    padding: 0.3rem 1.5rem;
+  }
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    font-size: 1rem;
+    padding: 0.5rem 2rem;
+  }
 
-    @media (min-width: 0px) and (max-width: 598.99px) {
-        font-size:0.5rem;
-        padding: 0.2rem 0.4rem;
-    }
-    @media (min-width: 599px) and (max-width: 799.99px) {
-       font-size:0.7rem;
-       padding: 0.2rem 0.7rem;
-    }
-    @media (min-width: 800px) and (max-width: 1199.98px) {
-        font-size:0.8rem;
-        padding: 0.3rem 1rem;
-    }
-    @media (min-width: 1200px) and (max-width: 1500px) {
-        font-size:1rem;
-        padding: 0.3rem 1.5rem;
+  &:hover {
+    background-color: var(--main-blue);
+  }
 
-    }
+  &:active {
+    background-color: #076bb3;
+  }
 
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    color: #666;
+  }
 `;
 
 
-export default function OrderCard({items,order}){
+
+export default function OrderCard({items,order,refetchOrder}){
     const navigate = useNavigate();
+    const {mutate: CancelOrderHook} = useCancelOrder();
     const {accessToken} = useContext(AuthContext);
-    useEffect(()=>{
-        console.log(order?._id);
-    },[order])
     
     const handleNav = (id)=>{
         if(id){
             window.open(`/info/order/${id}`)
         }
     }
+    const handleCancelOrder = (orderId)=>{
+        
+
+        CancelOrderHook(
+            {
+                orderId:orderId
+            },
+            {
+                onSuccess:(data)=>{
+                    toast.success(`Đổi trạng thái thành công!`);
+                    refetchOrder();
+                },
+                onError:(error)=>{
+                    const message = error.response?.data?.message || error.message;
+                    toast.error("Lỗi: " + message);
+                }
+            }
+        )
+    }
     return(
-        <OrderCardContainer onClick={()=>handleNav(order?._id)}>
-            
+        <OrderCardContainer >
+            <div onClick={()=>handleNav(order?._id)}>
                 <Header >
                     <Status style={{color:"var(--main-blue)"}}>{order.status}</Status>
                 </Header>
@@ -136,11 +168,15 @@ export default function OrderCard({items,order}){
                     <Status>Thành tiền: {FormattedPrice(order.totalPrice)}</Status>
                 </Header>
                 
-
+            </div>
                 <Header>
                     <BtnGroup>
                         <BuyButton>Chi tiết </BuyButton>
-                        <BuyButton disabled= { order.status!=="Đang đợi xác nhận" }>Hủy Đơn </BuyButton>
+                        <BuyButton 
+                            disabled={order.status.trim() !== "Đang đợi xác nhận"}
+                            onClick={()=>handleCancelOrder(order?._id)}>
+                                Hủy Đơn 
+                        </BuyButton>
                     </BtnGroup>
                 </Header>
 

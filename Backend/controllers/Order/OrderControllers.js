@@ -285,4 +285,43 @@ const getDetailOrder = async(req,res,next)=>{
     }
 
 }
-module.exports = {createOrder,getAllOrderUser,getDetailOrder};
+
+const updateOrderStatus =async  (req,res,next)=>{
+    try{
+        const {orderId} = req.params;
+        const {status} = req.body;
+
+        if(!orderId || !status){
+            res.status(400)
+            throw Error("Vui lòng truyền đủ các trường để chỉnh sửa")
+        }
+        
+        
+        if(status === "Đang đợi xác nhận" || status=== "Xác nhận"|| status==="Đã hủy"|| status==="Đang vận chuyển"|| status==="Giao hàng thất bại"|| status==="Giao hàng thành công"){
+
+                const order  = await Order.findByIdAndUpdate(
+                    orderId,
+                    {status:status}
+                )
+
+                return res.status(200).json({
+                    message:"Updated Order Successfully",
+                    status:"Successfully",
+                    code:200,
+                    order
+                })
+
+        }
+        else{
+            res.status(404)
+             throw Error("Vui lòng chọn đúng dạng enum status")
+        }
+        
+
+
+    }
+    catch(error){
+        next(error)
+    }
+}
+module.exports = {createOrder,getAllOrderUser,getDetailOrder,updateOrderStatus};

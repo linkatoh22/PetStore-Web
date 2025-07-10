@@ -222,7 +222,7 @@ function LoginForm(){
         {
           onSuccess:(data)=>{
             if(data.status == "Success"){
-              console.log(data)
+              
               toast.success(`Đăng nhập thành công!`);
               
               if(data.token.accessToken){
