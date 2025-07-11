@@ -6,6 +6,8 @@ import { DescriptionProduct } from "./DescriptionProduct";
 import { useGetDetailProduct } from "../../../services/hook/DetailHook";
 import Recommmend from "../Recommend";
 import Spinner from 'react-bootstrap/Spinner';
+import { useEffect } from "react";
+import { useProductQueryFetchFilter } from "../../../services/hook/categoryProductHook";
 const SpinnerContainer = styled.div`
     display:flex;
     width:100%;
@@ -35,24 +37,24 @@ const DetailContainer = styled.div`
   flex-direction: column;
   
 
-    padding-top:5.5rem;
+    padding-block:5.5rem;
   @media (min-width: 0px) and (max-width: 598.99px) {
-        padding-top:4.5rem;
+        padding-block:4.5rem;
         width:100%;
         gap:0.5rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding-top:4.3rem; 
+        padding-block:4.3rem; 
           width:90%;
           gap:0.8rem;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
-        padding-top:4.6rem;
+        padding-block:4.6rem;
         width:85%;
         gap:1rem;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
-        padding-top:5.3rem;
+        padding-block:5.3rem;
         width:80%;
         gap:1rem;
 
@@ -91,6 +93,17 @@ const DetailItem = styled.div`
 
 export function ProductDetailContainter({id}){
     const {data:product,isLoading:isLoadingProduct} = useGetDetailProduct(id);
+
+    const {data:filterProductRecommend = [], isLoading:isLoadingProductRecommend} = useProductQueryFetchFilter({
+                      category: product?.ProductDetail?.category ,
+                      sort: 1,
+                      page:1,
+                      limit:12,
+        },
+    {
+        enabled: !!product?.ProductDetail?.category
+    })
+   
     return(
         <>
             <DetailContainer>
@@ -108,7 +121,7 @@ export function ProductDetailContainter({id}){
                 }           
 
                 <DescriptionProduct product={product?.ProductDetail}></DescriptionProduct>
-                {/* <Recommmend></Recommmend> */}
+                <Recommmend data={filterProductRecommend?.products} type={"Product"} isLoading={isLoadingProductRecommend}></Recommmend>
                 
 
 

@@ -180,4 +180,24 @@ const SearchPet = async (req,res,next) =>{
     }
 }
 
-module.exports = {fetchPetSoldDesc,PetQuery,SearchPet,getDetailPet}
+
+const RecommendPet = async (req,res,next)=>{
+    try{
+        const {species}  = req.query;
+
+        const RecommendPetData = await Pet.find({species:species}).sort({sold:-1}).limit(12);
+
+        return res.status(200).json(
+            {
+                status:"Success",
+                code:200,
+                message:"Successfully Get Recommend Pet",
+                pets: RecommendPetData
+            }
+        )
+    }
+    catch(error){
+        next(error)
+    }
+}
+module.exports = {fetchPetSoldDesc,PetQuery,SearchPet,getDetailPet,RecommendPet}

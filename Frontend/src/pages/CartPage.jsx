@@ -13,21 +13,21 @@ import { useQueryClient } from "@tanstack/react-query";
 const CartContainer = styled.div`
      width: 80%;
     margin:auto;
-    padding-top:5.5rem;
+    padding-block:5.5rem;
     @media (min-width: 0px) and (max-width: 598.99px) {
-        padding-top:5rem;
+        padding-block:5rem;
         width:100%;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding-top:5.5rem;
+        padding-block:5.5rem;
           width:90%;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
-        padding-top:5.5rem;
+        padding-block:5.5rem;
         width:85%;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
-        padding-top:5.5rem;
+        padding-block:5.5rem;
         width:80%;
     }
 `

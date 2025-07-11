@@ -367,4 +367,56 @@ const SearchAll = async (req,res,next) =>{
     }
 
 }
-module.exports = {ProductTopSold,ProductQuery,ProductSearch,SearchAll,getDetailProduct}
+
+const RecommendProduct = async (req,res,next)=>{
+    try{
+        const {category} = req.params;
+
+        const products = await Product.aggregate(
+            [
+                {
+                    $addFields:{
+                        totalSold:{
+                            $sum:"$variants.sold"
+                        },
+                        totalStock:{
+                            $sum:"$variants.stock"
+                        }
+                    }
+                },
+                {
+                    $match: {
+                        totalStock: { $gt: 0 },
+                        category:category
+                    }
+                },
+                {
+
+                    $sort:{
+                        totalSold:-1
+                    }
+                },
+                {
+                    $limit:12
+                }
+            ]
+        )
+
+        return res.status(200).json(
+            {
+                status:"Success",
+                code:200,
+                message:"Successfully Get Recommend Pet",
+                products
+            }
+        )
+
+        
+
+    }
+    catch(error){
+
+        next(error);
+    }
+}
+module.exports = {ProductTopSold,ProductQuery,ProductSearch,SearchAll,getDetailProduct,RecommendProduct}

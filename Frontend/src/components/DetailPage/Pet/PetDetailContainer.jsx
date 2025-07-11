@@ -3,9 +3,10 @@ import ImageSlider from "../ImageSlider";
 import { DetailPetTable } from "./DetailPetTable";
 import { useGetDetailPet } from "../../../services/hook/DetailHook";
 import { DescriptionPet } from "./DescriptionPet";
-
 import Recommmend from "../Recommend";
 import Spinner from 'react-bootstrap/Spinner';
+import { usePetQueryFetchFilter } from "../../../services/hook/categoryHook";
+import { useEffect } from "react";
 const SpinnerContainer = styled.div`
     display:flex;
     width:100%;
@@ -35,24 +36,24 @@ const DetailContainer = styled.div`
   flex-direction: column;
   
 
-    padding-top:5.5rem;
+    padding-block:5.5rem;
   @media (min-width: 0px) and (max-width: 598.99px) {
-        padding-top:4.5rem;
+        padding-block:4.5rem;
         width:98%;
         gap:0.5rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding-top:4.3rem; 
+        padding-block:4.3rem; 
           width:90%;
           gap:0.8rem;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
-        padding-top:4.6rem;
+        padding-block:4.6rem;
         width:85%;
         gap:1rem;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
-        padding-top:5.3rem;
+        padding-block:5.3rem;
         width:80%;
         gap:1rem;
 
@@ -128,6 +129,20 @@ const PetValue = [
 
 export function PetDetailContainter({id}){
     const {data:pet,isLoading: isLoadingPet} = useGetDetailPet(id);
+
+    const {data:petRecommend, isLoading:isLoadingRecommend} = usePetQueryFetchFilter({
+                  sort: 1,
+                  species:pet?.PetDetail?.species,
+                  page:1,
+                  limit:12
+    },
+    {
+        enabled: !!pet?.PetDetail?.species
+    })
+
+
+    
+
     return(
         <>
             <DetailContainer>
@@ -150,7 +165,7 @@ export function PetDetailContainter({id}){
                 
 
                 <DescriptionPet></DescriptionPet>
-                {/* <Recommmend></Recommmend> */}
+                <Recommmend data = {petRecommend?.pets} type="Pet" isLoading={isLoadingRecommend}></Recommmend>
                 
 
 

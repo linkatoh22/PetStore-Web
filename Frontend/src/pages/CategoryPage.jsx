@@ -18,21 +18,21 @@ const CategoryPageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-    padding-top:5.5rem;
+    padding-block:5.5rem;
     @media (min-width: 0px) and (max-width: 598.99px) {
-        padding-top:4.5rem;
+        padding-block:4.5rem;
         width:95%;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding-top:4.3rem; 
+        padding-block:4.3rem; 
             width:90%;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
-        padding-top:4.6rem;
+        padding-block:4.6rem;
         width:85%;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
-        padding-top:5.3rem;
+        padding-block:5.3rem;
         width:80%;
     }
 `;
