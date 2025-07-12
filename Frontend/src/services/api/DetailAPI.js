@@ -53,3 +53,25 @@ export const AddToCart = async({ itemType, item, variant, quantity }, accessToke
         throw error;
     }
 }
+
+export const RecommendPet = async ({species,id})=>{
+    try{
+        const response = await axios.get(`${BASE_URL}/pet/recommend-pet?species=${species}&id=${id}`)
+        return response.data;
+    }
+    catch(error){
+            console.error("Lỗi khi fetch data:",error);
+        throw error;
+    }
+}
+
+export const RecommendProduct = async ({category,id})=>{
+    try{
+        const response = await axios.get(`${BASE_URL}/product/recommend-product?category=${category}&id=${id}`)
+        return response.data;
+    }
+    catch(error){
+            console.error("Lỗi khi fetch data:",error);
+        throw error;
+    }
+}

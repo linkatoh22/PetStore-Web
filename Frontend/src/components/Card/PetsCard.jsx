@@ -143,7 +143,12 @@ function PetsCard({Item,type} ){
 
     return(
         <>
-            <CardContainer onClick={()=>handleNavItem(type,Item?._id)}>
+            <a href={type==="Pet"?`/detail/thu-cung/${Item?._id}`: `/detail/phu-kien/${Item?._id}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+            <CardContainer 
+                // onClick={()=>handleNavItem(type,Item?._id)}
+                >
             <PetImage src= {imageSrc}  ></PetImage>
                 {type=="Pet"?
                         <InfoContainer>
@@ -179,6 +184,7 @@ function PetsCard({Item,type} ){
                 </>}
 
             </CardContainer>
+            </a>
         </>
     )
 

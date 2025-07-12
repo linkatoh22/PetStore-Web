@@ -22,7 +22,9 @@ const fetchPetSoldDesc = async (req,res,next)=>{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("fetchPetSoldDesc: ", fullUrl);
 
-        const query = { quantity: {$gt:0}    };
+        const query = { quantity: {$gt:0},                 // còn hàng (> 0)
+        status: { $nin: ["Hết hàng", "Ngừng kinh doanh"] }  
+        }; //status != "Hết hàng" && status !="Ngừng kinh doanh"
 
         const pets = await Pet.find(query).sort({sold:-1}).limit(8);
         // console.log(pets);
@@ -51,6 +53,7 @@ const PetQuery = async (req,res,next) =>{
         var totalRecords= 0;
         
         filter.quantity = { $gt: 0 };
+        filter.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};
         if(species)
             filter.species = species;
         if(breed)
@@ -132,7 +135,7 @@ const SearchPet = async (req,res,next) =>{
         const skip = (page-1)*limit;
         
         query.quantity = { $gt: 0 };
-
+        query.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};
         if(keyword){
             query.$text = { $search: keyword };
         }
@@ -183,18 +186,32 @@ const SearchPet = async (req,res,next) =>{
 
 const RecommendPet = async (req,res,next)=>{
     try{
-        const {species}  = req.query;
+         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("PetRecommend: ", fullUrl);
 
-        const RecommendPetData = await Pet.find({species:species}).sort({sold:-1}).limit(12);
+        let filter = {};
+        var pets=[];
+        const {species,id} = req.query;
+        
+        filter.quantity = { $gt: 0 };
+        filter.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};
+        filter._id = {$nin:[id]}
 
-        return res.status(200).json(
-            {
-                status:"Success",
-                code:200,
-                message:"Successfully Get Recommend Pet",
-                pets: RecommendPetData
-            }
-        )
+
+        if(species)
+            filter.species = species;
+
+        totalRecords = await Pet.find(filter).countDocuments();
+        
+        pets = await Pet.find(filter).sort({sold:-1}).limit(12);
+        
+    
+
+        return res.status(200).json({
+            status:"Success",
+            code:200,
+            message:"Successfully query Pet",
+            pets})
     }
     catch(error){
         next(error)

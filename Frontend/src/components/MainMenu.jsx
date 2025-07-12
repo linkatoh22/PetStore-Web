@@ -56,8 +56,10 @@ const ButtonMenu = styled.div`
     }
 `
 
-
-const TitleBtnMenu = styled.div`
+const TitleBtnMenu = styled.a`
+    text-decoration: none;
+    color: inherit;
+    
     position: relative;
     padding-block:1.5rem;
     display: flex;
@@ -344,20 +346,28 @@ function MainMenu({isSidebar,setIsSidebar}) {
     }
     const handleKeyDown = (event) =>{
         if (event.key === 'Enter') {
-            switch(searchOption){
-                case "All":
-                    navigate(`/category/tim-kiem/all/${Keyword}`)
-                    break;
-                case "Chó":
-                    navigate(`/category/tim-kiem/cho-canh/${Keyword}`)
-                    break;
-                case "Mèo":
-                    navigate(`/category/tim-kiem/meo-canh/${Keyword}`)
-                    break;
-                case "Phụ kiện":
-                    navigate(`/category/tim-kiem/phu-kien/${Keyword}`)
-                    break;
+
+            if(Keyword!=""){
+                switch(searchOption){
+                    case "All":
+                        navigate(`/category/tim-kiem/all/${Keyword}`)
+                        break;
+                    case "Chó":
+                        navigate(`/category/tim-kiem/cho-canh/${Keyword}`)
+                        break;
+                    case "Mèo":
+                        navigate(`/category/tim-kiem/meo-canh/${Keyword}`)
+                        break;
+                    case "Phụ kiện":
+                        navigate(`/category/tim-kiem/phu-kien/${Keyword}`)
+                        break;
+                }
+
             }
+            else{
+                toast.error("Vui lòng nhập từ khóa để tìm kiếm!")
+            }
+            
             
         }
 
@@ -391,13 +401,17 @@ function MainMenu({isSidebar,setIsSidebar}) {
                 </div>
 
                 <ButtonMenu>
+
+
+
                     <TitleBtnMenu 
+                        href='/'
                         onClick={()=>handleNavHome()}
                     >
                         Trang chủ 
-                        
                     </TitleBtnMenu>
 
+                    
                     <TitleBtnMenu 
                         onMouseOver={()=>handleHoverIn("Dog")} 
                         onMouseOut={()=>handleHoverOut("Dog")}
@@ -405,7 +419,14 @@ function MainMenu({isSidebar,setIsSidebar}) {
                     >
 
 
-                        <div onClick={()=>handleNavItem("Dog")} >Chó cảnh</div>
+                        <a 
+                            href='/category/cho-canh'
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                            // onClick={()=>handleNavItem("Dog")}
+                        >
+                            Chó cảnh
+                        </a>
+
                         <RiArrowDropDownLine className="search-icon"  />
 
                         { isHoverDog? <Dropdown menuType={1} setHover={setIsHoverDog}
@@ -415,11 +436,17 @@ function MainMenu({isSidebar,setIsSidebar}) {
 
 
                     
-                    <TitleBtnMenu onMouseOver={()=>handleHoverIn("Cat")} 
+                    <TitleBtnMenu 
+                        onMouseOver={()=>handleHoverIn("Cat")} 
                         onMouseOut={()=>handleHoverOut("Cat")}
                         
                         >
-                        <div onClick={()=>handleNavItem("Cat")} >Mèo cảnh</div>
+                        <a 
+                            href='/category/meo-canh'
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                            // onClick={()=>handleNavItem("Cat")} 
+                        >
+                            Mèo cảnh</a>
 
                         <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
                         />
@@ -428,10 +455,17 @@ function MainMenu({isSidebar,setIsSidebar}) {
 
                     </TitleBtnMenu>
 
-                    <TitleBtnMenu onMouseOver={()=>handleHoverIn("Product")} 
+                    <TitleBtnMenu 
+                        onMouseOver={()=>handleHoverIn("Product")} 
                         onMouseOut={()=>handleHoverOut("Product")}
                         >
-                        <div onClick={()=>handleNavItem("Product")}>Phụ kiện</div>
+                        <a 
+                            href='/category/phu-kien'
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                            onClick={()=>handleNavItem("Product")}
+                        >
+                            Phụ kiện
+                        </a>
                         <RiArrowDropDownLine style={{width:"30px",height:"30px"}}
                         />
 
@@ -473,10 +507,18 @@ function MainMenu({isSidebar,setIsSidebar}) {
 
                 {accessToken?
                         <>
-                            <TitleBtnMenu onClick={()=>handleNavCart()}>
+                            <TitleBtnMenu 
+                                href={'/cart'}
+                                // onClick={()=>handleNavCart()}
+                            >
                                 <FaShoppingCart></FaShoppingCart>
                             </TitleBtnMenu>
-                            <TitleBtnMenu onClick={()=>handleNavInfo()}>
+
+                            <TitleBtnMenu 
+                                href={'/info'}
+                                // onClick={()=>handleNavInfo()}
+                                
+                            >
                                 
                                 <FaUserCircle></FaUserCircle>
                             </TitleBtnMenu>
@@ -488,11 +530,17 @@ function MainMenu({isSidebar,setIsSidebar}) {
                         </>
                     :
                     <>
-                        <TitleBtnMenu onClick={()=>handleNavItem("Sign Up")}>
+                        <TitleBtnMenu 
+                            href={"/dang-nhap"}
+                            // onClick={()=>handleNavItem("Sign Up")}
+                        >
                             Đăng ký
                         </TitleBtnMenu>
 
-                        <TitleBtnMenu  onClick={()=>handleNavItem("Log In")}>
+                        <TitleBtnMenu  
+                            href={"/dang-ky"}
+                            // onClick={()=>handleNavItem("Log In")}
+                        >
                             Đăng nhập
                         </TitleBtnMenu>
                     </>

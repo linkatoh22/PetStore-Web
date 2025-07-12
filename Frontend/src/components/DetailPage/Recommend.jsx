@@ -187,7 +187,7 @@ function Recommmend({data,type,isLoading}){
 
     const chunkedData = useMemo(()=>{
       return chunkArray(data || [], sizeItem);
-    },[sizeItem])
+    },[data,sizeItem])
     // const chunkedData = chunkArray(data || [], 4);
 
     return(

@@ -6,7 +6,8 @@ import { DescriptionPet } from "./DescriptionPet";
 import Recommmend from "../Recommend";
 import Spinner from 'react-bootstrap/Spinner';
 import { usePetQueryFetchFilter } from "../../../services/hook/categoryHook";
-import { useEffect } from "react";
+import { useRecommendPet } from "../../../services/hook/DetailHook";
+import { useEffect, useState } from "react";
 const SpinnerContainer = styled.div`
     display:flex;
     width:100%;
@@ -130,18 +131,16 @@ const PetValue = [
 export function PetDetailContainter({id}){
     const {data:pet,isLoading: isLoadingPet} = useGetDetailPet(id);
 
-    const {data:petRecommend, isLoading:isLoadingRecommend} = usePetQueryFetchFilter({
+    const {data:petRecommend, isLoading:isLoadingRecommend} = useRecommendPet({
                   sort: 1,
                   species:pet?.PetDetail?.species,
                   page:1,
-                  limit:12
+                  limit:12,
+                  id:id
     },
     {
         enabled: !!pet?.PetDetail?.species
     })
-
-
-    
 
     return(
         <>

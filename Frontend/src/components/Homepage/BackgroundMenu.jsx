@@ -241,11 +241,26 @@ function BackgroundMenu(){
                     
 
                     <BtnGroupMenu>
+                        <a href='/category/meo-canh'>
+                        <TransparentBlueButton 
+                        // onClick={()=>handleNavItem("Cat")}
+                        className="transparent-blue-button" 
+                        > Mèo cảnh</TransparentBlueButton>
+                        </a>
 
-                        <TransparentBlueButton className="transparent-blue-button" onClick={()=>handleNavItem("Cat")}> Mèo cảnh</TransparentBlueButton>
+                        <a href='/category/cho-canh'>
+                        <TransparentBlueButton 
+                        //  onClick={()=>handleNavItem("Dog")}
+                        className="transparent-blue-button"> Chó cảnh</TransparentBlueButton>
+                        </a>
 
-                        <TransparentBlueButton className="transparent-blue-button" onClick={()=>handleNavItem("Dog")}> Chó cảnh</TransparentBlueButton>
-                        <TransparentBlueButton className="transparent-blue-button" onClick={()=>handleNavItem("Product")}> Phụ kiện thú cưng</TransparentBlueButton>
+                        <a href='/category/phu-kien'>
+                        <TransparentBlueButton 
+                        // onClick={()=>handleNavItem("Product")}
+                        className="transparent-blue-button" 
+                        
+                        > Phụ kiện thú cưng</TransparentBlueButton>
+                        </a>
 
                     </BtnGroupMenu>
 

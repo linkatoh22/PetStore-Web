@@ -24,7 +24,10 @@ const DropdownContainer = styled.div`
     z-index:1000;
     
 `
-const DropdownBtn = styled.div`
+const DropdownBtn = styled.a`
+    text-decoration: none;
+    color: inherit;
+
     display:flex;
     justify-content:center;
     
@@ -68,8 +71,10 @@ export function Dropdown({menuType,setHover}){
                                 
                                 {
                                     Dog.map((item,index)=>{
-                                            return (<DropdownBtn 
-                                            onClick = {()=>handleNavigate("cho-canh",item)}
+                                            return (<DropdownBtn
+                                            href={`/category/cho-canh/${item}`}
+                                            // onClick = {()=>handleNavigate("cho-canh",item)}
+
                                             key={index}>
                                                     Chó {item}
                                                 </DropdownBtn>
@@ -83,7 +88,8 @@ export function Dropdown({menuType,setHover}){
                             {
                                 Cat.map((item,index)=>{
                                         return (<DropdownBtn 
-                                            onClick = {()=>handleNavigate("meo-canh",item)}
+                                            href={`/category/meo-canh/${item}`}
+                                            // onClick = {()=>handleNavigate("meo-canh",item)}
                                         key={index}>
                                                 Mèo {item}
                                             </DropdownBtn>

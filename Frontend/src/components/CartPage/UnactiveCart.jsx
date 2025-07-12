@@ -239,20 +239,52 @@ const SpinnerContainer = styled.div`
     font-size:1.3rem;
 
     @media (min-width: 0px) and (max-width: 598.99px) {
+        height:80px;
         font-size:0.7rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
+        height:100px;
         font-size:0.8rem;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:120px;
        font-size:0.9rem;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
+        height:150px;
         font-size:1.1rem;
     }
 
 `
 
+const NoItem = styled.div`
+    height:200px;
+    
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    
+    color: var(--grey-500);
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        height:80px;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        height:100px;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:120px;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        height:150px;
+        
+    }
+
+`
 function UnactiveCartProduct({cartInfo,updatedUnactiveCart,isLoading}){
     const [Selection,SetSelection] = useState([])
     const {accessToken}  = useContext(AuthContext)
@@ -343,6 +375,7 @@ function UnactiveCartProduct({cartInfo,updatedUnactiveCart,isLoading}){
                                     </td>
                                 </tr>
                             :
+                            cartInfo?.items?.length > 0 ? (
                             (cartInfo?.items?.map((item, index)=>{
                                 
                                 return (<tr key={index}>
@@ -406,6 +439,17 @@ function UnactiveCartProduct({cartInfo,updatedUnactiveCart,isLoading}){
                                 </tr>)
 
                                 }))
+                            )
+                            :
+                            <tr>
+                                <td colSpan={6}>
+                                <NoItem 
+                                    // style={{ textAlign: "center", padding: "2rem", color: "var(--grey-500)" }}
+                                >
+                                    Chưa có sản phẩm nào trong mục không hoạt động
+                                </NoItem>
+                                </td>
+                            </tr>
                         }
                            
 

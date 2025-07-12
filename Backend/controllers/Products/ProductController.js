@@ -61,7 +61,8 @@ const ProductTopSold = async (req,res,next) =>{
                 },
                 {
                     $match: {
-                        totalStock: { $gt: 0 }
+                        totalStock: { $gt: 0 },
+                        status:{$nin: ["Hết hàng", "Ngừng kinh doanh"]}
                     }
                 },
                 {
@@ -90,7 +91,7 @@ const ProductTopSold = async (req,res,next) =>{
 }
 const ProductQuery = async (req,res,next) =>{
     try{
-        console.log("HERE")
+        
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("ProductQuery: ", fullUrl);
 
@@ -109,6 +110,8 @@ const ProductQuery = async (req,res,next) =>{
         if(subcategory) filter.subcategory = subcategory;
         if(category) filter.category = category;
         if(species) filter.species = species;
+
+        filter.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};
 
         totalRecords = await Product.find(filter).countDocuments();
         
@@ -218,7 +221,8 @@ const ProductSearch = async (req, res, next) => {
         // Filter products with stock > 0
         pipeline.push({
             $match: {
-                totalStock: { $gt: 0 }
+                totalStock: { $gt: 0 },
+                status: { $nin: ["Hết hàng", "Ngừng kinh doanh"] }  
             }
         });
 
@@ -370,46 +374,44 @@ const SearchAll = async (req,res,next) =>{
 
 const RecommendProduct = async (req,res,next)=>{
     try{
-        const {category} = req.params;
+        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        console.log("ProductQuery: ", fullUrl);
 
-        const products = await Product.aggregate(
-            [
-                {
-                    $addFields:{
-                        totalSold:{
-                            $sum:"$variants.sold"
-                        },
-                        totalStock:{
-                            $sum:"$variants.stock"
-                        }
-                    }
-                },
-                {
-                    $match: {
-                        totalStock: { $gt: 0 },
-                        category:category
-                    }
-                },
-                {
+        let filter = {};
+        let products = [];
+        const {category,id} = req.query;
+        
+        if(category) filter.category = category;
 
-                    $sort:{
-                        totalSold:-1
-                    }
-                },
-                {
-                    $limit:12
-                }
-            ]
+        filter.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};
+        filter._id = {$nin:[id]}
+        
+        const pipeline = [{ $match: filter }]
+
+        pipeline.push({   
+            $addFields:
+            {    
+                minPrice:{  $min:"$variants.price"  },
+                totalSold:{ $sum:"$variants.sold"},
+                totalStock:{ $sum:"$variants.stock" }  
+            }   
+        })
+        pipeline.push(
+                {   $sort:{     totalSold:-1    }}
+                ,
+                { $match: { totalStock: { $gt: 0 } } }
         )
-
-        return res.status(200).json(
-            {
-                status:"Success",
-                code:200,
-                message:"Successfully Get Recommend Pet",
-                products
-            }
+        pipeline.push(  
+            {   $limit:12    }
         )
+            
+        products = await Product.aggregate(pipeline);
+        
+    return res.status(200).json({
+        status:"Success",
+        code:200,
+        message:"Successfully Recommend Product",
+        products});
 
         
 

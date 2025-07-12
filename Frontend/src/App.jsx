@@ -24,16 +24,18 @@ import GoogleSuccess from './pages/GoogleSuccess.jsx'
 import ForgotPasswordPage from './pages/ForgotPassword.jsx'
 import ResetPasswordPage from './pages/ResetPassword.jsx'
 import RootLayout from './Layout.jsx'
+import ScrollToTop from './utils/ScrollToTop.js'
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   return (
     <>
     
-    <GoogleOAuthProvider clientId={clientId}>
+    {/* <GoogleOAuthProvider clientId={clientId}> */}
         <CustomQueryClientProvider>
           <AuthProvider>
             
               <Router>
+                <ScrollToTop></ScrollToTop>
                 <Routes>
                   <Route element={<RootLayout/>}>
                     <Route path="/" element={<Homepage/>}/>
@@ -100,7 +102,7 @@ function App() {
             </AuthProvider>
           </CustomQueryClientProvider>
 
-    </GoogleOAuthProvider>
+    {/* </GoogleOAuthProvider> */}
     
     </>
   )

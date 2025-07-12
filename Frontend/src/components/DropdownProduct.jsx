@@ -57,7 +57,10 @@ const DropdownProductCategory = styled.div`
 
 `
 
-const DropdownProductCategoryBtn = styled.div`
+const DropdownProductCategoryBtn = styled.a`
+    text-decoration: none;
+    color: inherit;
+
     display:flex;
     flex-direction:row;
     align-items:center;
@@ -97,7 +100,12 @@ export function DropdownProduct(){
                                     { ProductFoodDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Thức ăn & Thực phẩm dinh dưỡng",item)}> 
+                                            <DropdownProductCategoryBtn
+                                             href={`/category/phu-kien/phu-kien-cua-cho/Thức ăn & Thực phẩm dinh dưỡng/${item}`}
+
+                                            //  onClick={()=>HandleNavDog("Thức ăn & Thực phẩm dinh dưỡng",item)}
+                                             
+                                             > 
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -111,7 +119,10 @@ export function DropdownProduct(){
                                     { ProductAccessoriesDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Đồ dùng & Đồ chơi & Phụ kiện",item)}> 
+                                            <DropdownProductCategoryBtn
+                                            href={`/category/phu-kien/phu-kien-cua-cho/Đồ dùng & Đồ chơi & Phụ kiện/${item}`}
+                                            // onClick={()=>HandleNavDog("Đồ dùng & Đồ chơi & Phụ kiện",item)}
+                                            > 
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -128,7 +139,13 @@ export function DropdownProduct(){
                                     { ProductHygineCareDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Vệ sinh & Chăm sóc",item)}>
+                                            <DropdownProductCategoryBtn
+                                            
+                                            href={`/category/phu-kien/phu-kien-cua-cho/Vệ sinh & Chăm sóc/${item}`}
+
+
+                                            // onClick={()=>HandleNavDog("Vệ sinh & Chăm sóc",item)}
+                                            >
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -146,7 +163,11 @@ export function DropdownProduct(){
                                     { ProductCageDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn onClick={()=>HandleNavDog("Chuồng & Nhà & Balo & Quây & Đệm",item)}>
+                                            <DropdownProductCategoryBtn
+                                            href={`/category/phu-kien/phu-kien-cua-cho/Chuồng & Nhà & Balo & Quây & Đệm/${item}`}
+                                            
+                                            // onClick={()=>HandleNavDog("Chuồng & Nhà & Balo & Quây & Đệm",item)}
+                                            >
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
                                         )
@@ -160,8 +181,10 @@ export function DropdownProduct(){
                                     { ProductMedicineDog.map((item)=>{
 
                                         return (
-                                            <DropdownProductCategoryBtn 
-                                            onClick={()=>HandleNavDog("Thuốc & Thực phẩm chức năng",item)}
+                                            <DropdownProductCategoryBtn
+                                            href={`/category/phu-kien/phu-kien-cua-cho/Thuốc & Thực phẩm chức năng/${item}`}
+
+                                            // onClick={()=>HandleNavDog("Thuốc & Thực phẩm chức năng",item)}
                                             >
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
@@ -192,8 +215,12 @@ export function DropdownProduct(){
                                     { ProductFoodCat.map((item)=>{
 
                                             return (
-                                                <DropdownProductCategoryBtn 
-                                                onClick={()=>HandleNavCat("Thức ăn & Thực phẩm dinh dưỡng",item)}
+                                                <DropdownProductCategoryBtn
+                                                
+                                                href={`/category/phu-kien/phu-kien-cua-meo/Thức ăn & Thực phẩm dinh dưỡng/${item}`}
+
+                                                // onClick={()=>HandleNavCat("Thức ăn & Thực phẩm dinh dưỡng",item)}
+
                                                 > 
                                                     <IoIosArrowForward /> {item}
                                                 </DropdownProductCategoryBtn>
@@ -210,7 +237,11 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn
-                                                onClick={()=>HandleNavCat("Đồ dùng & Đồ chơi & Phụ kiện",item)}
+
+                                                href={`/category/phu-kien/phu-kien-cua-meo/Đồ dùng & Đồ chơi & Phụ kiện/${item}`}
+
+
+                                                // onClick={()=>HandleNavCat("Đồ dùng & Đồ chơi & Phụ kiện",item)}
                                                 
                                                 > 
                                                     <IoIosArrowForward /> {item}
@@ -231,7 +262,12 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn
-                                                onClick={()=>HandleNavCat("Vệ sinh & Chăm sóc",item)}>
+
+                                                href={`/category/phu-kien/phu-kien-cua-meo/Vệ sinh & Chăm sóc/${item}`}
+
+
+                                                // onClick={()=>HandleNavCat("Vệ sinh & Chăm sóc",item)}
+                                                >
                                                     <IoIosArrowForward /> {item}
                                                 </DropdownProductCategoryBtn>
                                             )
@@ -248,7 +284,10 @@ export function DropdownProduct(){
 
                                         return (
                                             <DropdownProductCategoryBtn
-                                            onClick={()=>HandleNavCat("Chuồng & Nhà & Balo & Quây & Đệm",item)}
+                                            href={`/category/phu-kien/phu-kien-cua-meo/Chuồng & Nhà & Balo & Quây & Đệm/${item}`}
+
+                                            // onClick={()=>HandleNavCat("Chuồng & Nhà & Balo & Quây & Đệm",item)}
+                                            
                                             > 
                                                 <IoIosArrowForward /> {item}
                                             </DropdownProductCategoryBtn>
@@ -265,7 +304,11 @@ export function DropdownProduct(){
 
                                             return (
                                                 <DropdownProductCategoryBtn
-                                                onClick={()=>HandleNavCat("Thuốc & Thực phẩm chức năng",item)}
+                                                
+                                                href={`/category/phu-kien/phu-kien-cua-meo/Thuốc & Thực phẩm chức năng/${item}`}
+
+                                                // onClick={()=>HandleNavCat("Thuốc & Thực phẩm chức năng",item)}
+                                                
                                                 > 
                                                     <IoIosArrowForward /> {item}
                                                 </DropdownProductCategoryBtn>

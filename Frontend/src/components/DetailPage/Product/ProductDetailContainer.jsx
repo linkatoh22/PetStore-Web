@@ -8,6 +8,7 @@ import Recommmend from "../Recommend";
 import Spinner from 'react-bootstrap/Spinner';
 import { useEffect } from "react";
 import { useProductQueryFetchFilter } from "../../../services/hook/categoryProductHook";
+import { useRecommendProduct } from "../../../services/hook/DetailHook";
 const SpinnerContainer = styled.div`
     display:flex;
     width:100%;
@@ -95,7 +96,8 @@ export function ProductDetailContainter({id}){
     const {data:product,isLoading:isLoadingProduct} = useGetDetailProduct(id);
 
     const {data:filterProductRecommend = [], isLoading:isLoadingProductRecommend} = useProductQueryFetchFilter({
-                      category: product?.ProductDetail?.category ,
+                      category: product?.ProductDetail?.category,
+                      id:id,
                       sort: 1,
                       page:1,
                       limit:12,

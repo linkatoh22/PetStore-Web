@@ -11,7 +11,7 @@ import { useDeleteCartItem,useEditCartItem } from '../../services/hook/CartHook'
 import { AuthContext } from '../../context/AuthProvider';
 import { useMemo } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-
+import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 const CartTableContainer = styled.div`
   width: 100%;
@@ -117,7 +117,7 @@ const ProductDetailContainer = styled.div`
     display:flex;
     flex-direction:row;
     gap:1rem;
-
+    cursor:pointer;
      @media (min-width: 0px) and (max-width: 598.99px) {
         gap:0.6rem;
     }
@@ -239,16 +239,51 @@ const SpinnerContainer = styled.div`
     font-size:1.3rem;
 
     @media (min-width: 0px) and (max-width: 598.99px) {
+        height:80px;
         font-size:0.7rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
+        height:100px;
         font-size:0.8rem;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:120px;
        font-size:0.9rem;
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
+        height:150px;
         font-size:1.1rem;
+    }
+
+`
+
+
+
+const NoItem = styled.div`
+    height:200px;
+    
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    
+    color: var(--grey-500);
+
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        height:80px;
+        
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        height:100px;
+        
+    }
+    @media (min-width: 800px) and (max-width: 1199.98px) {
+        height:120px;
+        
+    }
+    @media (min-width: 1200px) and (max-width: 1500px) {
+        height:150px;
+        
     }
 
 `
@@ -264,7 +299,11 @@ function CartProduct({
     const {mutate: deleteItem}  = useDeleteCartItem(accessToken);
     const {mutate:updateItem} = useEditCartItem(accessToken)
     const [tempQuantities, setTempQuantities] = useState({});
+    const navigate = useNavigate();
 
+    useEffect(()=>{
+        console.log("cartInfo: ",cartInfo)
+    },[cartInfo])
     useEffect(()=>{
         if(cartInfo?.items){
             const QuantityIn ={};
@@ -333,7 +372,7 @@ function CartProduct({
 
     }
     const HandleQuantityCalc = (amount,ItemId,product)=>{
-        
+       
         if(amount > product.variants[0].stock){
             amount = product.stock
         }
@@ -449,10 +488,15 @@ function CartProduct({
                                     </td>
                                 </tr>
                             :
+                            cartInfo?.items?.length > 0 ? (
                             (
                                 cartInfo?.items?.map((item, index)=>{
                                     
-                                    return (<tr key={index}>
+                                    return (<tr 
+                                            key={index} 
+                                            
+                                    
+                                    >
                                         
                                         <td >
                                             <input 
@@ -467,7 +511,15 @@ function CartProduct({
                                         </td>
 
                                         <td>
-                                            <ProductDetailContainer>
+                                            <ProductDetailContainer
+                                                
+                                                onClick={()=>{
+                                                    item.itemType === "Pet" ?
+                                                    navigate(`/detail/thu-cung/${item.item}`)
+                                                    :
+                                                    navigate(`/detail/phu-kien/${item.item}`)
+                                                }}
+                                            >
                                                 <ProductDetailImage src={item?.productItem?.image[0]??detail4} ></ProductDetailImage>
 
                                                 <ProductDetailParagraph>
@@ -531,14 +583,25 @@ function CartProduct({
                                         </td>
                                     
                                     </tr>
-                            )
+                                    )
 
                                 })
-                            ) 
+                            ) ):
+                            <tr>
+                                <td colSpan={6}>
+                                <NoItem>
+                                    Chưa thêm vào giỏ hàng sản phẩm nào
+                                </NoItem>
+                                </td>
+                            </tr>
+                        
                         }
+
                             
 
                     </tbody>
+
+                    
                     
                 </CartTable>
                 </ScrollTable>

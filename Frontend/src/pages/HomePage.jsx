@@ -10,7 +10,7 @@ import BackgroundMenu from "../components/Homepage/BackgroundMenu.jsx";
 import {useState,useEffect} from 'react';
 
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MainMenu from "../components/MainMenu.jsx";
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -119,10 +119,6 @@ const HomepageTitleBtn = styled.button`
         padding: 0.6rem 0.9rem;
     }
 `
-
-
-
-
 const CardContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(4,1fr);
@@ -153,10 +149,6 @@ const CardContainer = styled.div`
     
 
 `
-
-
-
-
 const BgrImg = styled.div`
     width:100%;
     background-image:url(${Bgr});
@@ -304,12 +296,16 @@ const BackgroundMenuWrapper = styled.div`
 
 
 function Homepage(){
+    const {pathname} = useLocation();
     const navigate = useNavigate()
     const { data: pet, isLoading: loadingUser } = PetFetchHook()
     const { data: product, isLoading: loadingProduct } = ProductFetchHook()
 
     const [PetData,setPetData] = useState([])
     const [ProductData,setProductData] = useState([])
+
+
+
 
     useEffect(()=>{
         // console.log('pet',pet)
@@ -365,8 +361,10 @@ function Homepage(){
                         <div className="homepage-title-1-pets">
                             Best-seller của store tụi mình  
                         </div>
-                        <HomepageTitleBtn>Xem thêm</HomepageTitleBtn>
 
+                        {/* <a>
+                        <HomepageTitleBtn>Xem thêm</HomepageTitleBtn>
+                        </a> */}
                     </HomepageTitleContainer>
 
                     
@@ -435,7 +433,11 @@ function Homepage(){
                         
                         </div>
 
-                        <HomepageTitleBtn onClick={()=>handleNavMenuItem("Product")}> Xem thêm</HomepageTitleBtn>
+                        <a href="/category/phu-kien">
+                        <HomepageTitleBtn 
+                            // onClick={()=>handleNavMenuItem("Product")}
+                        > Xem thêm</HomepageTitleBtn>
+                        </a>
                     </HomepageTitleContainer>
 
 

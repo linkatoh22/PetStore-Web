@@ -1,5 +1,5 @@
 import { useQuery,useMutation } from "@tanstack/react-query";
-import { GetDetailPet,AddToCart,GetDetailProduct } from "../api/DetailAPI";
+import { GetDetailPet,AddToCart,GetDetailProduct,RecommendPet,RecommendProduct } from "../api/DetailAPI";
 
 export const useGetDetailPet = (id)=>useQuery({
     queryKey:['Detail/Pet',id],
@@ -16,3 +16,15 @@ export const useAddToCart = (accessToken)=>{
         mutationFn:({ itemType, item, variant, quantity })=>AddToCart({ itemType, item, variant, quantity }, accessToken)
     }
 )}
+
+export const useRecommendPet = ({species,id})=>useQuery({
+    queryKey:['Recommend/Pet',species,id],
+    queryFn:()=>RecommendPet({species,id}),
+    keepPreviousData: true,
+})
+
+export const useRecommendProduct = ({category,id})=>useQuery({
+    queryKey:['Recommend/Product',category,id],
+    queryFn:()=>RecommendProduct({category,id}),
+    keepPreviousData: true,
+})
