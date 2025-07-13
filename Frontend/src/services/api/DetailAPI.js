@@ -56,7 +56,11 @@ export const AddToCart = async({ itemType, item, variant, quantity }, accessToke
 
 export const RecommendPet = async ({species,id})=>{
     try{
-        const response = await axios.get(`${BASE_URL}/pet/recommend-pet?species=${species}&id=${id}`)
+
+        var queryParams = {}
+        queryParams.id=id;
+        queryParams.species=species;
+        const response = await axios.get(`${BASE_URL}/pet/recommend-pet`,{params:queryParams})
         return response.data;
     }
     catch(error){
@@ -67,7 +71,10 @@ export const RecommendPet = async ({species,id})=>{
 
 export const RecommendProduct = async ({category,id})=>{
     try{
-        const response = await axios.get(`${BASE_URL}/product/recommend-product?category=${category}&id=${id}`)
+        var queryParams = {}
+        queryParams.id=id;
+        queryParams.category=category;
+        const response = await axios.get(`${BASE_URL}/product/recommend-product`,{params:queryParams})
         return response.data;
     }
     catch(error){

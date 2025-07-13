@@ -95,12 +95,12 @@ const DetailItem = styled.div`
 export function ProductDetailContainter({id}){
     const {data:product,isLoading:isLoadingProduct} = useGetDetailProduct(id);
 
-    const {data:filterProductRecommend = [], isLoading:isLoadingProductRecommend} = useProductQueryFetchFilter({
+    const {data:filterProductRecommend = [], isLoading:isLoadingProductRecommend} = useRecommendProduct({
                       category: product?.ProductDetail?.category,
                       id:id,
-                      sort: 1,
-                      page:1,
-                      limit:12,
+                    //   sort: 1,
+                    //   page:1,
+                    //   limit:12,
         },
     {
         enabled: !!product?.ProductDetail?.category
