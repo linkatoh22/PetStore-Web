@@ -79,6 +79,7 @@ function CategoryPage({type,typePage}){
     const [header,setHeader] = useState("Sản Phẩm")
     const { breed } = useParams();
 
+    
 
     const [Price,SetPrice] =useState([])
     const [Gender,SetGender] = useState()
@@ -118,6 +119,10 @@ function CategoryPage({type,typePage}){
       }
       ,[typePage,type]);
 
+    
+    useEffect(() => {
+            document.title = "Thú cưng | DCAT Store";
+            }, []);
 
     return (
 

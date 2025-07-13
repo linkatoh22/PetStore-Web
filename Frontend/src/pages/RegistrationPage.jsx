@@ -5,6 +5,7 @@ import SignUpForm from "../components/RegistrationPage/SignUpForm";
 import styled from "styled-components";
 import Bgr from "../assets/background-0.jpg"
 import MainMenu from "../components/MainMenu";
+import { useEffect } from "react";
 const SignupContainer = styled.div`
     width: 100%;
       height: 100vh;
@@ -16,6 +17,11 @@ const SignupContainer = styled.div`
 
 
 function RegistrationPage(){
+
+    useEffect(() => {
+                    document.title = "Đăng ký | DCAT Store";
+                    }, []);
+
 
     return(
         <>

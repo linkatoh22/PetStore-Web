@@ -13,7 +13,9 @@ import { useEffect } from 'react';
 
 function ProductDetail({type}){
     const {id} = useParams();
-    
+    useEffect(() => {
+                    document.title = "Chi tiết sản phẩm | DCAT Store";
+                    }, []);
     return(
         <>
            

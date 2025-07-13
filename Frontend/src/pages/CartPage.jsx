@@ -58,6 +58,11 @@ function CartPage(){
     const [selectItem, SetSelectItem] = useState([]);
     const queryClient = useQueryClient();
 
+    useEffect(() => {
+            document.title = "Giỏ hàng | DCAT Store";
+            }, []);
+
+
     const refetchCart = ()=>{
         queryClient.invalidateQueries(['Cart/GetCart']);
     }

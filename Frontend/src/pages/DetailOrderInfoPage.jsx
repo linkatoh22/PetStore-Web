@@ -214,7 +214,9 @@ export default function DetailOrderInfoPage(){
         return []
     },[orderInfo])
 
-    
+    useEffect(() => {
+            document.title = "Đơn hàng | DCAT Store";
+            }, []);
     
     
     return(

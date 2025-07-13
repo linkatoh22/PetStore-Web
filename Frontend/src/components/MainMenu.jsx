@@ -531,14 +531,14 @@ function MainMenu({isSidebar,setIsSidebar}) {
                     :
                     <>
                         <TitleBtnMenu 
-                            href={"/dang-nhap"}
+                            href={"/dang-ky"}
                             // onClick={()=>handleNavItem("Sign Up")}
                         >
                             Đăng ký
                         </TitleBtnMenu>
 
                         <TitleBtnMenu  
-                            href={"/dang-ky"}
+                            href={"/dang-nhap"}
                             // onClick={()=>handleNavItem("Log In")}
                         >
                             Đăng nhập

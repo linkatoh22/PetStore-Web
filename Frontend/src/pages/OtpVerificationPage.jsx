@@ -1,5 +1,6 @@
 
 
+import { useEffect } from "react";
 import Bgr from "../assets/background-0.jpg"
 import OtpVerificationForm from "../components/OtpVerificationPage/OtpVerification"
 import styled from "styled-components";
@@ -17,6 +18,12 @@ const OtpVerifyContainer = styled.div`
 
 
 function OtpVerificationPage(){
+
+
+    useEffect(() => {
+                    document.title = "Xác thực tài khoản | DCAT Store";
+                    }, []);
+
 
     return(
         <>

@@ -107,6 +107,9 @@ export default function InfoPage(){
         queryClient.invalidateQueries(['Cart/GetAllOrder']);
     }
 
+    useEffect(() => {
+                document.title = "Đơn hàng | DCAT Store";
+                }, []);
     
     return(
         <>

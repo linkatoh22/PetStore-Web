@@ -59,9 +59,9 @@ const CheckoutInfo = styled.div`
 
 function CheckoutPage(){
     const CheckoutProduct =JSON.parse(localStorage.getItem("cartItems")) 
-    useEffect(()=>{
-        console.log("CheckoutProduct: ",CheckoutProduct)
-    },[CheckoutProduct])
+    useEffect(() => {
+            document.title = "Thanh toán | DCAT Store";
+            }, []);
     return(
         <>
             

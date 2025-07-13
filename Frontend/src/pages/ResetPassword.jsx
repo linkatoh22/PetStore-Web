@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Bgr from "../assets/background-0.jpg"
 import ResetPasswordForm from "../components/ResetPasswordPage/ResetPasswordForm"
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SuccessfullySent from "../components/ForgotPasswordPage/SuccessfullySent";
 const ResetPasswordContainer = styled.div`
     width: 100%;
@@ -14,7 +14,11 @@ const ResetPasswordContainer = styled.div`
     `
 export default function ResetPasswordPage(){
     const [isSuccessfully,setIsSuccessfully] = useState(false);
-    
+    useEffect(() => {
+                    document.title = "Đổi mật khẩu | DCAT Store";
+                    }, []);
+
+
     const { id } = useParams();
     return(
 

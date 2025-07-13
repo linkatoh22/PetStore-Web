@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Bgr from "../assets/background-0.jpg"
 import ForgotPasswordForm from "../components/ForgotPasswordPage/ForgotPasswordForm"
 import SuccessfullySent from "../components/ForgotPasswordPage/SuccessfullySent"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 const OtpVerifyContainer = styled.div`
     width: 100%;
       height: 100vh;
@@ -16,6 +16,13 @@ const OtpVerifyContainer = styled.div`
 export default function ForgotPasswordPage(){
     const [isSuccessfully,setIsSuccessfully] = useState(false);
     const [emailChosen, setEmailChosen] = useState();
+
+    useEffect(() => {
+                document.title = "Quên mật khẩu | DCAT Store";
+                }, []);
+
+
+
     return(
 
         <OtpVerifyContainer>

@@ -164,7 +164,9 @@ function CategorySearchPage({type}){
           ,[type]);
     const totalItems = filterItem?.totalItems ?? 0;
     const totalPage = filterItem?.totalPage ?? 0;
-          
+    useEffect(() => {
+            document.title = "Tìm kiếm | DCAT Store";
+            }, []);
 
     
     const CardBody = (type )=>{

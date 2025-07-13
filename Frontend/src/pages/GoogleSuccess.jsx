@@ -8,7 +8,7 @@ export default function GoogleSuccess(){
     const{login} = useContext(AuthContext);
     const navigate = useNavigate();
     useEffect(()=>{
-        console.log("GET HERE ")
+        
         if(accessToken){
             toast.success("Đăng nhập thành công")
             login(accessToken)
@@ -16,6 +16,12 @@ export default function GoogleSuccess(){
         }
     },[accessToken])
     
+
+    useEffect(() => {
+                document.title = "Đăng nhập thành công | DCAT Store";
+                }, []);
+
+
     return(
         <div>Logging in via Google...</div>
     )

@@ -303,7 +303,9 @@ function Homepage(){
     const [PetData,setPetData] = useState([])
     const [ProductData,setProductData] = useState([])
 
-
+    useEffect(() => {
+        document.title = "Trang chủ | DCAT Store";
+        }, []);
 
 
     useEffect(()=>{

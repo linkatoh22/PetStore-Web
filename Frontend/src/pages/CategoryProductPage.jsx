@@ -98,6 +98,10 @@ function CategoryProductPage({type,typePage}){
     const totalItems = filterProduct?.totalItems ?? 0;
     const totalPage = filterProduct?.totalPage??0;
 
+    useEffect(() => {
+            document.title = "Sản phẩm | DCAT Store";
+            }, []);
+
 
     useEffect(()=>
       {
