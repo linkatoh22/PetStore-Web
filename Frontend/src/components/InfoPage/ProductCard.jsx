@@ -1,5 +1,7 @@
 import styled from "styled-components"
-import Detail1 from "../../assets/pic/detail-product/detail1.png"
+
+
+import CantLoad from "../../assets/loadPic.png"
 import { FormattedPrice } from "../../utils/FormatPrice"
 import { useEffect } from "react"
 const ProductImg = styled.img`
@@ -143,7 +145,7 @@ export default function ProductCard ({productItem}){
     return(
         <OrderCardBody >
         
-                            <ProductImg src={productItem?.productItem?.image[0]?? Detail1}/>
+                            <ProductImg src={productItem?.productItem?.image[0]?? CantLoad}/>
                             
         
                             <div>

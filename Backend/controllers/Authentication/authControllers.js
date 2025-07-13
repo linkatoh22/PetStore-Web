@@ -16,7 +16,7 @@ const signUp = async (req, res,next)=>{
         
         if( !email || !password || !username){
             res.status(400);
-            throw new Error("All fields are mandatory!");
+            throw new Error("Vui lòng nhập đủ các thông tin.");
             
         }
         
@@ -24,7 +24,7 @@ const signUp = async (req, res,next)=>{
         
         if(userAvailable && userAvailable.verified == true){
             res.status(400);
-            throw new Error("User already registed!");
+            throw new Error("Email này đã được đăng ký.");
         }
         
         const hashedPassword = await bcrypt.hash(password,10);
@@ -70,7 +70,7 @@ const logIn = async (req, res,next)=>{
         if(!user||user.verified==false){
 
             res.status(400);
-            throw Error("User not does not exist!")
+            throw Error("Tài khoản email này chưa đăng ký.")
         }
         
         
@@ -79,7 +79,7 @@ const logIn = async (req, res,next)=>{
         
         if(!isMatch){
              res.status(401);
-            throw new Error ("Wrong Password or Username");
+            throw new Error ("Sai mật khẩu hoặc email.");
         }
         
         const accessToken = generateAccessToken(user)
@@ -120,17 +120,17 @@ const logIn = async (req, res,next)=>{
 const logOut = async(req,res,next) =>{
     try{
         const refreshToken = req.cookies.refreshToken;
-        console.log("Refresh Token",refreshToken)
+        
         if(!refreshToken){
             res.status(404)
-            throw new Error("No refresh token found");
+            throw new Error("Không tìm thấy Refresh Token.");
         }
 
         const user = await User.findOne({refreshToken}).lean();
         
         if(!user){
             res.status(400)
-            throw new Error("Invalid Refresh Token");
+            throw new Error("Refresh Token không hợp lệ.");
         }
         
         await User.updateOne({refreshToken:refreshToken},{$unset:{refreshToken:refreshToken}})

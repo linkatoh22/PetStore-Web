@@ -15,12 +15,12 @@ const AddToCart = async (req,res,next) =>{
         
         if(!itemType||!item||!quantity) {
             res.status(400);
-            throw Error("Missing required field")
+            throw Error("Vui lòng nhập đủ thông tin.")
         }
 
         if(!['Product','Pet'].includes(itemType)){
             res.status(400);
-            throw Error(`Invalid itemType: ${itemType}`)
+            throw Error(`itemType không hợp lệ: ${itemType}`)
         }
 
         let cart = await Cart.findOne({user:userId});
@@ -33,14 +33,14 @@ const AddToCart = async (req,res,next) =>{
 
             if(!variant){
                 res.status(400);
-                throw Error("Variant is required for product")
+                throw Error("Variant là bắt buộc cho Product")
             }
 
             const foundProduct = await Product.findById(item);
 
             if(!foundProduct){
                 res.status(404);
-                throw Error("Product not found")
+                throw Error("Không tìm thấy product")
             }
             const foundVariants = foundProduct.variants.id(variant)
 
@@ -59,7 +59,7 @@ const AddToCart = async (req,res,next) =>{
 
                 if(updateQuantity>foundVariants.stock){
                     res.status(400);
-                    throw Error("Quantity exceed stock")
+                    throw Error("Không đủ hàng.")
                 }
 
                 cart.items[itemIndex].quantity = updateQuantity;
@@ -76,12 +76,12 @@ const AddToCart = async (req,res,next) =>{
             if(quantity<1){
                 
                 res.status(400)
-                throw Error("Quantity must be greater than 0")
+                throw Error("Số lượng phải lớn hơn 0")
             }
             else if(foundVariants.stock<quantity){
 
                 res.status(400)
-                throw Error("Quantity exceed the stock")
+                throw Error("Không đủ hàng")
             
             }
             price=foundVariants.price;
@@ -95,7 +95,7 @@ const AddToCart = async (req,res,next) =>{
                 const updatedQuantity = cart.items[itemIndex].quantity +quantity;
                 if(updatedQuantity> foundPet.quantity){
                     res.status(400);
-                    throw Error("Quantity exceed stock")
+                    throw Error("Không đủ hàng")
                 }
                 cart.items[itemIndex].quantity=updatedQuantity;
                 cart.items[itemIndex].price=foundPet.price* updatedQuantity;
@@ -111,7 +111,7 @@ const AddToCart = async (req,res,next) =>{
 
             if(!foundPet){
                 res.status(404);
-                throw Error("Pet not found");
+                throw Error("Không tìm thấy Pet này");
             }
             price=foundPet.price;
         }
@@ -153,7 +153,7 @@ const GetCartActive = async(req,res,next)=>{
 
         if(!userId){
             res.status(404);
-            throw Error("No user found");
+            throw Error("Không tìm thấy user.");
         }
 
         let cart = await Cart.findOne({user:userId});
@@ -211,7 +211,7 @@ const GetItemUnactive = async (req,res,next)=>{
 
         if(!userId){
             res.status(404);
-            throw Error("No user found");
+            throw Error("Không tìm thấy user.");
         }
 
         let cart = await Cart.findOne({user:userId});
@@ -271,30 +271,30 @@ const EditCart = async(req,res,next)=>{
         const userId = req.user._id;
         if(!userId){
             res.status(400);
-            throw Error("User not found")
+            throw Error("Không tìm thấy user.")
         }
         if(!cartItem){
             res.status(400);
-            throw Error("Cart Item's id is required")
+            throw Error("Thiếu id của sản phẩm trong giỏ hàng ")
         }
 
         const cart = await Cart.findOne({user:userId});
         
         if(!add && !minus && !amount){
             res.status(400);
-            throw Error("Choose one operation (add, minus, amount) must be specified");
+            throw Error("Chọn một phép tính duy nhất");
         }
 
         if(!cart){
             res.status(404);
-            throw Error("Cart not found")
+            throw Error("Không tìm thấy giỏ hàng")
         }
         
         const itemIndex = cart.items.findIndex(item => item._id.toString() === cartItem);
         
         if(itemIndex === -1){
             res.status(404);
-            throw Error("Cart item not found")
+            throw Error("Không tìm thấy sản phẩm trong giỏ hàng")
         }
         const product = await Product.findOne({_id:cart.items[itemIndex].item});
         
@@ -303,7 +303,7 @@ const EditCart = async(req,res,next)=>{
         
         if(itemIndex===-1){
             res.status(404);
-            throw Error("Cart item not found");
+            throw Error("Không tìm thấy sản phẩm trong giỏ hàng");
         }
 
         if(add){
@@ -312,7 +312,7 @@ const EditCart = async(req,res,next)=>{
             
             if(cartItemAdd>variant.stock){
                 res.status(400)
-                throw Error("Don't have enough stock to add to cart")
+                throw Error("Không đủ hàng.")
             }
             
             cart.items[itemIndex].quantity+=1;
@@ -347,7 +347,7 @@ const EditCart = async(req,res,next)=>{
         else if(amount){
             if(variant.stock<amount){
                 res.status(400)
-                throw Error("Amount edit greater than variant stock");
+                throw Error("Không đủ hàng");
             }
 
             cart.items[itemIndex].quantity=amount;
@@ -388,11 +388,11 @@ const DeleteItem= async (req,res,next)=>{
         const userId = req.user._id;
         if(!userId){
             res.status(404);
-            throw Error("User not found")
+           throw Error("Không tìm thấy user.")
         }
         if(!cartItemId){
             res.status(400)
-            throw Error("Cart Item Id is required");
+           throw Error("Thiếu id của sản phẩm trong giỏ hàng ")
         }
         const cart = await Cart.findOne({user:userId});
 
@@ -400,7 +400,7 @@ const DeleteItem= async (req,res,next)=>{
         
         if(!cart){
             res.status(404);
-            throw Error("Cart not found")
+            throw Error("Không tìm thấy giỏ hàng")
         }
 
         
@@ -411,7 +411,7 @@ const DeleteItem= async (req,res,next)=>{
                 
                 if(itemIndex === -1){
                     res.status(404);
-                    throw Error("Cart item not found")
+                    throw Error("Không tìm thấy sản phẩm trong giỏ hàng");
                 }   
                 cart.items.splice(itemIndex,1);
             }  

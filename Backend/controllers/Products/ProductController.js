@@ -380,8 +380,7 @@ const RecommendProduct = async (req,res,next)=>{
         let filter = {};
         let products = [];
         const {category,id} = req.query;
-        console.log("category: ",category)
-        console.log("id: ",id)
+        
         if(category) filter.category = category;
 
         filter.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};

@@ -8,7 +8,7 @@ const getUserDetail = async (req,res,next) =>{
         const user = await User.find({_id:user_token._id})
         if(!user){
             res.status(404);
-            throw Error("No info found")
+            throw Error("Không tìm thấy người dùng.")
         }
         return res.status(200).json({
             message:"Retrieve User Data Successfully",
@@ -31,7 +31,7 @@ const editUserDetail = async (req,res,next) =>{
 
         if(!username||!gender||!phonenumber||!address){
             res.status(400)
-            throw Error("Missing required fields")
+            throw Error("Vui lòng nhập đủ thông tin.")
         }
 
         const user = await User.findByIdAndUpdate(
@@ -42,7 +42,7 @@ const editUserDetail = async (req,res,next) =>{
 
         if(!user){
             res.status(400);
-            throw Error("User not found")
+            throw Error("Người dùng không tồn tại.")
         }
 
         return res.status(200).json({

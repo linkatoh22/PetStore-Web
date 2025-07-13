@@ -1,9 +1,5 @@
 // import "../../styles/components/Feedback.css"
-import Detail1 from "../../assets/pic/feedback/detail1.jpg"
-import Detail2 from "../../assets/pic/feedback/detail2.jpg"
-import Detail3 from "../../assets/pic/feedback/detail3.jpg"
-import Detail4 from "../../assets/pic/feedback/detail4.jpg"
-import Detail5 from "../../assets/pic/feedback/detail5.jpg"
+
 
 import "swiper/css";
 import "swiper/css/navigation";

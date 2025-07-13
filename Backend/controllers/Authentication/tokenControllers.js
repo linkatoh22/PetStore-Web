@@ -12,7 +12,7 @@ const handleAccessToken = async (req,res,next) =>{
        
         if(!refreshToken){
             res.status(404)
-            throw Error("No refresh token found!")
+            throw Error("Không tìm thấy Refresh Token.")
         }
 
         // const decoded = jwt.verify(refreshToken,process.env.REFRESH_TOKEN_KEY);
@@ -22,7 +22,7 @@ const handleAccessToken = async (req,res,next) =>{
         
         if(!user){
             res.status(403)
-            throw Error("Refresh token is not valid!")
+            throw Error("Refresh token không hợp lệ.")
         }
 
         const accessToken = generateAccessToken(user);

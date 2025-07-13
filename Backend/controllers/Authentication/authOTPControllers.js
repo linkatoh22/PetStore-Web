@@ -62,7 +62,7 @@ const verifyOTP  = async (req,res,next)=>{
         
         if(!userId||!otp){
             res.status(400)
-            throw Error("Empty otp details are not allowed"); //empty
+            throw Error("Vui lòng nhập đầy đủ thông tin"); //empty
         }
         else{
             const UserOTPVerificationRecords = await UserOTPVerification.find({
@@ -73,7 +73,7 @@ const verifyOTP  = async (req,res,next)=>{
                 //No RECORDS FOUND
                 res.status(400)
                 throw new Error (
-                    "Account record exist or has been verified already. Please sign up or log in"
+                    "Tài khoản đã tồn tại hoặc đã được xác thực vui lòng đăng nhập lại."
                 )
             }
             else{
@@ -85,7 +85,7 @@ const verifyOTP  = async (req,res,next)=>{
                     //expire
                     await UserOTPVerificationRecords.deleteMany({userId})
                     res.status(401)
-                    throw new Error ("Code has expires. Please request again.")
+                    throw new Error ("Mã OTP đã hết hạn.")
                 }
                 else{
 
@@ -93,7 +93,7 @@ const verifyOTP  = async (req,res,next)=>{
                     if(!validOTP){
                         //supplied otp is wrong
                         res.status(401)
-                        throw new Error("Invalid code. Check your inbox then re-enter the code.")
+                        throw new Error("Mã OTP không hợp lệ.")
                     }
                     else{
                         //success
@@ -142,14 +142,14 @@ const resendOTP = async (req,res,next) =>{
         if(!userId){
             
             res.status(400)
-            throw Error("Empty user details are not allowed");
+            throw Error("Người dùng không tồn tại.");
         }
         
             const user = await User.findById(userId);
 
             if (!user) {
                 res.status(404);
-                throw new Error("User not found");
+                throw new Error("Người dùng không tồn tại.");
             }
             const email = user.email;
             await UserOTPVerification.deleteMany({userId});

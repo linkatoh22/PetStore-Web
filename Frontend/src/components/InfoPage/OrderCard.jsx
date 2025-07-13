@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import Detail1 from "../../assets/pic/detail-product/detail1.png"
+
+import CantLoad from "../../assets/loadPic.png"
 import { useContext, useEffect } from "react"
 import ProductCard from "./ProductCard"
 import { FormattedPrice } from "../../utils/FormatPrice"

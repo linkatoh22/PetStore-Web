@@ -1,17 +1,16 @@
 
 import Bgr from "../assets/bgr-homepage.png"
 import PetsCard from "../components/Card/PetsCard.jsx";
-import ProductsCard from "../components/Card/ProductsCard.jsx";
+
 import BrandPic from "../assets/brand.png"
-import HoldhandPic from "../assets/holdhand.png"
-import KnowledgeCard from "../components/Card/KnowledgedCard.jsx"; 
-import Footer from "../components/Footer";
+
+
 import BackgroundMenu from "../components/Homepage/BackgroundMenu.jsx";
 import {useState,useEffect} from 'react';
 
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import MainMenu from "../components/MainMenu.jsx";
+
 import Spinner from 'react-bootstrap/Spinner';
 
 import { PetFetchHook,ProductFetchHook } from "../services/hook/homepageHook.js";

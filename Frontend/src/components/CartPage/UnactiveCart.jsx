@@ -1,8 +1,9 @@
 // import "../../styles/components/CartProduct.css"
 import { useContext, useEffect, useState } from 'react';
-import detail4 from '../../assets/pic/detail-product/detail4.png';
-import detail5 from '../../assets/pic/detail-product/detail5.png';
-import detail6 from '../../assets/pic/detail-product/detail6.png';
+
+
+import CantLoad from "../../assets/loadPic.png"
+
 import { MdOutlineClose } from "react-icons/md";
 import styled from "styled-components";
 import { FormattedPrice } from '../../utils/FormatPrice';
@@ -386,7 +387,7 @@ function UnactiveCartProduct({cartInfo,updatedUnactiveCart,isLoading}){
 
                                     <td>
                                         <ProductDetailContainer style={{filter:"grayscale(100%)",color: "#aaa"}} >
-                                            <ProductDetailImage src={item?.productItem?.image[0]??detail4} ></ProductDetailImage>
+                                            <ProductDetailImage src={item?.productItem?.image[0]??CantLoad} ></ProductDetailImage>
 
                                             <ProductDetailParagraph>
                                                 

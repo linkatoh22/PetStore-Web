@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import Detail1 from "../../assets/pic/detail-product/detail1.png"
 import ProductCard from "../InfoPage/ProductCard"
 import { useEffect } from "react"
 const OrderCardContainer = styled.div`

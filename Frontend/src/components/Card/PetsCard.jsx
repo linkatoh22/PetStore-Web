@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import petImage from '../../assets/pets-card.png'
+import CantLoad from "../../assets/loadPic.png"
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 const CardContainer = styled.div`
@@ -127,7 +127,7 @@ function PetsCard({Item,type} ){
     
 
 
-    const imageSrc = Item?.image?.[0] || petImage;
+    const imageSrc = Item?.image?.[0] || CantLoad;
     const name = Item?.name || "Chưa cập nhật";
     const gender = Item?.gender || "Không xác định";
     const age = Item?.age || "Không xác định";
