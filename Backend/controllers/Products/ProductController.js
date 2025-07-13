@@ -1,4 +1,5 @@
 const Product = require("../../models/ProductModel")
+const Pet =require("../../models/PetModel")
 const mongoose =require("mongoose")
 const getDetailProduct = async (req,res,next)=>{
     try{
@@ -272,7 +273,7 @@ const SearchAll = async (req,res,next) =>{
     try{
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         console.log("SearchAll: ", fullUrl);
-        const query={};
+        
 
         
         const page = parseInt(req.query.page) || 1;
@@ -281,9 +282,8 @@ const SearchAll = async (req,res,next) =>{
         const sort = parseInt(req.query.sort);
         const skip = (page - 1) * limit;
 
-        query.quantity = { $gt: 0 };
-        query.$text = {$search:keyword};
-
+        
+        
         const pipeline = [
             {
                 $match:{    $text:{$search:keyword} }
@@ -325,17 +325,27 @@ const SearchAll = async (req,res,next) =>{
         }))
 
         //Tìm Pet
-        const petsDocs = await Product.find(query);
+        const query={};
+        query.quantity = { $gt: 0 };
+        query.status = {$nin: ["Hết hàng", "Ngừng kinh doanh"]};
+        query.$text = {$search:keyword};
+
+
+        const petsDocs = await Pet.find(query).sort({ score: { $meta: "textScore" } })
         const pets = petsDocs.map((p)=>({
-            id:p._id,
+            _id:p._id,
             name:p.name,
             gender:p.gender,
             age:p.age,
             price:p.price,
             image:p.image,
+            sold:p.sold??0,
+            price:p.price,
             type:"Pet"
         }))
 
+        
+        
         let results = [...products,...pets]
         
         if(sort === 1){

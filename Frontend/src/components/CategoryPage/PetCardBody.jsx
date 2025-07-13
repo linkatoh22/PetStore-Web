@@ -188,10 +188,10 @@ const SpinnerContainer = styled.div`
 
 function PetCardBody({Pet,Header,SetSort,Petlength,type,Page,SetPage,TotalPage,isLoading}){
   useEffect(()=>{
-      console.log("TotalPage: ",TotalPage)
-      console.log("Page: ",Page)
+      console.log("Pet ",Pet)
       
-    },[TotalPage,Page])
+      
+    },[Pet])
 
     const handlePageClick = (pageNumber) => {
     if (pageNumber !== Page && pageNumber >= 1 && pageNumber <= TotalPage) {

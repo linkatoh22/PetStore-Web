@@ -144,7 +144,7 @@ const SearchPet = async (req,res,next) =>{
         }
 
         const totalRecords = await Pet.find(query).countDocuments();
-        const Petseee = await Pet.find(query);
+        // const Petseee = await Pet.find(query);
         
         if(sort == 0||!sort)
         {
