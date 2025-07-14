@@ -10,13 +10,19 @@ const googleCallback = async (req,res,next) =>{
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
         await User.updateOne({_id:user._id},{$set: {refreshToken:refreshToken}});
+        const Secure = process.env.SECURE == "true"? true:false;
+
 
         res.cookie("refreshToken",refreshToken,{
             httpOnly:true,
-            secure:true,
-            sameSite:"Strict",
+            secure: Secure, 
+            sameSite: process.env.SAME_SITE,
             maxAge:7 * 24 * 60 * 60 * 1000,
         })
+
+
+
+
         res.redirect(`${process.env.ORIGIN}/google-success?accessToken=${accessToken}`);
         // return res.status(200).json({
         //     message:"Google Login Successfully",
