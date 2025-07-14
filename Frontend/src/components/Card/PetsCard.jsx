@@ -11,7 +11,7 @@ const CardContainer = styled.div`
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     padding:0.8rem;
     gap: 0.5rem;
-
+   height: 100%; 
     @media (min-width: 0px) and (max-width: 598.99px) {
         padding:0.5rem;
     }
@@ -23,6 +23,7 @@ const CardContainer = styled.div`
     }
     @media (min-width: 1200px) and (max-width: 1500px) {
         padding:0.7rem;
+        
     }
 `
 
@@ -59,6 +60,13 @@ const PetName = styled.div`
     color: var(--main-blue);
     font-weight: bold;
     font-size: 1.1rem;
+    
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;     /* tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+
+
 
     @media (min-width: 0px) and (max-width: 598.99px) {
         font-size: 0.7rem;

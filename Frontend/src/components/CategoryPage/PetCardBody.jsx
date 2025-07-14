@@ -117,7 +117,7 @@ const PcCardContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   gap: 0.5rem;
-
+     grid-auto-rows: 1fr; 
   @media (min-width: 0px) and (max-width: 598.99px) {
         grid-template-columns: repeat(2,1fr);
         column-gap: 0.2rem;

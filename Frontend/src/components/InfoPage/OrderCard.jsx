@@ -172,7 +172,7 @@ export default function OrderCard({items,order,refetchOrder}){
             </div>
                 <Header>
                     <BtnGroup>
-                        <BuyButton>Chi tiết </BuyButton>
+                        <BuyButton onClick={()=>handleNav(order?._id)} >Chi tiết </BuyButton>
                         <BuyButton 
                             disabled={order.status.trim() !== "Đang đợi xác nhận"}
                             onClick={()=>handleCancelOrder(order?._id)}>

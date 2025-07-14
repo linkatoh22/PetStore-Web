@@ -222,7 +222,7 @@ function Footer(){
 
                   <FooterCopyright>
 
-                      Copyright 2025 © DCAT Store - Cung cấp phụ kiện và thú cưng
+                      Copyright {new Date().getFullYear()} © DCAT Store - Cung cấp phụ kiện và thú cưng
                   </FooterCopyright>
             </MainFooter>
 

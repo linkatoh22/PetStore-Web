@@ -379,11 +379,13 @@ function MainMenu({isSidebar,setIsSidebar}) {
             {
                 onSuccess:(data)=>{
                     toast.success("Đăng xuất thành công")
-                    
+                    navigate("/dang-nhap")
                     logout();
                 },
                 onError:(error)=>{
-                    toast.error("Đăng xuất thất bại")
+                    toast.error("Có lỗi xảy ra....")
+                    navigate("/dang-nhap");
+                    logout();
                 }
             }
         )

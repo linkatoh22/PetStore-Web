@@ -123,7 +123,7 @@ const CardContainer = styled.div`
     grid-template-columns: repeat(4,1fr);
     column-gap: 1rem;
     row-gap: 1rem;
-
+     grid-auto-rows: 1fr; 
     @media (min-width: 0px) and (max-width: 598.99px) {
         grid-template-columns: repeat(2,1fr);
         column-gap: 0.5rem;
