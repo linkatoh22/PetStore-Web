@@ -28,7 +28,27 @@ npm run dev
 cd backend
 npm install
 nodemon index.js
-``` 
-## 3. Contact:
+```
+## 3. Dependencies:
+**1. Frontend:**
+- tanstack
+- bootstrap
+- dayjs
+- react-toastify
+- styled-components
+  
+**2. Backend:**
+- bcrypt
+- cookie-parser
+- jsonwebtoken
+- mongoose
+- nodemailer
+- passport
+- passport-google-oauth20
+- express
+- express-session
+- cors
+- dotenv
+## 4. Contact:
 - **Email**: lintoh111@gmail.com
 - **Facebook**: https://www.facebook.com/linhtokh
