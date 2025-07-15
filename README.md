@@ -2,7 +2,8 @@
 PetShop is an e-commerce website that allows users to easily and conveniently search for, view details of, and purchase various pets as well as pet care accessories.
 
 🚀 **Key Feature:**
-- User registration / login.
+- User registration/login.
+- Verify email when registering.
 - User login via Google.
 - Forgot password functionality.
 - Browse product categories: Pets, Accessories.
