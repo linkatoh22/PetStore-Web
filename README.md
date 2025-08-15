@@ -32,7 +32,7 @@ nodemon index.js
 ```
 ## 3. Dependencies:
 **1. Frontend:**
-- tanstack
+- react-query
 - bootstrap
 - dayjs
 - react-toastify
