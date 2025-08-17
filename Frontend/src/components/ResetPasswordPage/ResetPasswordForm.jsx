@@ -180,17 +180,30 @@ const ResetPasswordButton = styled.button`
   @media (min-width: 1312px) and (max-width: 1500.00px) {
         font-size: 1rem;
   }
+
+
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 
 
 
 function ResetPasswordForm({id,setIsSuccessfully})
 {
-    const {mutate: ResetPasswordHook,isLoading }=useResetPassword();
+    const {mutate: ResetPasswordHook,isPending:isLoading }=useResetPassword();
     const {logout} =useContext(AuthContext)
     const navigate = useNavigate();
     const{mutate:LogoutHook} = useLogOut();
     const [password,setPassword]= useState("")
+
+
+    useEffect(() => {
+        document.body.style.cursor = isLoading ? "wait" : "default";
+        }, [isLoading]);
+
 
     const handleChange = (e)=>{
       setPassword(e.target.value)
@@ -245,7 +258,7 @@ function ResetPasswordForm({id,setIsSuccessfully})
     return(
 
         <>
-            <ResetPasswordContainer>
+            <ResetPasswordContainer >
                 
                 <ResetPasswordTitle>
                     <div>Xác minh thành công </div>
@@ -273,7 +286,11 @@ function ResetPasswordForm({id,setIsSuccessfully})
                     </InputWrapper>
                     
 
-                    <ResetPasswordButton type="submit">Xác nhận</ResetPasswordButton>
+                    <ResetPasswordButton type="submit" disabled={isLoading}>
+                        
+                         {isLoading ? "Đang xử lý..." : "Xác nhận"}
+                        
+                        </ResetPasswordButton>
 
                 </ResetPasswordItem>
 

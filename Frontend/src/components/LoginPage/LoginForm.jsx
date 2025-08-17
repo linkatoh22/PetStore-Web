@@ -4,7 +4,7 @@ import { MdLockOutline } from "react-icons/md";
 import Google from "../../assets/svg/google/google";
 import styled from "styled-components";
 import { useLogin } from "../../services/hook/LoginHook";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation  } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthProvider";
 import { useGoogleLogin } from '@react-oauth/google';
@@ -169,20 +169,24 @@ const LoginButton = styled.button`
   font-weight: bold;
   border: none;
   padding-block: 0.5rem;
-  cursor:pointer;
-  &:active{
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  &:active {
     background-color: var(--main-blue);
   }
 
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
   @media (min-width: 0px) and (max-width: 598.99px) {
-        font-size: 0.8rem;
-        
-        
+    font-size: 0.8rem;
   }
   @media (min-width: 599px) and (max-width: 799.99px) {
-        font-size: 1rem;
-        
-        
+    font-size: 1rem;
   }
 `;
 const BASE_URL = import.meta.env.VITE_BASE_URL_ORG;
@@ -191,7 +195,7 @@ function LoginForm(){
     const {login} = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation();
-    const {mutate:logIn}  = useLogin();
+    const {mutate:logIn, isPending:isLoading}  = useLogin();
     
     const [formData,setFormData] = useState({
         email: "",
@@ -247,12 +251,16 @@ function LoginForm(){
       window.location.href = `${BASE_URL}/api/auth/google`;
   };
 
+  useEffect(() => {
+    document.body.style.cursor = isLoading ? "wait" : "default";
+  }, [isLoading]);
+
 
     return(
 
         <>
 
-            <LoginFormContainer className="login-form-container">
+            <LoginFormContainer className="login-form-container"  >
                 
                 <LoginFormTitle className="login-form-title">Đăng nhập với</LoginFormTitle>
 
@@ -307,7 +315,10 @@ function LoginForm(){
                     <LoginButton 
                       type="submit" 
                       className="login-button"
-                    > Đăng nhập</LoginButton>
+                      disabled = {isLoading}
+                    > 
+                    {isLoading ? "Đang xử lý..." : "Đăng nhập"}
+                    </LoginButton>
 
                 </LoginFormMain>
 

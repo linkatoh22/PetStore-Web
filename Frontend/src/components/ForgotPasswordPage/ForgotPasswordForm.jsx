@@ -167,6 +167,12 @@ const ForgotPasswordButton = styled.button`
   @media (min-width: 1312px) and (max-width: 1500.00px) {
         font-size: 1rem;
   }
+
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 
 
@@ -194,7 +200,7 @@ function ForgotPasswordForm({setIsSuccessfully,setEmailChosen})
               {
                 onSuccess: (data) => {
                   if (data.status === "Success") {
-                    toast.success("Đã gửi link thay đổi mật khẩu vào email.Vui lòng hãy check email");
+                    toast.success("Đã gửi link thay đổi mật khẩu vào email. Vui lòng hãy check email");
                     setIsSuccessfully(true);
                     setEmailChosen(email);
                     setIsLoading(false);
@@ -214,6 +220,11 @@ function ForgotPasswordForm({setIsSuccessfully,setEmailChosen})
         }
         
     }
+
+
+    useEffect(() => {
+      document.body.style.cursor = isLoading ? "wait" : "default";
+    }, [isLoading]);
 
     return(
 
@@ -243,7 +254,12 @@ function ForgotPasswordForm({setIsSuccessfully,setEmailChosen})
                     </InputWrapper>
                     
 
-                    <ForgotPasswordButton type="submit">Xác nhận</ForgotPasswordButton>
+                    <ForgotPasswordButton type="submit" disabled={isLoading} >
+                      {isLoading ? "Đang xử lý..." : "Xác nhận"}
+                      
+                      
+                      
+                      </ForgotPasswordButton>
 
                 </ForgotPasswordItem>
 

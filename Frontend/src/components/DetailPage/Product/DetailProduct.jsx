@@ -406,7 +406,7 @@ const VariantButton = styled.button`
 export function DetailProduct({product}){
     const navigate = useNavigate();
     const {accessToken} = useContext(AuthContext)
-    const {mutate:addToCart} = useAddToCart(accessToken);
+    const {mutate:addToCart,isPending:isLoading} = useAddToCart(accessToken);
     const [PriceQuantity,SetPriceQuantity] = useState(
         {
             price:null,
@@ -669,8 +669,15 @@ export function DetailProduct({product}){
         }
 
     }
+
+
+    useEffect(() => {
+        document.body.style.cursor = isLoading ? "wait" : "default";
+        }, [isLoading]);
+
+
     return(
-        <DetailPetContainer>  
+        <DetailPetContainer >  
 
             <DetailNameContainer>
 
@@ -722,8 +729,8 @@ export function DetailProduct({product}){
             <DetailBtnGroup>
                     
 
-                    <BuyBtn onClick={()=>BuyNow()}>Mua ngay</BuyBtn>
-                    <CartBtn onClick={()=>HandleAddToCart()}>Bỏ vào giỏ hàng</CartBtn>
+                    <BuyBtn onClick={()=>BuyNow()} disabled={isLoading}>Mua ngay</BuyBtn>
+                    <CartBtn onClick={()=>HandleAddToCart()} disabled={isLoading}>Bỏ vào giỏ hàng</CartBtn>
             </DetailBtnGroup>
 
             

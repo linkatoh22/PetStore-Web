@@ -65,11 +65,17 @@ const CheckoutBtn = styled.button`
         padding-inline: 1.5rem;
     }
 
-  border-radius: 5px;
-  font-weight:bold;
-  &:active {
-    background-color: #005897;
-  }
+    border-radius: 5px;
+    font-weight:bold;
+    &:active {
+        background-color: #005897;
+    }
+
+    &:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
 `;
 const LineDivider = styled.div`
     width:100%;
@@ -146,7 +152,7 @@ function CheckoutInput({cartInfo}){
     const {data:tinhThanhData}= useGetTinhThanh();
     const {mutate:GetQuanHuyen} = useGetQuanHuyen();
     const {mutate:GetPhuongXa} = useGetPhuongXa();
-    const {mutate:CreateOrder} = useCheckOut();
+    const {mutate:CreateOrder,isPending:isLoading} = useCheckOut();
     const [QuanHuyenData,SetQuanHuyenData] = useState();
     const [PhuongXaData,SetPhuongXaData] = useState();
 
@@ -245,9 +251,15 @@ function CheckoutInput({cartInfo}){
             )
         }
     },[QuanHuyenChosen])
+
+    useEffect(() => {
+        document.body.style.cursor = isLoading ? "wait" : "default";
+        }, [isLoading]);
+
+
     return(
         <>
-            <CheckoutInputContainer className="CheckoutInput-Container">
+            <CheckoutInputContainer className="CheckoutInput-Container" >
 
                 <CheckoutInputTitle className="CheckoutInput-Title">
                     Thanh toán đơn hàng
@@ -381,7 +393,9 @@ function CheckoutInput({cartInfo}){
                             </Form.Group>
                             
                             
-                            <CheckoutBtn type="submit">Thanh toán</CheckoutBtn>
+                            <CheckoutBtn type="submit" disabled={isLoading}>
+                                {isLoading ? "Đang xử lý..." : "Thanh toán"}
+                            </CheckoutBtn>
                         </Form>
                     </FormContainter>
 

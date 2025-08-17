@@ -57,39 +57,6 @@ const CartBtn = styled.button`
   padding: 10px 20px;
 `;
 
-// const DetailTable = styled.table`
-//   width: 90%;
-//   border-left: none;
-//   border-right: none;
-//   border-top: none;
-//   border-color: rgb(175, 175, 175);
-//   border-collapse: collapse;
-//   font-size: 18px;
-//   color: rgb(87, 86, 86);
-// `;
-
-const DetailTableItemHeader = styled.td`
-  width: 25%;
-  padding: 13px;
-  text-align: left;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-color: rgb(175, 175, 175);
-`;
-
-const DetailTableItem = styled.td`
-  padding: 13px;
-  text-align: left;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-color: rgb(175, 175, 175);
-`;
-
-const DetailItemContent = styled.div`
-  width: 40%;
-`;
 
 
 function DetailInfo(){

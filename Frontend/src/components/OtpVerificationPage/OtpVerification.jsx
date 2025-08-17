@@ -165,6 +165,11 @@ const OtpVerifyButton = styled.button`
   @media (min-width: 1312px) and (max-width: 1500.00px) {
         font-size: 1rem;
   }
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 const ResendOTPButton = styled.div`
     text-decoration: underline;
@@ -174,25 +179,16 @@ const ResendOTPButton = styled.div`
     &:active{
         color: var(--main-blue);
     }
+        
 `
 function OtpVerificationForm()
 {
     
-    const { mutate:otpData } = useVerifyOtp();
-    const {mutate: resendOtpData} = useResendOtp();
+    const { mutate:otpData,isPending: isLoadingVerifyOtp } = useVerifyOtp();
+    const {mutate: resendOtpData,isPending:isLoadingResendOtp} = useResendOtp();
     const{id}= useParams();
     const navigate = useNavigate();
-    // const email = useMemo(()=>{
-      
-    //   if(otpData.data){
-    //     return otpData.data.email
-    //   }
-    //   return ""
-    // },[otpData])
-
-    useEffect(()=>{
-      console.log(otpData)
-    },[otpData])
+    
     const [formData,setFormData]= useState({
       otp:"",
       userId:id
@@ -255,10 +251,16 @@ function OtpVerificationForm()
         
     }
 
+
+    useEffect(() => {
+      document.body.style.cursor = (isLoadingVerifyOtp || isLoadingResendOtp) ? "wait" : "default";
+    }, [isLoadingVerifyOtp , isLoadingResendOtp]);
+
+
     return(
 
         <>
-            <OtpVerifyContainer className="signup-form-container">
+            <OtpVerifyContainer className="signup-form-container" >
                 
                 <OtpVerifyFormTitle className="signup-form-title">Xác thực OTP</OtpVerifyFormTitle>
                   <div className="paragraph">Chúng tôi vừa gửi mã OTP vào email của bạn vui lòng kiểm tra. OTP có hiệu lực trong 5 phút.</div>
@@ -280,13 +282,23 @@ function OtpVerificationForm()
                         ></InputForm>
                         
                     </InputWrapper>
-                    <ResendOTPButton onClick={()=>ResendOTP()}>Gửi lại mã OTP</ResendOTPButton>
+                    <ResendOTPButton 
+                    disabled={isLoadingVerifyOtp || isLoadingResendOtp }
+                    onClick={()=>ResendOTP()}>
+                      {(isLoadingVerifyOtp || isLoadingResendOtp) ? "Đang xử lý..." : "Gửi lại mã OTP"}
+                      
+                      </ResendOTPButton>
                     
 
 
                     
 
-                    <OtpVerifyButton className="signup-button" type="submit">Xác nhận</OtpVerifyButton>
+                    <OtpVerifyButton 
+                    disabled={(isLoadingVerifyOtp || isLoadingResendOtp) }
+                    className="signup-button" type="submit">
+                      {(isLoadingVerifyOtp || isLoadingResendOtp) ? "Đang xử lý..." : "Xác nhận"}
+                      
+                      </OtpVerifyButton>
 
                 </OtpVerifyFormItem>
 

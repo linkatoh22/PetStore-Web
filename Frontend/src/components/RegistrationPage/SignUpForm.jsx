@@ -4,7 +4,7 @@
   import { BsPersonCheckFill } from "react-icons/bs";
   import Google from "../../assets/svg/google/google";
   import styled from 'styled-components';
-  import React, { useState } from 'react';
+  import React, { useEffect, useState } from 'react';
 
   import { useSignUp } from "../../services/hook/SignUpHook";
   import { useNavigate } from 'react-router-dom';
@@ -157,34 +157,41 @@ import { toast } from "react-toastify";
   `;
 
   const SignUpButton = styled.button`
-    background-color: var(--clr-dark-blue);
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    padding-block: 0.5rem;
-    cursor: pointer;
-    &:active{
-      background-color: var(--main-blue);
-    }
+  background-color: var(--clr-dark-blue);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  padding-block: 0.5rem;
+  cursor: pointer;
+  transition: 0.3s ease;
 
-    @media (min-width: 0px) and (max-width: 598.99px) {
-        font-size: 0.8rem;
-        
-        
+  &:active {
+    background-color: var(--main-blue);
+  }
+
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  @media (min-width: 0px) and (max-width: 598.99px) {
+    font-size: 0.8rem;
   }
   @media (min-width: 599px) and (max-width: 799.99px) {
-        font-size: 1rem;
-        
-        
+    font-size: 1rem;
   }
-  `;
+`;
 
   const BASE_URL = import.meta.env.VITE_BASE_URL_ORG;
   function SignUpForm()
   {
     const navigate = useNavigate()
-    const {mutate:signup} = useSignUp();
+    
+    // const {mutate:signup, isLoading} = useSignUp();
+    const { mutate: signup, isPending: isLoading } = useSignUp();
+
     const[formData, setFormData] = useState({ 
           username:'',
           email: '',
@@ -210,6 +217,7 @@ import { toast } from "react-toastify";
       }
 
       const handleSubmit = (e) => {
+          console.log("ABCD: ")
           e.preventDefault();
           
           if (!isValidEmail(formData.email)) {
@@ -225,26 +233,26 @@ import { toast } from "react-toastify";
             return;
           }
           
-          signup({
-            username:formData.username,
-            email: formData.email,
-            password: formData.password,
-          },
-          {
-            onSuccess:(data) =>{
-              if(data.status == "Success"){
-                toast.success("Đăng ký thành công")
-                navigate(`/dang-ky/otp/${data.data.userid}`);
-              } else {
-                toast.error(data?.message ?? "Đăng ký thất bại");
+          signup(
+            {
+              username: formData.username,
+              email: formData.email,
+              password: formData.password,
+            },
+            {
+              onSuccess: (data) => {
+                if (data.status === "Success") {
+                  toast.success("Đăng ký thành công");
+                  navigate(`/dang-ky/otp/${data.data.userid}`);
+                } else {
+                  toast.error(data?.message ?? "Đăng ký thất bại");
+                }
+              },
+              onError: (error) => {
+                const message = error.response?.data?.message || error.message;
+                toast.error("Lỗi đăng ký: " + message);
               }
             }
-          },
-          {
-            onError:(error)=>{
-              toast.error("Lỗi đăng nhập:"+error.message)
-            }
-          }
           );
           
           
@@ -252,11 +260,17 @@ import { toast } from "react-toastify";
 
       };
     
-    
+      useEffect(() => {
+        document.body.style.cursor = isLoading ? "wait" : "default";
+        console.log("isLoading: ",isLoading)
+      }, [isLoading]);
+
+
+
       return(
           
           <>
-              <SignUpFormContainer className="signup-form-container">
+              <SignUpFormContainer className="signup-form-container" >
                   
                   <SignUpFormTitle className="signup-form-title">Đăng ký với</SignUpFormTitle>
 
@@ -273,6 +287,7 @@ import { toast } from "react-toastify";
 
                           <BsPersonCheckFill></BsPersonCheckFill>
                           <InputForm 
+                          required
                           type="text" 
                           placeholder="Nhập tên hiển thị của bạn" 
                           className="input-form"
@@ -287,6 +302,7 @@ import { toast } from "react-toastify";
 
                           <GrMailOption></GrMailOption>
                           <InputForm 
+                          required
                           type="email" 
                           placeholder="Nhập email của bạn" 
                           className="input-form"
@@ -300,6 +316,7 @@ import { toast } from "react-toastify";
                       <InputWrapper className="input-wrapper"> 
                           <MdLockOutline></MdLockOutline>
                           <InputForm 
+                          required
                           type="password"
                           name="password"
                           placeholder="Nhập mật khẩu (ít nhất 8 ký tự)"
@@ -311,6 +328,7 @@ import { toast } from "react-toastify";
                       <InputWrapper className="input-wrapper"> 
                           <MdLockOutline></MdLockOutline>
                           <InputForm 
+                          required
                           type="password"
                           name="confirmPassword"
                           placeholder="Nhập mật khẩu lại" 
@@ -323,7 +341,11 @@ import { toast } from "react-toastify";
 
                       
 
-                      <SignUpButton type="submit" className="signup-button">Đăng ký</SignUpButton>
+                      <SignUpButton type="submit" className="signup-button"  disabled={isLoading} >
+                        
+                        {isLoading ? "Đang xử lý..." : "Đăng ký"}
+                        
+                        </SignUpButton>
 
                   </SignUpFormItem>
 

@@ -344,7 +344,7 @@ const PetLabel = [
 export function DetailPetTable({pet}){
     
     const {accessToken} = useContext(AuthContext);
-    const {mutate:addToCart} = useAddToCart(accessToken);
+    const {mutate:addToCart, isPending:isLoading} = useAddToCart(accessToken);
     const petQuantity = pet?.quantity??0;
     const price = pet?.price;
     const navigate = useNavigate();
@@ -394,7 +394,11 @@ export function DetailPetTable({pet}){
           SetCartQuantity(quantity)
      }
 
-     const HandleAddToCart = () => { 
+     const HandleAddToCart = () => {
+        if(cartQuantity <1){
+          toast.warning("Vui lòng chọn số lượng lớn hơn 0.")
+          return;
+        } 
         if(accessToken){
            
             addToCart({
@@ -452,8 +456,13 @@ export function DetailPetTable({pet}){
      }
 
      
+     useEffect(() => {
+        document.body.style.cursor = isLoading ? "wait" : "default";
+      }, [isLoading]);
+
+
     return(
-        <DetailPetContainer>  
+        <DetailPetContainer >  
 
             <DetailNameContainer>
 
@@ -510,8 +519,8 @@ export function DetailPetTable({pet}){
             <DetailBtnGroup>
                     
 
-                    <BuyBtn onClick={()=>BuyNow()}>Mua ngay</BuyBtn>
-                    <CartBtn onClick={()=>HandleAddToCart()}>Bỏ vào giỏ hàng</CartBtn>
+                    <BuyBtn onClick={()=>BuyNow()} disabled={isLoading}>Mua ngay</BuyBtn>
+                    <CartBtn onClick={()=>HandleAddToCart()} disabled={isLoading}>Bỏ vào giỏ hàng</CartBtn>
             </DetailBtnGroup>
 
             
