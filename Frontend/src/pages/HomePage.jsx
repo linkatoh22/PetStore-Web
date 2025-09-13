@@ -446,7 +446,7 @@ function Homepage(){
                     
                         { loadingProduct?  
                             <SpinnerContainer>
-                                <Spinner animation="border" variant="info" style={{ width: "4rem", height: "4rem" }} className='mr-2' />
+                                <Spinner animation="border" variant="info" className='mr-2' />
                             </SpinnerContainer>
                             :
                             (
