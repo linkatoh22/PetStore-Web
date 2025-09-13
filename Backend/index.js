@@ -34,6 +34,7 @@ app.use("/api/user",require("./routes/UserRoutes"))
 app.use("/api/cart",require("./routes/CartRoutes"))
 app.use("/api/order",require("./routes/OrderRoutes"))
 app.use("/api/forget-password",require("./routes/ResetPasswordRoutes"))
+// app.use("/api/address",require("./routes/addressRoutes"))
 // app.use("/api/order",require("./routes/OrderRoutes"))
 
 app.use(errorHandler);

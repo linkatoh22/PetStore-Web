@@ -272,7 +272,7 @@ const getDetailOrder = async(req,res,next)=>{
 
         
 
-        res.status(200).json({
+        return res.status(200).json({
             message:"Get detail order successfully",
             status:"Success",
             code:200,

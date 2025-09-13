@@ -30,15 +30,16 @@ const MainMenuItem = styled.div`
     
     
     @media (min-width: 0px) and (max-width: 598.99px) {
-        width:95%; 
+        width:100%; 
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
         width:95%;
     }
     @media (min-width: 1312px) and (max-width: 1500.00px) {
-        width:90%;
+        width:95%;
     }
+        
 
     
 
@@ -47,7 +48,7 @@ const MainMenuItem = styled.div`
 const ButtonMenu = styled.div`
     display: flex;
     flex-direction: row;
-    width:36%;
+    width:33%;
     justify-content:space-between;
     flex-shrink: 0;
     
@@ -83,25 +84,26 @@ const TitleBtnMenu = styled.a`
         }
     }
 
-    @media (min-width: 0px) and (max-width: 399.99px) {
-        font-size: 0.4rem;
-        
-    }
-    @media (min-width: 400px) and (max-width: 598.99px) {
+
+
+    @media (min-width: 300px) and (max-width: 598.99px) {
         font-size: 0.5rem;
+    }
+     @media (min-width: 300px) and (max-width: 598.99px) {
+        font-size: 0.6rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         
     }
     @media (min-width: 800px) and (max-width: 1000.98px) {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
         
     }
 
     @media (min-width: 1001px) and (max-width: 1500px) {
-        font-size: 0.7rem;
+        font-size: 1rem;
         
     }
     
@@ -138,15 +140,15 @@ const SearchContainer = styled.div`
     justify-content: space-between;
     gap:0.5rem;
     @media (min-width: 300px) and (max-width: 598.99px) {
-        width:50%;
+        width:40%;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        width:60%;
+        width:45%;
         
     }
     @media (min-width: 800px) and (max-width: 1000px) {
-        width:60%;
+        width:55%;
         
     }
 `
@@ -154,12 +156,12 @@ const SearchContainer = styled.div`
 const SearchInputWrapper = styled.div`
     background-color: white;
     border-radius: 15px;
-    width: 75%;
+    width: 70%;
     display: flex;
     
     flex-direction: row;
     align-items: center;
-    padding: 0.6rem;
+    padding: 0.5rem;
     @media (min-width: 300px) and (max-width: 598.99px) {
         padding: 0rem;
         
@@ -169,7 +171,7 @@ const SearchInputWrapper = styled.div`
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        padding: 0.2rem;
+        padding: 0.15rem;
         
     }
     
@@ -186,13 +188,19 @@ const SearchSelect = styled.select`
     padding-left:0.3rem;
     @media (min-width: 300px) and (max-width: 598.99px) {
         font-size: 0.5rem;
+        padding-inline: 0rem;
+        padding-left:0rem;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
         font-size: 0.6rem;
+        padding-inline: 0rem;
+        padding-left:0rem;
     }
     @media (min-width: 800px) and (max-width: 1000px) {
         font-size: 0.7rem;
+        padding-inline: 0.1rem;
+        padding-left:0.1rem;
         
     }
         
@@ -226,24 +234,51 @@ const InputMenu = styled.input`
 `
 
 const ButtonMenu_Responsive = styled.div`
-    width:14%;
+    width:20%;
     
     display: flex;
     flex-direction: row;
-    // gap:1rem;
-    justify-content: space-between;
     
+    justify-content: end;
+    gap:1.8rem;
     flex-shrink: 0;
+
+
     @media (min-width: 300px) and (max-width: 598.99px) {
-        width:20%; 
+        width:25%;
+    
+        display: flex;
+        flex-direction: row;
+        
+        justify-content: space-between;
+        
+        flex-shrink: 0;
         
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-        width:20%;   
+            width:25%;
+            
+            display: flex;
+            flex-direction: row;
+            
+            justify-content: space-between;
+            
+            flex-shrink: 0;  
     }
 
     @media (min-width: 800px) and (max-width: 1000px) {
-        width:20%;
+            width:25%;
+            
+            display: flex;
+            flex-direction: row;
+            
+            justify-content: space-between;
+            
+            flex-shrink: 0;
+        
+    }
+    @media (min-width: 1001px) and (max-width: 1500px) {
+        gap:1.5rem;
         
     }
     
@@ -552,7 +587,7 @@ function MainMenu({isSidebar,setIsSidebar}) {
                     }
                     
 
-            </ButtonMenu_Responsive>
+                </ButtonMenu_Responsive>
 
             </MainMenuItem>
                 

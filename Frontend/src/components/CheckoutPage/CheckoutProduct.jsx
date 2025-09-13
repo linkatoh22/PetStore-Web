@@ -20,11 +20,14 @@ const CartTableContainer = styled.div`
   @media (min-width: 0px) and (max-width: 598.99px) {
         font-size:0.5rem;
         gap:0.2rem;
-        width: 55%;
+        width: 100%;
+        order: 1;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
             font-size:0.8rem;
           gap:0.7rem;
+          width: 100%;
+          order: 1;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
         font-size:0.9rem;
@@ -42,7 +45,7 @@ const CartTableContainer = styled.div`
 const CartTable = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0.5   rem;
+  border-spacing: 0.5rem;
   
   th {
     background-color:white;
@@ -106,7 +109,20 @@ const ScrollTable = styled.div`
     
     overflow:auto;
 `
-
+const CheckoutInputTitle = styled.div`
+    font-weight:bold;
+    font-size: 1.2rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+    }
+`;
+const LineDivider = styled.div`
+    width:100%;
+    border:1px solid var(--grey-200);
+`
 function CheckoutProductTable({cartInfo}){
     const [shippingFee, setShippingFee] = useState(30000)
 
@@ -166,7 +182,12 @@ function CheckoutProductTable({cartInfo}){
     return(
         <>
             <CartTableContainer className="cartTable-container">
+
+                <CheckoutInputTitle className="CheckoutInput-Title">
+                    Chi tiết đơn hàng
+                </CheckoutInputTitle>
                 
+                <LineDivider></LineDivider>
                 
                 
 

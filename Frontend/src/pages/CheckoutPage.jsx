@@ -35,11 +35,11 @@ const CheckoutInfo = styled.div`
   gap: 1.5rem;
 
   @media (min-width: 0px) and (max-width: 598.99px) {
-  
+        flex-direction: column;
         gap:0.5rem;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
-       
+            flex-direction: column;
           gap:0.7rem;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
@@ -57,6 +57,7 @@ const CheckoutInfo = styled.div`
 
 
 
+
 function CheckoutPage(){
     const CheckoutProduct =JSON.parse(localStorage.getItem("cartItems")) 
     useEffect(() => {
@@ -67,9 +68,9 @@ function CheckoutPage(){
             
             <CheckoutPageContainer className="CheckoutPage-Container">
                 <CheckoutInfo className="Checkout-Info">
-
-                    <CheckoutInput cartInfo={CheckoutProduct}></CheckoutInput>
-                    <CheckoutProductTable cartInfo={CheckoutProduct}></CheckoutProductTable>
+                    
+                    <CheckoutInput className="Ordercheckoutinput"  cartInfo={CheckoutProduct}></CheckoutInput>
+                    <CheckoutProductTable className="Ordercheckouttable" cartInfo={CheckoutProduct}></CheckoutProductTable>
 
                 </CheckoutInfo>
 

@@ -14,10 +14,13 @@ const CheckoutInputContainer = styled.div`
 
   @media (min-width: 0px) and (max-width: 598.99px) {
         gap:0.7rem;
-        width: 40%;
+        width: 100%;
+        order: 2;
     }
     @media (min-width: 599px) and (max-width: 799.99px) {
+        width: 100%;
         gap:0.9rem;
+        order: 2;
     }
     @media (min-width: 800px) and (max-width: 1199.98px) {
         gap:1.1rem;
@@ -29,6 +32,13 @@ const CheckoutInputContainer = styled.div`
 
 const CheckoutInputTitle = styled.div`
     font-weight:bold;
+    font-size: 1.2rem;
+    @media (min-width: 0px) and (max-width: 598.99px) {
+        font-size: 1rem;
+    }
+    @media (min-width: 599px) and (max-width: 799.99px) {
+        font-size: 1rem;
+    }
 `;
 
 
@@ -142,16 +152,21 @@ const StyledFormSelect = styled(Form.Select)`
 
 
 function CheckoutInput({cartInfo}){
+
     const [TinhThanhChosen,SetTinhThanhChosen] =useState({});
     const [QuanHuyenChosen,SetQuanHuyenChosen] =useState({});
     const [PhuongXaChosen,SetPhuongXa] =useState({});
+
     const [FullName,SetFullName]= useState();
     const [PhoneNumber,SetPhoneNumber] = useState();
     const [Address,SetAddress] = useState();
+
     const navigate = useNavigate()
     const {data:tinhThanhData}= useGetTinhThanh();
+
     const {mutate:GetQuanHuyen} = useGetQuanHuyen();
     const {mutate:GetPhuongXa} = useGetPhuongXa();
+
     const {mutate:CreateOrder,isPending:isLoading} = useCheckOut();
     const [QuanHuyenData,SetQuanHuyenData] = useState();
     const [PhuongXaData,SetPhuongXaData] = useState();
@@ -262,7 +277,7 @@ function CheckoutInput({cartInfo}){
             <CheckoutInputContainer className="CheckoutInput-Container" >
 
                 <CheckoutInputTitle className="CheckoutInput-Title">
-                    Thanh toán đơn hàng
+                    Thông tin thanh toán
                 </CheckoutInputTitle>
                 <LineDivider></LineDivider>
                     <FormContainter>
@@ -293,23 +308,24 @@ function CheckoutInput({cartInfo}){
 
                             
                             <Form.Group 
+                                required
                                 className="mb-3" 
                                 controlId="Checkout.Form">
                                 <Form.Label>Tỉnh/Thành Phố:</Form.Label>
                                 <StyledFormSelect
                                 aria-label="Default select example" 
                                 onChange={(e)=>{
-                                    const selectedIndex = e.target.selectedIndex;
-                                    const selectedOption = e.target.options[selectedIndex];
-                                    SetTinhThanhChosen({
-                                        key: selectedOption.getAttribute('data-id'),
-                                        value: e.target.value
-                                    })
+                                        const selectedIndex = e.target.selectedIndex;
+                                        const selectedOption = e.target.options[selectedIndex];
+                                        SetTinhThanhChosen({
+                                            key: selectedOption.getAttribute('data-id'),
+                                            value: e.target.value
+                                        })
 
-                                }
+                                    }
                                     
                                 }
-                                required
+                                
                                 >
                                     <option>Tỉnh thành</option>
                                     {tinhThanhData?.data?.map((item)=>{
